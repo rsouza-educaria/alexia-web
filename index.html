@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Redactar comunicado — Alexia</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,500;0,700;1,700&display=swap" rel="stylesheet">
+<style>
+/* ─── DS Tokens ─── */
+:root {
+  --blue-50:    #F0F4F9;
+  --blue-100:   #D6E4F3;
+  --blue-200:   #B8D0EA;
+  --blue-300:   #94B8DE;
+  --blue-500:   #24558E;
+  --blue-700:   #1A3D66;
+  --purple-300: #AEA6E1;
+  --purple-500: #6F61B6;
+  --purple-700: #4E4380;
+  --grey-50:    #ffffff;
+  --grey-100:   #fdfdfd;
+  --grey-200:   #f6f7f9;
+  --grey-300:   #f3f4f6;
+  --grey-400:   #eaedf0;
+  --grey-500:   #D1D9E2;
+  --grey-600:   #adb4be;
+  --grey-700:   #868585;
+  --grey-800:   #333333;
+
+  --text-primary:   var(--grey-800);
+  --text-secondary: var(--grey-700);
+  --text-muted:     var(--grey-600);
+  --border-default: var(--grey-500);
+  --bg-primary:     var(--grey-50);
+  --bg-surface:     var(--grey-100);
+  --action-primary: var(--blue-500);
+  --action-hover:   var(--blue-700);
+  --state-focus:    var(--blue-300);
+  --radius-sm:   4px;
+  --radius-card: 8px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--blue-50);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ─── Stubs ─── */
+.stub-header {
+  height: 52px;
+  flex-shrink: 0;
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-default);
+}
+.body-row {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  min-height: 0;
+}
+.stub-sidebar {
+  width: 56px;
+  flex-shrink: 0;
+  background: var(--bg-primary);
+  border-right: 1px solid var(--border-default);
+}
+.main-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+}
+.stub-breadcrumb {
+  height: 90px;
+  flex-shrink: 0;
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-default);
+}
+
+/* ─── Scroll area ─── */
+.scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 16px 15px 100px 10px;
+}
+.scroll-area::-webkit-scrollbar { width: 4px; }
+.scroll-area::-webkit-scrollbar-track { background: var(--grey-300); }
+.scroll-area::-webkit-scrollbar-thumb { background: var(--grey-600); border-radius: 2px; }
+
+/* ─── Content grid ─── */
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 401px;
+  gap: 16px;
+}
+.col-left  { display: flex; flex-direction: column; gap: 16px; }
+.col-right { display: flex; flex-direction: column; }
+
+/* ─── Card ─── */
+.card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+
+/* ─── Card title group (icon + title) ─── */
+.card-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--action-primary);
+  padding: 2px;
+}
+.card-icon svg { width: 20px; height: 20px; display: block; }
+.card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.004em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* ─── Dash divider ─── */
+.divider-dash {
+  height: 1px;
+  background: repeating-linear-gradient(
+    to right,
+    var(--border-default) 0, var(--border-default) 4px,
+    transparent 4px, transparent 8px
+  );
+}
+
+/* ─── Destinatarios card ─── */
+.destinatarios-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 24px;
+  min-height: 64px;
+}
+
+/* ─── btn outline sm ─── */
+.btn-dest {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 16px;
+  border: 1px solid var(--blue-200);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--action-primary);
+  cursor: pointer;
+  letter-spacing: -0.004em;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.btn-dest:hover { background: var(--bg-surface); }
+.btn-dest svg { flex-shrink: 0; }
+
+/* ─── Mensaje card ─── */
+.mensaje-inner {
+  padding: 21px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.mensaje-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* ─── btn-ia (DS) ─── */
+
+@keyframes btn-ia-breathe {
+  0%, 100% { border-color: var(--purple-300); box-shadow: 0 0 0 0 transparent; }
+  50%       { border-color: var(--purple-700); box-shadow: 0 0 0 2px rgba(111,97,182,.12); }
+}
+
+.btn-ia {
+  display: inline-flex; align-items: center; gap: 8px;
+  height: 32px; padding: 0 12px;
+  border: 1px solid var(--purple-300); border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px; font-weight: 700; color: var(--purple-500);
+  line-height: 1; white-space: nowrap;
+  transition: background .15s;
+  animation: btn-ia-breathe 3s ease-in-out infinite;
+}
+
+.btn-ia:hover {
+  background: var(--grey-100);
+  border-color: var(--purple-700); color: var(--purple-700);
+  animation: none;
+  box-shadow: none;
+}
+
+.btn-ia-icon { width: 16px; height: 16px; display: block; flex-shrink: 0; }
+
+/* ─── IA stars twinkle ─── */
+@keyframes ia-star-twinkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.1; transform: scale(0.6); }
+}
+.ia-star-lg  { transform-box: fill-box; transform-origin: center; animation: ia-star-twinkle 2.6s ease-in-out infinite; }
+.ia-star-sm1 { transform-box: fill-box; transform-origin: center; animation: ia-star-twinkle 2.0s ease-in-out infinite 0.7s; }
+.ia-star-sm2 { transform-box: fill-box; transform-origin: center; animation: ia-star-twinkle 2.3s ease-in-out infinite 1.3s; }
+.btn-ia:hover .ia-star-lg,
+.btn-ia:hover .ia-star-sm1,
+.btn-ia:hover .ia-star-sm2 { animation: none; opacity: 1; transform: scale(1); }
+
+/* ─── AI Dropdown ─── */
+.ai-wrap { position: relative; }
+.ai-dropdown {
+  position: absolute;
+  top: calc(100% + 1px);
+  right: 0;
+  width: 220px;
+  display: none;
+  padding: 8px 0;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 4px;
+  border: 1px solid var(--border-default);
+  background: var(--grey-100);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12);
+  z-index: 60;
+}
+.ai-dropdown.open { display: flex; animation: fadeIn .15s ease; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.ai-option {
+  display: flex;
+  height: 36px;
+  padding: 0 24px;
+  align-items: center;
+  align-self: stretch;
+  width: 100%;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .1s;
+}
+.ai-option:hover { background: var(--grey-400); }
+
+/* ─── Custom Select ─── */
+.custom-select { position: relative; }
+.custom-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  background: var(--grey-200);
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  width: 100%;
+  transition: border-color .15s;
+  user-select: none;
+}
+.custom-select-trigger.has-value { color: var(--text-primary); border-color: var(--state-focus); }
+.custom-select-trigger.open { border-color: var(--state-focus); }
+.custom-select-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  display: none;
+  padding: 4px 0;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 4px;
+  border: 1px solid var(--border-default);
+  background: var(--grey-200);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12);
+  z-index: 60;
+}
+.custom-select-menu.open { display: flex; animation: fadeIn .15s ease; }
+.custom-select-option {
+  display: flex;
+  height: 36px;
+  padding: 0 16px;
+  align-items: center;
+  align-self: stretch;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background .1s;
+}
+.custom-select-option:hover { background: var(--grey-400); }
+.custom-select-option.selected { font-weight: 700; color: var(--action-primary); }
+
+/* ─── Fields row ─── */
+.fields-row {
+  display: grid;
+  grid-template-columns: 1fr 240px;
+  gap: 16px;
+  align-items: end;
+}
+.field { display: flex; flex-direction: column; gap: 8px; }
+.field-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+/* ─── Input / Select ─── */
+.field-input,
+.field-select {
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  background: var(--grey-200);
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  outline: none;
+  width: 100%;
+  transition: border-color .15s;
+}
+.field-input::placeholder { color: var(--text-muted); }
+.field-input:focus  { border-color: var(--state-focus); }
+.field-input.filled { border-color: var(--state-focus); }
+.field-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8' viewBox='0 0 14 8' fill='none' stroke='%23868585' stroke-width='1.5'%3E%3Cpolyline points='1 1 7 7 13 1'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+  cursor: pointer;
+  color: var(--text-secondary);
+}
+.field-select.has-value { color: var(--text-primary); border-color: var(--state-focus); }
+
+/* ─── RTE ─── */
+.rte-wrap {
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  background: var(--grey-200);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: border-color .15s;
+}
+.rte-wrap:focus-within { border-color: var(--state-focus); }
+.rte-body {
+  flex: 1;
+  min-height: 220px;
+  padding: 20px 24px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.7;
+  outline: none;
+  background: transparent;
+  border: none;
+  resize: none;
+  width: 100%;
+}
+.rte-body::placeholder { color: var(--text-muted); }
+.rte-toolbar {
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-default);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 6px 12px;
+  gap: 2px;
+  flex-shrink: 0;
+  row-gap: 4px;
+}
+.rte-btn {
+  height: 28px;
+  padding: 0 7px;
+  border: none;
+  border-radius: 3px;
+  background: transparent;
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  line-height: 28px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+.rte-btn:hover { background: var(--grey-400); }
+.rte-btn.active { background: var(--blue-50); color: var(--action-primary); }
+.rte-btn.b  { font-weight: 900; font-size: 13px; }
+.rte-btn.it { font-style: italic; font-size: 13px; }
+.rte-btn.u  { text-decoration: underline; font-size: 13px; }
+.rte-btn.st { text-decoration: line-through; font-size: 13px; }
+.rte-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+.rte-sep { width: 1px; height: 16px; background: var(--border-default); margin: 0 3px; flex-shrink: 0; }
+.rte-dropdown {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 28px;
+  padding: 0 8px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+/* ─── Upload card ─── */
+.upload-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 20px 24px;
+  cursor: pointer;
+  text-align: center;
+  transition: background .15s;
+  min-height: 100px;
+  justify-content: center;
+}
+.upload-zone:hover,
+.upload-zone.drag-over { background: var(--bg-surface); }
+#upload-card:hover { border-color: var(--state-focus); }
+.upload-zone.compact {
+  flex-direction: row;
+  min-height: auto;
+  padding: 10px 24px;
+  gap: 8px;
+  border-top: 1px dashed var(--border-default);
+  justify-content: center;
+}
+.upload-zone.compact .upload-title { font-size: 13px; }
+.upload-zone.compact .upload-sub   { display: none; }
+.upload-zone.compact .upload-cloud { display: none; }
+.upload-zone.compact .upload-add-icon { display: flex; }
+.upload-add-icon { display: none; align-items: center; color: var(--action-primary); }
+.upload-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--action-primary);
+  letter-spacing: -0.004em;
+  line-height: 1.2;
+}
+.upload-sub {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  line-height: 1;
+}
+
+/* ─── File section ─── */
+.files-section { display: none; }
+.files-section.visible { display: block; }
+.files-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 24px 8px;
+  border-top: 1px solid var(--border-default);
+}
+.files-header-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  flex: 1;
+}
+.files-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: 9px;
+  background: var(--blue-50);
+  border: 1px solid var(--blue-200);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--action-primary);
+}
+.file-list { display: flex; flex-direction: column; gap: 6px; padding: 0 24px 14px; }
+.file-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 36px;
+  padding: 0 12px;
+  background: var(--grey-200);
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  transition: border-color .1s;
+}
+.file-item:hover { border-color: var(--blue-200); }
+.file-ext {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 22px;
+  border-radius: 3px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+  text-transform: uppercase;
+}
+.file-ext.pdf  { background: #FEE2E2; color: #D94A4A; }
+.file-ext.doc,
+.file-ext.docx { background: #D6E4F3; color: #24558E; }
+.file-ext.xls,
+.file-ext.xlsx { background: #EDF7EE; color: #71A850; }
+.file-ext.img  { background: #F1EFFA; color: #6F61B6; }
+.file-ext.generic { background: var(--grey-400); color: var(--text-muted); }
+.file-name { flex: 1; font-size: 13px; font-weight: 500; color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.file-size { font-size: 11px; color: var(--text-muted); flex-shrink: 0; }
+.file-del  { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; background: transparent; color: var(--text-muted); font-size: 15px; border-radius: 2px; flex-shrink: 0; transition: color .1s, background .1s; line-height: 1; }
+.file-del:hover { color: #D94A4A; background: #FEE2E2; }
+
+/* ─── Opciones de envío ─── */
+.opc-title-bar { padding: 24px 24px 14px; }
+.opc-section { padding: 16px 24px; }
+
+/* ─── Switch row ─── */
+.switch-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.sw-text { display: flex; flex-direction: column; gap: 3px; }
+.sw-title    { font-size: 14px; font-weight: 700; color: var(--text-primary); line-height: 1.2; }
+.sw-subtitle { font-size: 12px; font-weight: 400; color: var(--text-primary); line-height: 1.3; }
+
+/* ─── Switch ─── */
+.switch {
+  flex-shrink: 0;
+  width: 48px; height: 28px;
+  border-radius: 14px;
+  background: var(--grey-400);
+  position: relative;
+  cursor: pointer;
+  transition: background .2s;
+  margin-top: 2px;
+}
+.switch.on { background: var(--action-primary); }
+.switch-thumb {
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 22px; height: 22px;
+  border-radius: 11px;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0,0,0,.15);
+  transition: transform .2s;
+}
+.switch.on .switch-thumb { transform: translateX(20px); }
+
+/* ─── Labeled row (title left, content right) ─── */
+.labeled-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.labeled-row .sw-title { white-space: nowrap; flex-shrink: 0; }
+
+/* ─── Language buttons ─── */
+.lang-group { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.lang-btn {
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all .15s;
+  line-height: 1;
+}
+.lang-btn:hover:not(.selected) { background: var(--grey-200); }
+.lang-btn.selected { background: var(--action-primary); border-color: var(--action-primary); color: white; }
+
+/* ─── Date pickers ─── */
+.date-row { display: flex; gap: 16px; }
+.date-field { width: 168px; flex-shrink: 0; position: relative; }
+.date-field .field-input { padding-right: 36px; cursor: pointer; }
+.date-field-icon {
+  position: absolute;
+  right: 10px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  pointer-events: none;
+  display: flex; align-items: center;
+}
+
+/* ─── Flatpickr overrides ─── */
+.flatpickr-calendar {
+  font-family: 'Nunito', sans-serif !important;
+  font-size: 13px !important;
+  border: 1px solid var(--border-default) !important;
+  border-radius: var(--radius-card) !important;
+  box-shadow: 0 4px 20px rgba(36,85,142,.12) !important;
+}
+.flatpickr-months { background: var(--blue-500) !important; border-radius: var(--radius-card) var(--radius-card) 0 0 !important; }
+.flatpickr-months .flatpickr-month { background: transparent !important; color: white !important; }
+.flatpickr-current-month { color: white !important; }
+.flatpickr-current-month .numInputWrapper input,
+.flatpickr-current-month .cur-year { color: white !important; }
+.flatpickr-current-month .flatpickr-monthDropdown-months { background: var(--blue-500) !important; color: white !important; }
+.flatpickr-months .flatpickr-prev-month svg,
+.flatpickr-months .flatpickr-next-month svg { fill: rgba(255,255,255,.8) !important; }
+.flatpickr-months .flatpickr-prev-month:hover svg,
+.flatpickr-months .flatpickr-next-month:hover svg { fill: white !important; }
+.flatpickr-weekdaycontainer { background: var(--grey-200) !important; }
+.flatpickr-weekday {
+  font-family: 'Nunito', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  color: var(--text-muted) !important;
+  background: transparent !important;
+}
+.dayContainer { padding: 4px !important; }
+.flatpickr-day {
+  font-family: 'Nunito', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: var(--text-primary) !important;
+  border-radius: var(--radius-sm) !important;
+  border: 1px solid transparent !important;
+}
+.flatpickr-day:hover:not(.selected):not(.today) { background: var(--blue-50) !important; border-color: var(--blue-100) !important; }
+.flatpickr-day.selected, .flatpickr-day.selected:hover { background: var(--blue-500) !important; border-color: var(--blue-500) !important; color: white !important; }
+.flatpickr-day.today { border-color: var(--state-focus) !important; }
+.flatpickr-day.today:hover { background: var(--blue-50) !important; color: var(--text-primary) !important; }
+.flatpickr-day.flatpickr-disabled, .flatpickr-day.flatpickr-disabled:hover { color: var(--text-muted) !important; background: transparent !important; }
+.flatpickr-time { border-top: 1px solid var(--border-default) !important; }
+.flatpickr-time input, .flatpickr-time .flatpickr-time-separator, .flatpickr-time .flatpickr-am-pm {
+  font-family: 'Nunito', sans-serif !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  color: var(--text-primary) !important;
+}
+.flatpickr-time input:hover, .flatpickr-time input:focus, .flatpickr-time .flatpickr-am-pm:hover { background: var(--grey-200) !important; }
+.numInputWrapper:hover { background: var(--grey-200) !important; }
+.numInputWrapper span { border-color: var(--border-default) !important; }
+.numInputWrapper span.arrowUp:after  { border-bottom-color: var(--text-muted) !important; }
+.numInputWrapper span.arrowDown:after { border-top-color: var(--text-muted) !important; }
+
+/* ─── Footer fixed ─── */
+.footer-actions {
+  position: fixed;
+  bottom: 0;
+  left: 56px;
+  right: 0;
+  padding: 8px 15px;
+  background: var(--blue-50); /* bloqueia o conteúdo que rola por baixo */
+  z-index: 40;
+  pointer-events: none;
+}
+.footer-inner {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-card);
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 12px 24px;
+  gap: 24px;
+  pointer-events: auto;
+}
+
+/* ─── Buttons ─── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 20px;
+  border-radius: var(--radius-sm);
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background .15s, border-color .15s;
+  white-space: nowrap;
+}
+.btn-solid   { background: var(--action-primary); color: white; border-color: var(--action-primary); }
+.btn-solid:hover { background: var(--action-hover); border-color: var(--action-hover); }
+.btn-outline { background: var(--bg-primary); color: var(--action-primary); border-color: var(--blue-200); }
+.btn-outline:hover { background: var(--bg-surface); }
+
+/* ─── Nav dots ─── */
+.nav-dots-bar {
+  position: fixed;
+  bottom: 24px;
+  left: 68px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.nav-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--grey-500);
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  transition: background .2s, transform .2s;
+}
+.nav-dot:hover { background: var(--grey-700); transform: scale(1.2); }
+.nav-dot.active { background: var(--action-primary); transform: scale(1.1); }
+.nav-label {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+  margin-left: 2px;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 1100px) {
+  .content-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header stub -->
+<div class="stub-header"></div>
+
+<div class="body-row">
+  <!-- Sidebar stub -->
+  <div class="stub-sidebar"></div>
+
+  <div class="main-col">
+    <!-- Breadcrumb stub -->
+    <div class="stub-breadcrumb"></div>
+
+    <!-- ─── Scroll area ─── -->
+    <div class="scroll-area" id="scroll-area">
+      <div class="content-grid">
+
+        <!-- ═══ LEFT COLUMN ═══ -->
+        <div class="col-left">
+
+          <!-- Destinatarios -->
+          <div class="card">
+            <div class="destinatarios-inner">
+              <div class="card-title-group">
+                <div class="card-icon">
+                  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="7.5" cy="6" r="2.5"/>
+                    <path d="M2 17c0-3.038 2.462-5.5 5.5-5.5s5.5 2.462 5.5 5.5"/>
+                    <circle cx="14.5" cy="7" r="2" stroke-opacity=".5"/>
+                    <path d="M18 16c0-1.93-1.343-3.5-3-3.5-.5 0-.97.12-1.4.34" stroke-opacity=".5"/>
+                  </svg>
+                </div>
+                <span class="card-title">Destinatarios:</span>
+              </div>
+              <button class="btn-dest">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="5.5" cy="4.5" r="2"/>
+                  <path d="M1 12c0-2.485 2.015-4.5 4.5-4.5s4.5 2.015 4.5 4.5"/>
+                  <path d="M10.5 5v4M12.5 7h-4"/>
+                </svg>
+                Seleccionar destinatarios para el envío
+              </button>
+            </div>
+          </div>
+
+          <!-- Mensaje -->
+          <div class="card">
+            <div class="mensaje-inner">
+
+              <!-- Header -->
+              <div class="mensaje-header">
+                <div class="card-title-group">
+                  <div class="card-icon">
+                    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                      <rect x="2" y="4" width="16" height="12" rx="2"/>
+                      <path d="M2 7l8 5 8-5"/>
+                    </svg>
+                  </div>
+                  <span class="card-title">Mensaje</span>
+                </div>
+                <div class="ai-wrap">
+                  <!-- IA button — SVG from design system -->
+                  <button class="btn-ia" id="btn-ia" onclick="clickIA()">
+                    <svg class="btn-ia-icon" viewBox="51 4 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path class="ia-star-lg" d="M72.7288 15.6431C67.662 14.2442 66.6084 13.1896 65.2092 8.12453C65.1648 7.96343 65.0185 7.85235 64.8518 7.85235C64.6851 7.85235 64.5388 7.96345 64.4944 8.12453C63.0954 13.1905 62.0406 14.244 56.9749 15.6431C56.8138 15.6875 56.7036 15.8338 56.7036 16.0004C56.7036 16.1671 56.8147 16.3134 56.9749 16.3578C62.0416 17.7567 63.0952 18.8113 64.4944 23.8764C64.5388 24.0374 64.6851 24.1485 64.8518 24.1485C65.0185 24.1485 65.1648 24.0374 65.2092 23.8764C66.6082 18.8104 67.663 17.7568 72.7288 16.3578C72.8899 16.3134 73 16.1671 73 16.0004C73 15.8338 72.8889 15.6875 72.7288 15.6431Z" fill="#3F96B4"/>
+                      <path class="ia-star-sm1" d="M56.7166 13.8767C56.7611 14.0378 56.9074 14.1489 57.074 14.1489C57.2407 14.1489 57.387 14.0378 57.4314 13.8767C58.0796 11.5307 58.5305 11.0798 60.8768 10.4318C61.0379 10.3873 61.1481 10.2411 61.1481 10.0744C61.1481 9.90778 61.0369 9.76151 60.8768 9.71706C58.5305 9.069 58.0795 8.61906 57.4314 6.27218C57.387 6.11109 57.2407 6 57.074 6C56.9074 6 56.7611 6.1111 56.7166 6.27218C56.0685 8.61816 55.6176 9.06909 53.2713 9.71706C53.1102 9.76151 53 9.90778 53 10.0744C53 10.2411 53.1111 10.3873 53.2713 10.4318C55.6176 11.0799 56.0686 11.5298 56.7166 13.8767Z" fill="#71A850"/>
+                      <path class="ia-star-sm2" d="M61.4325 22.1238C59.464 21.5803 59.0862 21.2026 58.5428 19.2345C58.4983 19.0733 58.352 18.9622 58.1854 18.9622C58.0187 18.9622 57.8724 19.0733 57.828 19.2345C57.2844 21.2027 56.9067 21.5804 54.9382 22.1238C54.7771 22.1682 54.667 22.3145 54.667 22.4812C54.667 22.6478 54.7781 22.794 54.9382 22.8385C56.9068 23.3819 57.2845 23.7596 57.828 25.7279C57.8724 25.889 58.0187 26 58.1854 26C58.352 26 58.4983 25.889 58.5428 25.7279C59.0863 23.7596 59.4641 23.3818 61.4325 22.8385C61.5936 22.794 61.7038 22.6478 61.7038 22.4812C61.7038 22.3145 61.5927 22.1682 61.4325 22.1238Z" fill="#F5D93F"/>
+                    </svg>
+                    ACCIONES DE IA
+                  </button>
+                  <div class="ai-dropdown" id="ai-dropdown">
+                    <div class="ai-option primary" onclick="clickAIOpt(0)">Redactar comunicado</div>
+                    <div class="ai-option" onclick="clickAIOpt(1)">Mejorar redacción</div>
+                    <div class="ai-option" onclick="clickAIOpt(2)">Resumir texto</div>
+                    <div class="ai-option" onclick="clickAIOpt(3)">Corregir gramática</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="divider-dash"></div>
+
+              <!-- Asunto + Categoría -->
+              <div class="fields-row">
+                <div class="field">
+                  <label class="field-label">Asunto</label>
+                  <input type="text" class="field-input filled" id="asunto" value="Pepito tiene muchas novias">
+                </div>
+                <div class="field">
+                  <label class="field-label">Categoría</label>
+                  <div class="custom-select" id="categoria-wrap">
+                    <div class="custom-select-trigger" id="categoria-trigger" onclick="toggleCustomSelect('categoria')">
+                      <span class="custom-select-value" id="categoria-value">Seleccionar...</span>
+                      <svg viewBox="0 0 10 6" fill="none" stroke="#868585" stroke-width="1.5" width="10" height="6"><polyline points="1 1 5 5 9 1"/></svg>
+                    </div>
+                    <div class="custom-select-menu" id="categoria-menu">
+                      <div class="custom-select-option" onclick="selectOption('categoria', 'Académico')">Académico</div>
+                      <div class="custom-select-option" onclick="selectOption('categoria', 'Comportamiento')">Comportamiento</div>
+                      <div class="custom-select-option" onclick="selectOption('categoria', 'Ausencia')">Ausencia</div>
+                      <div class="custom-select-option" onclick="selectOption('categoria', 'Reunión')">Reunión</div>
+                      <div class="custom-select-option" onclick="selectOption('categoria', 'General')">General</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- RTE -->
+              <div class="rte-wrap">
+                <textarea class="rte-body" id="mensaje" placeholder="Escribe el mensaje aquí..."></textarea>
+                <div class="rte-toolbar">
+                  <!-- Estilo párrafo -->
+                  <div class="rte-dropdown">
+                    Párrafo
+                    <svg viewBox="0 0 10 6" fill="none" stroke="#868585" stroke-width="1.5" width="10" height="6"><polyline points="1 1 5 5 9 1"/></svg>
+                  </div>
+                  <div style="width:4px"></div>
+                  <div class="rte-dropdown">
+                    Nunito
+                    <svg viewBox="0 0 10 6" fill="none" stroke="#868585" stroke-width="1.5" width="10" height="6"><polyline points="1 1 5 5 9 1"/></svg>
+                  </div>
+                  <div style="width:4px"></div>
+                  <div class="rte-dropdown">
+                    12
+                    <svg viewBox="0 0 10 6" fill="none" stroke="#868585" stroke-width="1.5" width="10" height="6"><polyline points="1 1 5 5 9 1"/></svg>
+                  </div>
+                  <div class="rte-sep"></div>
+                  <!-- Formato -->
+                  <button class="rte-btn b" title="Negrita">B</button>
+                  <button class="rte-btn it" title="Cursiva">I</button>
+                  <button class="rte-btn u" title="Subrayado">U</button>
+                  <button class="rte-btn st" title="Tachado">S</button>
+                  <div class="rte-sep"></div>
+                  <!-- Color texto -->
+                  <button class="rte-btn" title="Color de texto" style="gap:3px; flex-direction:column; height:28px; justify-content:center;">
+                    <span style="font-size:12px; font-weight:700; line-height:1;">A</span>
+                    <span style="display:block; width:12px; height:3px; background:#24558E; border-radius:1px;"></span>
+                  </button>
+                  <div class="rte-sep"></div>
+                  <!-- Alineación -->
+                  <button class="rte-btn active" title="Alinear izquierda">
+                    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="1" y1="3" x2="13" y2="3"/><line x1="1" y1="7" x2="9" y2="7"/><line x1="1" y1="11" x2="13" y2="11"/></svg>
+                  </button>
+                  <button class="rte-btn" title="Centrar">
+                    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="1" y1="3" x2="13" y2="3"/><line x1="3" y1="7" x2="11" y2="7"/><line x1="1" y1="11" x2="13" y2="11"/></svg>
+                  </button>
+                  <button class="rte-btn" title="Alinear derecha">
+                    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="1" y1="3" x2="13" y2="3"/><line x1="5" y1="7" x2="13" y2="7"/><line x1="1" y1="11" x2="13" y2="11"/></svg>
+                  </button>
+                  <button class="rte-btn" title="Justificar">
+                    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="1" y1="3" x2="13" y2="3"/><line x1="1" y1="7" x2="13" y2="7"/><line x1="1" y1="11" x2="13" y2="11"/></svg>
+                  </button>
+                  <div class="rte-sep"></div>
+                  <!-- Listas -->
+                  <button class="rte-btn" title="Lista con viñetas">
+                    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="2" cy="3.5" r="1" fill="currentColor" stroke="none"/><line x1="5" y1="3.5" x2="13" y2="3.5"/><circle cx="2" cy="7.5" r="1" fill="currentColor" stroke="none"/><line x1="5" y1="7.5" x2="13" y2="7.5"/><circle cx="2" cy="11.5" r="1" fill="currentColor" stroke="none"/><line x1="5" y1="11.5" x2="13" y2="11.5"/></svg>
+                  </button>
+                  <button class="rte-btn" title="Lista numerada">
+                    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><text x="0.5" y="5" font-size="4.5" font-family="Nunito,sans-serif" font-weight="700" fill="currentColor" stroke="none">1.</text><line x1="5" y1="3.5" x2="13" y2="3.5"/><text x="0.5" y="9" font-size="4.5" font-family="Nunito,sans-serif" font-weight="700" fill="currentColor" stroke="none">2.</text><line x1="5" y1="7.5" x2="13" y2="7.5"/><text x="0.5" y="13" font-size="4.5" font-family="Nunito,sans-serif" font-weight="700" fill="currentColor" stroke="none">3.</text><line x1="5" y1="11.5" x2="13" y2="11.5"/></svg>
+                  </button>
+                  <div class="rte-sep"></div>
+                  <!-- Sangría -->
+                  <button class="rte-btn" title="Reducir sangría">
+                    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="1" y1="3" x2="13" y2="3"/><line x1="5" y1="7" x2="13" y2="7"/><line x1="5" y1="11" x2="13" y2="11"/><path d="M3 6l-2 1.5L3 9"/></svg>
+                  </button>
+                  <button class="rte-btn" title="Aumentar sangría">
+                    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="1" y1="3" x2="13" y2="3"/><line x1="5" y1="7" x2="13" y2="7"/><line x1="5" y1="11" x2="13" y2="11"/><path d="M1 6l2 1.5L1 9"/></svg>
+                  </button>
+                  <div class="rte-sep"></div>
+                  <!-- Enlace y cita -->
+                  <button class="rte-btn" title="Insertar enlace">
+                    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5.5 8.5A3.5 3.5 0 0 0 10 10l1-1a3.5 3.5 0 0 0-4.95-4.95L5 5"/><path d="M8.5 5.5A3.5 3.5 0 0 0 4 4L3 5a3.5 3.5 0 0 0 4.95 4.95L9 9"/></svg>
+                  </button>
+                  <button class="rte-btn" title="Cita">
+                    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="1" x2="3" y2="13"/><path d="M3 4h8M3 9h5"/></svg>
+                  </button>
+                  <div class="rte-sep"></div>
+                  <!-- Fuente HTML -->
+                  <button class="rte-btn" title="Ver código fuente" style="font-size:11px; gap:2px;">
+                    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 3L1 7l3 4M10 3l3 4-3 4M8 2l-2 10"/></svg>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Upload card -->
+          <div class="card" id="upload-card"
+            ondragover="dragOver(event)"
+            ondragleave="dragLeave(event)"
+            ondrop="dropFile(event)">
+
+            <!-- Drop zone (siempre visible) -->
+            <div class="upload-zone" id="upload-zone"
+              onclick="document.getElementById('file-input').click()">
+              <svg class="upload-cloud" width="28" height="22" viewBox="0 0 28 22" fill="none" stroke="#24558E" stroke-width="1.5">
+                <path d="M19 16a5 5 0 1 0 0-10h-.5A8.5 8.5 0 1 0 4 14"/>
+                <path d="M14 12v8M11 15l3-3 3 3"/>
+              </svg>
+              <svg class="upload-add-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#24558E" stroke-width="1.5">
+                <circle cx="8" cy="8" r="6.5"/>
+                <path d="M8 5v6M5 8h6"/>
+              </svg>
+              <div class="upload-title">Arrastra archivos aquí o haz clic para subir</div>
+              <div class="upload-sub">PDF, DOC, XLS, imágenes — máx. 100 MB por archivo</div>
+            </div>
+
+            <!-- Sección de archivos adjuntos -->
+            <div class="files-section" id="files-section">
+              <div class="files-header">
+                <span class="files-header-title">Archivos adjuntos</span>
+                <span class="files-count" id="files-count">0</span>
+              </div>
+              <div class="file-list" id="file-list"></div>
+            </div>
+
+            <input type="file" id="file-input" multiple style="display:none" onchange="addFiles(this.files)">
+          </div>
+
+        </div>
+
+        <!-- ═══ RIGHT COLUMN ═══ -->
+        <div class="col-right">
+          <div class="card">
+
+            <!-- Title -->
+            <div class="opc-title-bar">
+              <div class="card-title-group">
+                <div class="card-icon">
+                  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <line x1="3" y1="5" x2="17" y2="5"/>
+                    <line x1="3" y1="10" x2="17" y2="10"/>
+                    <line x1="3" y1="15" x2="17" y2="15"/>
+                    <circle cx="7" cy="5" r="2" fill="currentColor" stroke="none"/>
+                    <circle cx="13" cy="10" r="2" fill="currentColor" stroke="none"/>
+                    <circle cx="9" cy="15" r="2" fill="currentColor" stroke="none"/>
+                  </svg>
+                </div>
+                <span class="card-title">Opciones de envío</span>
+              </div>
+            </div>
+
+            <div class="divider-dash" style="margin: 0 24px;"></div>
+
+            <!-- Idioma -->
+            <div class="opc-section">
+              <div class="labeled-row">
+                <span class="sw-title">Idioma</span>
+                <div class="lang-group">
+                  <button class="lang-btn selected" id="btn-esp" onclick="clickLang('esp')">Español</button>
+                  <button class="lang-btn" id="btn-cat" onclick="clickLang('cat')">Catalán</button>
+                  <button class="lang-btn" id="btn-eus" onclick="clickLang('eus')">Euskera</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="divider-dash" style="margin: 0 24px;"></div>
+
+            <!-- Plantillas -->
+            <div class="opc-section">
+              <div class="labeled-row">
+                <span class="sw-title" style="white-space:nowrap;">Plantillas</span>
+                <div class="custom-select" id="plantillas-wrap" style="width:200px;flex-shrink:0;">
+                  <div class="custom-select-trigger" id="plantillas-trigger" onclick="toggleCustomSelect('plantillas')">
+                    <span class="custom-select-value" id="plantillas-value">Seleccionar...</span>
+                    <svg viewBox="0 0 10 6" fill="none" stroke="#868585" stroke-width="1.5" width="10" height="6"><polyline points="1 1 5 5 9 1"/></svg>
+                  </div>
+                  <div class="custom-select-menu" id="plantillas-menu">
+                    <div class="custom-select-option" onclick="selectOption('plantillas', 'Comunicado académico')">Comunicado académico</div>
+                    <div class="custom-select-option" onclick="selectOption('plantillas', 'Comunicado de ausencia')">Comunicado de ausencia</div>
+                    <div class="custom-select-option" onclick="selectOption('plantillas', 'Reunión de padres')">Reunión de padres</div>
+                    <div class="custom-select-option" onclick="selectOption('plantillas', 'Notificación de conducta')">Notificación de conducta</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="divider-dash" style="margin: 0 24px;"></div>
+
+            <!-- Enviar por email -->
+            <div class="opc-section">
+              <div class="switch-row">
+                <div class="sw-text">
+                  <span class="sw-title">Enviar también por email</span>
+                  <span class="sw-subtitle">Notifica a las familias en su correo.</span>
+                </div>
+                <div class="switch" onclick="this.classList.toggle('on')"><div class="switch-thumb"></div></div>
+              </div>
+            </div>
+
+            <div class="divider-dash" style="margin: 0 24px;"></div>
+
+            <!-- Permitir respuestas -->
+            <div class="opc-section">
+              <div class="switch-row">
+                <div class="sw-text">
+                  <span class="sw-title">Permitir respuestas</span>
+                  <span class="sw-subtitle">Las familias podrán contestar.</span>
+                </div>
+                <div class="switch" onclick="this.classList.toggle('on')"><div class="switch-thumb"></div></div>
+              </div>
+            </div>
+
+            <div class="divider-dash" style="margin: 0 24px;"></div>
+
+            <!-- Mostrar en Novedades -->
+            <div class="opc-section">
+              <div class="switch-row">
+                <div class="sw-text">
+                  <span class="sw-title">Mostrar en "Novedades"</span>
+                  <span class="sw-subtitle">Aparece destacado en el panel.</span>
+                </div>
+                <div class="switch" onclick="this.classList.toggle('on')"><div class="switch-thumb"></div></div>
+              </div>
+            </div>
+
+            <div class="divider-dash" style="margin: 0 24px;"></div>
+
+            <!-- Enviar en nombre del centro -->
+            <div class="opc-section">
+              <div class="switch-row">
+                <div class="sw-text">
+                  <span class="sw-title">Enviar en nombre del centro</span>
+                  <span class="sw-subtitle">Aparece como remitente el centro.</span>
+                </div>
+                <div class="switch" onclick="this.classList.toggle('on')"><div class="switch-thumb"></div></div>
+              </div>
+            </div>
+
+            <div class="divider-dash" style="margin: 0 24px;"></div>
+
+            <!-- Programar envío -->
+            <div class="opc-section">
+              <div style="display:flex;flex-direction:column;gap:12px;">
+                <span class="sw-title">Programar envío</span>
+                <div class="date-row">
+                  <div class="date-field">
+                    <input type="text" class="field-input filled" id="prog-date" placeholder="dd/mm/aaaa" readonly>
+                    <span class="date-field-icon">
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="1" y="2.5" width="12" height="10.5" rx="1.5"/><path d="M1 6h12M4.5 1v3M9.5 1v3"/>
+                      </svg>
+                    </span>
+                  </div>
+                  <div class="date-field">
+                    <input type="text" class="field-input" id="prog-time" placeholder="hh:mm" readonly>
+                    <span class="date-field-icon">
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="7" cy="7" r="5.5"/><path d="M7 4.5V7l2 1.5"/>
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="divider-dash" style="margin: 0 24px;"></div>
+
+            <!-- ¿Expira? -->
+            <div class="opc-section">
+              <div style="display:flex;flex-direction:column;gap:12px;padding-bottom:4px;">
+                <span class="sw-title">¿Expira?</span>
+                <div class="date-row">
+                  <div class="date-field">
+                    <input type="text" class="field-input filled" id="expira-date" placeholder="dd/mm/aaaa" readonly>
+                    <span class="date-field-icon">
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="1" y="2.5" width="12" height="10.5" rx="1.5"/><path d="M1 6h12M4.5 1v3M9.5 1v3"/>
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /scroll-area -->
+  </div><!-- /main-col -->
+</div><!-- /body-row -->
+
+<!-- ─── Footer fixo ─── -->
+<div class="footer-actions">
+  <div class="footer-inner">
+    <button class="btn btn-outline">Guardar borrador</button>
+    <button class="btn btn-solid">Enviar comunicado</button>
+  </div>
+</div>
+
+<!-- ─── Nav dots ─── -->
+<div class="nav-dots-bar">
+  <button class="nav-dot active" title="01 — Estado inicial"   onclick="goToFrame(1)"></button>
+  <button class="nav-dot"        title="02 — IA dropdown"      onclick="goToFrame(2)"></button>
+  <button class="nav-dot"        title="03 — Mensaje generado" onclick="goToFrame(3)"></button>
+  <button class="nav-dot"        title="04 — Archivos adjuntos" onclick="goToFrame(4)"></button>
+  <span class="nav-label" id="nav-label">01 / 04</span>
+</div>
+
+<!-- ─── Scripts ─── -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+<script>
+/* ─── Flatpickr ─── */
+flatpickr.localize(flatpickr.l10ns.es);
+flatpickr('#prog-date', {
+  dateFormat: 'd/m/Y',
+  defaultDate: '2026-05-21',
+  onChange(_, v) { document.getElementById('prog-date').classList.toggle('filled', !!v); }
+});
+flatpickr('#prog-time', {
+  enableTime: true, noCalendar: true, dateFormat: 'H:i', time_24hr: true,
+  onChange(_, v) { document.getElementById('prog-time').classList.toggle('filled', !!v); }
+});
+flatpickr('#expira-date', {
+  dateFormat: 'd/m/Y',
+  defaultDate: '2026-06-08',
+  onChange(_, v) { document.getElementById('expira-date').classList.toggle('filled', !!v); }
+});
+
+/* ─── Upload ─── */
+function dragOver(e) {
+  e.preventDefault();
+  document.getElementById('upload-card').style.outline = '2px solid var(--state-focus)';
+  document.getElementById('upload-zone').classList.add('drag-over');
+}
+function dragLeave(e) {
+  if (!document.getElementById('upload-card').contains(e.relatedTarget)) {
+    document.getElementById('upload-card').style.outline = '';
+    document.getElementById('upload-zone').classList.remove('drag-over');
+  }
+}
+function dropFile(e) {
+  e.preventDefault();
+  document.getElementById('upload-card').style.outline = '';
+  document.getElementById('upload-zone').classList.remove('drag-over');
+  addFiles(e.dataTransfer.files);
+}
+
+function getExtClass(name) {
+  const ext = name.split('.').pop().toLowerCase();
+  if (ext === 'pdf') return 'pdf';
+  if (['doc','docx'].includes(ext)) return 'doc';
+  if (['xls','xlsx'].includes(ext)) return 'xls';
+  if (['jpg','jpeg','png','gif','webp','svg'].includes(ext)) return 'img';
+  return 'generic';
+}
+function getExtLabel(name) {
+  return name.split('.').pop().toUpperCase().slice(0, 4);
+}
+
+function addFiles(files) {
+  const list = document.getElementById('file-list');
+  Array.from(files).forEach(f => {
+    const sz = f.size > 1048576 ? (f.size/1048576).toFixed(1)+' MB' : Math.round(f.size/1024)+' KB';
+    const extClass = getExtClass(f.name);
+    const extLabel = getExtLabel(f.name);
+    const item = document.createElement('div');
+    item.className = 'file-item';
+    item.innerHTML = `
+      <span class="file-ext ${extClass}">${extLabel}</span>
+      <span class="file-name">${f.name}</span>
+      <span class="file-size">${sz}</span>
+      <button class="file-del" onclick="removeFile(this)" title="Eliminar">×</button>
+    `;
+    list.appendChild(item);
+  });
+  refreshUploadState();
+}
+
+function removeFile(btn) {
+  btn.closest('.file-item').remove();
+  refreshUploadState();
+}
+
+function refreshUploadState() {
+  const count = document.getElementById('file-list').children.length;
+  const section = document.getElementById('files-section');
+  const zone = document.getElementById('upload-zone');
+  const badge = document.getElementById('files-count');
+  if (count > 0) {
+    section.classList.add('visible');
+    zone.classList.add('compact');
+    badge.textContent = count;
+    document.querySelector('.upload-title').textContent = 'Añadir más archivos';
+    document.querySelector('.upload-sub').textContent = '';
+  } else {
+    section.classList.remove('visible');
+    zone.classList.remove('compact');
+    badge.textContent = '0';
+    document.querySelector('.upload-title').textContent = 'Arrastra archivos aquí o haz clic para subir';
+    document.querySelector('.upload-sub').textContent = 'PDF, DOC, XLS, imágenes — máx. 100 MB por archivo';
+  }
+}
+
+/* ─── Language ─── */
+function clickLang(l) {
+  ['esp','cat','eus'].forEach(id =>
+    document.getElementById('btn-'+id).classList.toggle('selected', id === l)
+  );
+}
+
+/* ─── IA dropdown ─── */
+let current = 1;
+function clickIA() {
+  if (current === 1) { goToFrame(2); return; }
+  if (current === 2) { goToFrame(1); return; }
+  document.getElementById('ai-dropdown').classList.toggle('open');
+}
+function clickAIOpt(idx) {
+  document.getElementById('ai-dropdown').classList.remove('open');
+  if (idx === 0 && current === 2) goToFrame(3);
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('#btn-ia') && !e.target.closest('#ai-dropdown'))
+    document.getElementById('ai-dropdown').classList.remove('open');
+});
+
+/* ─── RTE toolbar toggles (visual only) ─── */
+document.querySelectorAll('.rte-toolbar .rte-btn').forEach(btn => {
+  if (!btn.closest('.rte-dropdown')) {
+    btn.addEventListener('click', () => btn.classList.toggle('active'));
+  }
+});
+
+/* ─── Prototype states ─── */
+const MSG = 'Pepito debe mantener la concentración en sus estudios y aprovechar las lecciones en clase, evitando distraerse con intereses sentimentales que afecten su rendimiento académico.';
+
+const STATES = {
+  1: { label:'01 / 04', asunto:'Pepito tiene muchas novias', mensaje:'', aiOpen:false, files:[] },
+  2: { label:'02 / 04', asunto:'Pepito tiene muchas novias', mensaje:'', aiOpen:true,  files:[] },
+  3: { label:'03 / 04', asunto:'Pepito tiene muchas novias', mensaje:MSG, aiOpen:false, files:[] },
+  4: {
+    label:'04 / 04', asunto:'Pepito tiene muchas novias', mensaje:MSG, aiOpen:false,
+    files:[
+      { name:'informe-trimestral.pdf',    size:'1.2 MB', ext:'pdf'  },
+      { name:'calendario-reuniones.docx', size:'48 KB',  ext:'doc'  },
+      { name:'foto-clase.jpg',            size:'820 KB', ext:'img'  }
+    ]
+  }
+};
+
+function goToFrame(n) {
+  const s = STATES[n]; current = n;
+  document.getElementById('asunto').value = s.asunto;
+  document.getElementById('asunto').classList.toggle('filled', !!s.asunto);
+  document.getElementById('mensaje').value = s.mensaje;
+  document.getElementById('ai-dropdown').classList.toggle('open', s.aiOpen);
+  document.getElementById('nav-label').textContent = s.label;
+
+  // files
+  const list = document.getElementById('file-list');
+  list.innerHTML = '';
+  s.files.forEach(f => {
+    const item = document.createElement('div');
+    item.className = 'file-item';
+    item.innerHTML = `
+      <span class="file-ext ${f.ext}">${f.ext.toUpperCase()}</span>
+      <span class="file-name">${f.name}</span>
+      <span class="file-size">${f.size}</span>
+      <button class="file-del" onclick="removeFile(this)">×</button>
+    `;
+    list.appendChild(item);
+  });
+  refreshUploadState();
+
+  document.querySelectorAll('.nav-dot').forEach((d,i) => d.classList.toggle('active', i+1===n));
+  document.getElementById('scroll-area').scrollTo({ top:0, behavior:'smooth' });
+}
+
+/* ─── Custom Select ─── */
+function toggleCustomSelect(id) {
+  const menu    = document.getElementById(id + '-menu');
+  const trigger = document.getElementById(id + '-trigger');
+  const isOpen  = menu.classList.contains('open');
+  document.querySelectorAll('.custom-select-menu.open').forEach(m => m.classList.remove('open'));
+  document.querySelectorAll('.custom-select-trigger.open').forEach(t => t.classList.remove('open'));
+  if (!isOpen) { menu.classList.add('open'); trigger.classList.add('open'); }
+}
+function selectOption(id, value) {
+  const valueEl  = document.getElementById(id + '-value');
+  const trigger  = document.getElementById(id + '-trigger');
+  const menu     = document.getElementById(id + '-menu');
+  valueEl.textContent = value;
+  trigger.classList.remove('open');
+  trigger.classList.add('has-value');
+  menu.classList.remove('open');
+  menu.querySelectorAll('.custom-select-option').forEach(opt => {
+    opt.classList.toggle('selected', opt.textContent.trim() === value);
+  });
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.custom-select')) {
+    document.querySelectorAll('.custom-select-menu.open').forEach(m => m.classList.remove('open'));
+    document.querySelectorAll('.custom-select-trigger.open').forEach(t => t.classList.remove('open'));
+  }
+});
+
+document.addEventListener('keydown', e => {
+  if (['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName)) return;
+  if (e.key === 'ArrowRight' && current < 4) goToFrame(current+1);
+  if (e.key === 'ArrowLeft'  && current > 1) goToFrame(current-1);
+});
+
+goToFrame(1);
+</script>
+</body>
+</html>
