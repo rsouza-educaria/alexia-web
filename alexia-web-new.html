@@ -3225,12 +3225,12 @@
             </div>
             <!-- Toggle -->
             <div style="display:flex;align-items:stretch;gap:12px;">
-              <button id="toggle-mode-a" onclick="setIaReviewMode('A')" style="flex:1;display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:16px;border-radius:var(--radius-md);border:2px solid var(--support-discovery);background:#EEF0FC;cursor:pointer;text-align:left;">
-                <span style="font-family:var(--font-ui);font-size:13px;font-weight:800;color:var(--support-discovery);">Opción 1 — Inline</span>
+              <button id="toggle-mode-a" onclick="setIaReviewMode('A')" style="flex:1;display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:16px;border-radius:var(--radius-md);border:2px solid var(--border);background:var(--bg-surface);cursor:pointer;text-align:left;" onmouseover="if(!this.classList.contains('ia-mode-active'))this.style.borderColor='var(--support-discovery)'" onmouseout="if(!this.classList.contains('ia-mode-active'))this.style.borderColor='var(--border)'">
+                <span style="font-family:var(--font-ui);font-size:13px;font-weight:800;color:var(--text-secondary);">Opción 1 — Inline</span>
                 <span style="font-family:var(--font-body);font-size:12px;color:var(--text-secondary);line-height:1.5;">La sugerencia aparece justo debajo del editor. El texto original queda visible arriba y la propuesta de IA abajo. Todo ocurre en la misma vista, sin abrir paneles.</span>
                 <span style="font-family:var(--font-ui);font-size:12px;font-weight:700;color:var(--support-discovery);margin-top:4px;">Probar →</span>
               </button>
-                    <button id="toggle-mode-b" onclick="setIaReviewMode('B')" style="flex:1;display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:16px;border-radius:var(--radius-md);border:2px solid var(--border);background:var(--bg-surface);cursor:pointer;text-align:left;">
+                    <button id="toggle-mode-b" onclick="setIaReviewMode('B')" style="flex:1;display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:16px;border-radius:var(--radius-md);border:2px solid var(--border);background:var(--bg-surface);cursor:pointer;text-align:left;" onmouseover="if(!this.classList.contains('ia-mode-active'))this.style.borderColor='var(--support-discovery)'" onmouseout="if(!this.classList.contains('ia-mode-active'))this.style.borderColor='var(--border)'">
                 <span style="font-family:var(--font-ui);font-size:13px;font-weight:800;color:var(--text-secondary);">Opción 2 — Panel lateral</span>
                 <span style="font-family:var(--font-body);font-size:12px;color:var(--text-secondary);line-height:1.5;">La sugerencia se abre en un panel lateral sobre la pantalla. El profesor ve el texto original y la propuesta de IA juntos, y decide si aplicar o descartar antes de volver al editor.</span>
                 <span style="font-family:var(--font-ui);font-size:12px;font-weight:700;color:var(--text-secondary);margin-top:4px;">Probar →</span>
@@ -5124,16 +5124,22 @@
 
   function setIaReviewMode(mode) {
     IA_REVIEW_MODE = mode;
-    // Update toggle button styles on page-ia
     var btnA = document.getElementById('toggle-mode-a');
     var btnB = document.getElementById('toggle-mode-b');
     if (btnA && btnB) {
-      btnA.style.borderColor = mode === 'A' ? 'var(--support-discovery)' : 'var(--border)';
-      btnA.style.background = mode === 'A' ? '#EEF0FC' : 'var(--bg-surface)';
-      btnA.querySelector('span').style.color = mode === 'A' ? 'var(--support-discovery)' : 'var(--text-secondary)';
-      btnB.style.borderColor = mode === 'B' ? 'var(--support-discovery)' : 'var(--border)';
-      btnB.style.background = mode === 'B' ? '#EEF0FC' : 'var(--bg-surface)';
-      btnB.querySelector('span').style.color = mode === 'B' ? 'var(--support-discovery)' : 'var(--text-secondary)';
+      [btnA, btnB].forEach(function(b) {
+        b.classList.remove('ia-mode-active');
+        b.style.borderColor = 'var(--border)';
+        b.style.background = 'var(--bg-surface)';
+        b.querySelector('span').style.color = 'var(--text-secondary)';
+        b.querySelectorAll('span')[1].style.color = 'var(--text-muted)';
+      });
+      var active = mode === 'A' ? btnA : btnB;
+      active.classList.add('ia-mode-active');
+      active.style.borderColor = 'var(--support-discovery)';
+      active.style.background = '#EEF0FC';
+      active.querySelector('span').style.color = 'var(--support-discovery)';
+      active.querySelectorAll('span')[1].style.color = 'var(--support-discovery)';
     }
     // Reset any open reviews
     iaDiscardInline();
