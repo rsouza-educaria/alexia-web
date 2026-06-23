@@ -92,6 +92,18 @@
   }
   .nav-item[data-tooltip]:hover::after { opacity: 1; }
 
+  /* ── BUTTONS DS ─────────────────────────────────────────────────────── */
+  .btn-secondary {
+    display: inline-flex; align-items: center; justify-content: center;
+    height: 40px; padding: 0 16px;
+    background: #FFFFFF; border: 1px solid #AECFE6;
+    border-radius: var(--radius-sm);
+    color: #333333; font-size: 14px; font-weight: 700; font-family: var(--font-ui);
+    cursor: pointer; white-space: nowrap; line-height: 1;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .btn-secondary:hover { color: #285A92; border-color: #285A92; }
+
   /* ── CONTENT (container de page-views) ─────────────────────────────── */
   .content { flex: 1; overflow: hidden; display: flex; flex-direction: column; background: var(--blue-50); }
   .content p { font-size: 14px; font-weight: 500; color: var(--text-muted); font-family: var(--font-body); }
@@ -453,7 +465,7 @@
     pointer-events: none;
   }
   .btn-ia.loading::before { animation: ia-spin 0.5s linear infinite; }
-  /* WebParts circular variant — outline follows circle */
+  /* Variante WebParts — outline circular */
   .btn-ia[style*="border-radius:50%"]::before,
   .btn-ia[style*="border-radius: 50%"]::before { border-radius: 50%; }
 
@@ -570,6 +582,9 @@
     margin-bottom: 12px; line-height: 1.4;
   }
   .compose-info-banner svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2; fill: none; flex-shrink: 0; margin-top: 1px; }
+  .compose-info-banner--warning {
+    background: var(--yellow-50, #FFFBEB); border-color: var(--yellow-600, #EBB851); color: var(--yellow-700, #CFA247);
+  }
   .compose-lang-row { display: flex; align-items: center; justify-content: space-between; }
   .compose-lang-btns { display: flex; gap: 4px; }
   .compose-lang-btn {
@@ -773,6 +788,7 @@
   }
   .wp-btn:hover { opacity: 0.85; transform: scale(1.08); }
   .wp-btn.active { outline: 2px solid var(--action-primary); outline-offset: 2px; }
+  .btn-ia.wp-btn.active { outline: none; }
   .wp-btn svg { width: 18px; height: 18px; stroke-width: 1.5; fill: none; }
   .wp-btn .wp-badge { position: absolute; top: -3px; right: -3px; min-width: 16px; height: 16px; background: var(--support-danger); border-radius: 8px; font-size: 10px; font-weight: 700; color: #fff; display: flex; align-items: center; justify-content: center; padding: 0 3px; font-family: var(--font-ui); }
   .wp-spacer { flex: 1; margin-bottom: 0; }
@@ -795,7 +811,8 @@
     background: var(--yellow-50); border: 1px solid rgba(51,51,51,0.1);
     display: flex; align-items: center; justify-content: center;
   }
-  .ph-icon svg { width: 20px; height: 20px; stroke: var(--yellow-700); stroke-width: 2; fill: none; }
+  .ph-icon[style*="background"] { border: 1px solid rgba(51,51,51,0.06); }
+  .ph-icon svg { width: 20px; height: 20px; }
   .ph-bar { width: 4px; height: 32px; background: var(--yellow-700); border-radius: 2px; flex-shrink: 0; }
   .ph-titles { flex: 1; min-width: 0; }
   .ph-title { display: block; font-size: 16px; font-weight: 700; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: var(--font-ui); }
@@ -1092,6 +1109,13 @@
   .ph-icon-red { width: 40px; height: 40px; flex-shrink: 0; border-radius: var(--radius-md); background: #FDECEA; border: 1px solid rgba(51,51,51,0.1); display: flex; align-items: center; justify-content: center; }
   .ph-icon-red svg { width: 20px; height: 20px; stroke: #C62828; stroke-width: 2; fill: none; }
   .ph-bar-red { width: 4px; height: 32px; background: #C62828; border-radius: 2px; flex-shrink: 0; }
+  .ph-bar-blue     { width: 4px; height: 32px; background: #54A0D2; border-radius: 2px; flex-shrink: 0; }
+  .ph-bar-comms    { width: 4px; height: 32px; background: #6F99D3; border-radius: 2px; flex-shrink: 0; }
+  .ph-bar-lilac    { width: 4px; height: 32px; background: #95A2D8; border-radius: 2px; flex-shrink: 0; }
+  .ph-bar-orange   { width: 4px; height: 32px; background: #D89E64; border-radius: 2px; flex-shrink: 0; }
+  .ph-bar-skyblue  { width: 4px; height: 32px; background: #75A1DF; border-radius: 2px; flex-shrink: 0; }
+  .ph-bar-purple   { width: 4px; height: 32px; background: #B378BA; border-radius: 2px; flex-shrink: 0; }
+  .ph-bar-ia       { width: 4px; height: 32px; background: #6352C7; border-radius: 2px; flex-shrink: 0; }
 
   .right-panel-3 {
     position: fixed; top: 0; right: 0; bottom: 0; width: 0; z-index: 200;
@@ -1539,7 +1563,7 @@
   .right-panel-ia .panel-header {
     display: flex; align-items: center; gap: 10px;
     padding: 12px 16px; flex-shrink: 0;
-    border-bottom: 1px solid var(--border); background: #EEF0FC;
+    border-bottom: 1px solid var(--border);
   }
   .right-panel-ia .panel-body {
     flex: 1; overflow-y: auto; padding: 20px 16px;
@@ -1666,7 +1690,7 @@
       <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
     </div>
     <!-- Filiación -->
-    <div class="nav-item" data-tooltip="Filiación">
+    <div class="nav-item" data-tooltip="Filiación" onclick="showPage('filiacion')">
       <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
     </div>
     <!-- Estructura educativa -->
@@ -1678,7 +1702,7 @@
       <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
     </div>
     <!-- Ciclos Formativos -->
-    <div class="nav-item" data-tooltip="Ciclos Formativos">
+    <div class="nav-item" data-tooltip="Ciclos Formativos" onclick="showPage('ciclos')">
       <svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
     </div>
     <!-- Comunicación -->
@@ -1686,41 +1710,41 @@
       <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
     </div>
     <!-- Facturación -->
-    <div class="nav-item" data-tooltip="Facturación">
+    <div class="nav-item" data-tooltip="Facturación" onclick="showPage('facturacion')">
       <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
     </div>
     <!-- Ventas -->
-    <div class="nav-item" data-tooltip="Ventas">
+    <div class="nav-item" data-tooltip="Ventas" onclick="showPage('ventas')">
       <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
     </div>
     <!-- Activid. y Servicios -->
-    <div class="nav-item" data-tooltip="Activid. y Servicios">
+    <div class="nav-item" data-tooltip="Activid. y Servicios" onclick="showPage('actividades')">
       <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
     </div>
     <!-- Utilidades -->
-    <div class="nav-item" data-tooltip="Utilidades">
+    <div class="nav-item" data-tooltip="Utilidades" onclick="showPage('utilidades')">
       <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
     </div>
     <!-- Cuadro Mando -->
-    <div class="nav-item" data-tooltip="Cuadro Mando">
+    <div class="nav-item" data-tooltip="Cuadro Mando" onclick="showPage('cuadromando')">
       <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
     </div>
     <!-- Listados -->
-    <div class="nav-item" data-tooltip="Listados">
+    <div class="nav-item" data-tooltip="Listados" onclick="showPage('listados')">
       <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
     </div>
     <div class="nav-spacer"></div>
     <div class="nav-bottom">
       <!-- Administración -->
-      <div class="nav-item" data-tooltip="Administración">
+      <div class="nav-item" data-tooltip="Administración" onclick="showPage('administracion')">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       </div>
       <!-- Firma digital -->
-      <div class="nav-item" data-tooltip="Firma digital">
+      <div class="nav-item" data-tooltip="Firma digital" onclick="showPage('firma')">
         <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
       </div>
       <!-- Salir -->
-      <div class="nav-item" data-tooltip="Salir">
+      <div class="nav-item" data-tooltip="Salir" onclick="showPage('salir')">
         <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
       </div>
     </div>
@@ -1740,9 +1764,9 @@
     <div class="page-view" id="page-cuaderno">
       <div id="cuaderno-asistente" style="flex:1;display:flex;align-items:flex-start;justify-content:center;background:var(--bg-surface);overflow:auto;padding:48px 24px;">
 
-        <!-- STEP 1: Recomendación proactiva -->
+        <!-- ═══ STEP 1: Punto de partida ═══ -->
         <div id="cua-step-1" class="cua-step" style="width:100%;max-width:560px;">
-          <div style="margin-bottom:32px;">
+          <div style="margin-bottom:28px;">
             <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);font-family:var(--font-ui);margin-bottom:6px;">Cuaderno del Profesor</div>
             <div style="font-size:22px;font-weight:800;color:var(--text-primary);font-family:var(--font-ui);line-height:1.2;margin-bottom:8px;">Nuevo cuaderno</div>
             <div style="font-size:14px;color:var(--text-secondary);font-family:var(--font-body);margin-bottom:16px;">Lengua Castellana · 1º EB-A · curso 2025-26</div>
@@ -1752,7 +1776,7 @@
           </div>
 
           <!-- Tarjeta recomendada -->
-          <div id="cua-card-rec" onclick="cuaSelectOrigen('rec')" style="border:2px solid var(--action-primary);border-radius:var(--radius-md);background:#fff;padding:20px;cursor:pointer;margin-bottom:12px;transition:box-shadow 0.15s;position:relative;" onmouseover="this.style.boxShadow='0 4px 16px rgba(10,82,159,0.12)'" onmouseout="this.style.boxShadow='none'">
+          <div id="cua-card-rec" onclick="cuaUsarRecomendado()" style="border:2px solid var(--action-primary);border-radius:var(--radius-md);background:#fff;padding:20px;cursor:pointer;margin-bottom:12px;transition:box-shadow 0.15s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(10,82,159,0.12)'" onmouseout="this.style.boxShadow='none'">
             <div style="display:flex;align-items:flex-start;gap:14px;">
               <div style="width:40px;height:40px;border-radius:var(--radius-sm);background:var(--blue-100);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--action-primary)" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
@@ -1769,137 +1793,235 @@
                   <span style="font-size:12px;color:var(--text-secondary);font-family:var(--font-body);background:var(--grey-300);padding:3px 8px;border-radius:4px;">Incidencias</span>
                 </div>
               </div>
+              <svg style="flex-shrink:0;margin-top:2px;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--action-primary)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
           </div>
 
-          <!-- Otras opciones colapsadas -->
+          <!-- Otras opciones -->
           <div style="margin-bottom:24px;">
             <div style="font-size:12px;font-weight:600;color:var(--text-muted);font-family:var(--font-ui);margin-bottom:8px;">O elige otro punto de partida</div>
             <div style="display:flex;flex-direction:column;gap:6px;">
 
               <div onclick="cuaSelectOrigen('plantilla')" style="border:1px solid var(--border);border-radius:var(--radius-md);background:#fff;padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:border-color 0.15s,background 0.15s;" onmouseover="this.style.borderColor='var(--action-primary)';this.style.background='var(--blue-50)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='#fff'">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-                <div>
-                  <div style="font-size:13px;font-weight:600;color:var(--text-primary);font-family:var(--font-ui);">Plantilla del centro</div>
-                  <div style="font-size:12px;color:var(--text-muted);font-family:var(--font-body);">Lengua Castellana · oficial del departamento</div>
+                <div style="width:32px;height:32px;border-radius:var(--radius-sm);background:var(--grey-200);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
                 </div>
-                <svg style="margin-left:auto;flex-shrink:0;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                <div style="flex:1;">
+                  <div style="font-size:13px;font-weight:600;color:var(--text-primary);font-family:var(--font-ui);">Plantilla del centro</div>
+                  <div style="font-size:12px;color:var(--text-muted);font-family:var(--font-body);">Parte de una plantilla oficial del departamento</div>
+                </div>
+                <svg style="flex-shrink:0;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
               </div>
 
               <div onclick="cuaSelectOrigen('otro-grupo')" style="border:1px solid var(--border);border-radius:var(--radius-md);background:#fff;padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:border-color 0.15s,background 0.15s;" onmouseover="this.style.borderColor='var(--action-primary)';this.style.background='var(--blue-50)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='#fff'">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                <div>
-                  <div style="font-size:13px;font-weight:600;color:var(--text-primary);font-family:var(--font-ui);">Cuaderno de otro grupo</div>
-                  <div style="font-size:12px;color:var(--text-muted);font-family:var(--font-body);">1º EB-B · 2024-25</div>
+                <div style="width:32px;height:32px;border-radius:var(--radius-sm);background:var(--grey-200);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                 </div>
-                <svg style="margin-left:auto;flex-shrink:0;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                <div style="flex:1;">
+                  <div style="font-size:13px;font-weight:600;color:var(--text-primary);font-family:var(--font-ui);">Cuaderno de otro grupo</div>
+                  <div style="font-size:12px;color:var(--text-muted);font-family:var(--font-body);">Copia la estructura de otro grupo tuyo</div>
+                </div>
+                <svg style="flex-shrink:0;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
               </div>
 
               <div onclick="cuaSelectOrigen('cero')" style="border:1px solid var(--border);border-radius:var(--radius-md);background:#fff;padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:border-color 0.15s,background 0.15s;" onmouseover="this.style.borderColor='var(--action-primary)';this.style.background='var(--blue-50)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='#fff'">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                <div>
-                  <div style="font-size:13px;font-weight:600;color:var(--text-primary);font-family:var(--font-ui);">Empezar desde cero</div>
-                  <div style="font-size:12px;color:var(--text-muted);font-family:var(--font-body);">Cuaderno en blanco</div>
+                <div style="width:32px;height:32px;border-radius:var(--radius-sm);background:var(--grey-200);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                 </div>
-                <svg style="margin-left:auto;flex-shrink:0;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                <div style="flex:1;">
+                  <div style="font-size:13px;font-weight:600;color:var(--text-primary);font-family:var(--font-ui);">Empezar desde cero</div>
+                  <div style="font-size:12px;color:var(--text-muted);font-family:var(--font-body);">Cuaderno en blanco, lo configuras tú</div>
+                </div>
+                <svg style="flex-shrink:0;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
               </div>
 
             </div>
           </div>
 
-          <!-- CTA principal -->
-          <div style="display:flex;align-items:center;gap:12px;">
-            <button onclick="cuaUsarRecomendado()" style="background:var(--action-primary);color:#fff;border:none;border-radius:var(--radius-sm);height:40px;padding:0 20px;font-size:14px;font-weight:700;font-family:var(--font-ui);cursor:pointer;display:flex;align-items:center;gap:8px;transition:background 0.15s;" onmouseover="this.style.background='var(--action-hover)'" onmouseout="this.style.background='var(--action-primary)'">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              Usar este cuaderno
-            </button>
-            <button onclick="showPage('home')" style="background:none;border:1px solid var(--border);border-radius:var(--radius-sm);height:40px;padding:0 16px;font-size:13px;font-weight:600;font-family:var(--font-ui);color:var(--text-secondary);cursor:pointer;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--grey-600)'" onmouseout="this.style.borderColor='var(--border)'">Cancelar</button>
-          </div>
+          <button onclick="showPage('home')" style="background:none;border:none;cursor:pointer;font-size:13px;font-weight:600;font-family:var(--font-ui);color:var(--text-muted);padding:0;transition:color 0.15s;" onmouseover="this.style.color='var(--text-secondary)'" onmouseout="this.style.color='var(--text-muted)'">Cancelar</button>
         </div>
 
-        <!-- STEP 2: Revisar detalles -->
-        <div id="cua-step-2" class="cua-step" style="display:none;width:100%;max-width:560px;">
-          <div style="margin-bottom:32px;">
-            <button onclick="cuaBack(1)" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:6px;color:var(--text-muted);font-size:13px;font-family:var(--font-ui);font-weight:600;padding:0;margin-bottom:16px;transition:color 0.15s;" onmouseover="this.style.color='var(--action-primary)'" onmouseout="this.style.color='var(--text-muted)'">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-              Volver
-            </button>
-            <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);font-family:var(--font-ui);margin-bottom:6px;">Paso 2 de 2</div>
-            <div style="font-size:22px;font-weight:800;color:var(--text-primary);font-family:var(--font-ui);line-height:1.2;margin-bottom:8px;">Revisa y crea</div>
-            <div style="font-size:14px;color:var(--text-secondary);font-family:var(--font-body);" id="cua-step2-subtitle">Copiando desde tu cuaderno 2024-25</div>
+        <!-- ═══ STEP 1.5: Selector de plantilla ═══ -->
+        <div id="cua-step-1b" class="cua-step" style="display:none;width:100%;max-width:560px;">
+          <button onclick="cuaBack(1)" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:6px;color:var(--text-muted);font-size:13px;font-family:var(--font-ui);font-weight:600;padding:0;margin-bottom:24px;transition:color 0.15s;" onmouseover="this.style.color='var(--action-primary)'" onmouseout="this.style.color='var(--text-muted)'">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+            Volver
+          </button>
+          <div style="margin-bottom:28px;">
+            <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);font-family:var(--font-ui);margin-bottom:6px;">Plantilla del centro</div>
+            <div style="font-size:22px;font-weight:800;color:var(--text-primary);font-family:var(--font-ui);line-height:1.2;margin-bottom:8px;">¿Qué plantilla usamos?</div>
+            <div style="font-size:14px;color:var(--text-secondary);font-family:var(--font-body);">Plantillas disponibles para Lengua Castellana</div>
           </div>
 
-          <!-- Nombre -->
-          <div style="margin-bottom:20px;">
-            <label style="display:block;font-size:12px;font-weight:700;color:var(--text-secondary);font-family:var(--font-ui);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.06em;">Nombre del cuaderno</label>
-            <input id="cua-nombre" type="text" value="Lengua Castellana 1º EB-A" style="width:100%;height:40px;border:1px solid var(--border);border-radius:var(--radius-sm);padding:0 12px;font-size:14px;font-family:var(--font-body);color:var(--text-primary);outline:none;transition:border-color 0.15s;" onfocus="this.style.borderColor='var(--action-primary)'" onblur="this.style.borderColor='var(--border)'">
-          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:28px;">
 
-          <!-- Qué copiar -->
-          <div id="cua-copiar-section" style="margin-bottom:20px;">
-            <div style="font-size:12px;font-weight:700;color:var(--text-secondary);font-family:var(--font-ui);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.06em;">Qué incluir</div>
-            <div style="display:flex;flex-direction:column;gap:8px;">
-              <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:12px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fff;transition:background 0.15s;" onmouseover="this.style.background='var(--blue-50)'" onmouseout="this.style.background='#fff'">
-                <input type="checkbox" checked style="width:16px;height:16px;accent-color:var(--action-primary);cursor:pointer;">
-                <div>
-                  <div style="font-size:13px;font-weight:600;color:var(--text-primary);font-family:var(--font-ui);">Ítems de evaluación reglada</div>
-                  <div style="font-size:12px;color:var(--text-muted);font-family:var(--font-body);">Criterios y competencias del centro</div>
-                </div>
-              </label>
-              <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:12px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fff;transition:background 0.15s;" onmouseover="this.style.background='var(--blue-50)'" onmouseout="this.style.background='#fff'">
-                <input type="checkbox" checked style="width:16px;height:16px;accent-color:var(--action-primary);cursor:pointer;">
-                <div>
-                  <div style="font-size:13px;font-weight:600;color:var(--text-primary);font-family:var(--font-ui);">Notas y observaciones finales</div>
-                  <div style="font-size:12px;color:var(--text-muted);font-family:var(--font-body);">Columnas de nota final por evaluación</div>
-                </div>
-              </label>
-              <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:12px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fff;transition:background 0.15s;" onmouseover="this.style.background='var(--blue-50)'" onmouseout="this.style.background='#fff'">
-                <input type="checkbox" style="width:16px;height:16px;accent-color:var(--action-primary);cursor:pointer;">
-                <div>
-                  <div style="font-size:13px;font-weight:600;color:var(--text-primary);font-family:var(--font-ui);">Incidencias</div>
-                  <div style="font-size:12px;color:var(--text-muted);font-family:var(--font-body);">Columna de registro de incidencias</div>
-                </div>
-              </label>
-              <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:12px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fff;transition:background 0.15s;" onmouseover="this.style.background='var(--blue-50)'" onmouseout="this.style.background='#fff'">
-                <input type="checkbox" style="width:16px;height:16px;accent-color:var(--action-primary);cursor:pointer;">
-                <div>
-                  <div style="font-size:13px;font-weight:600;color:var(--text-primary);font-family:var(--font-ui);">Actividades y tareas</div>
-                  <div style="font-size:12px;color:var(--text-muted);font-family:var(--font-body);">Copia las actividades del cuaderno anterior</div>
-                </div>
-              </label>
+            <div onclick="cuaSelectPlantilla(this, 'Lengua Castellana LOMLOE 2025')" style="border:1px solid var(--border);border-radius:var(--radius-md);background:#fff;padding:16px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:border-color 0.15s,background 0.15s;" onmouseover="this.style.borderColor='var(--action-primary)';this.style.background='var(--blue-50)'" onmouseout="if(!this.classList.contains('plantilla-selected')){this.style.borderColor='var(--border)';this.style.background='#fff'}">
+              <div style="width:36px;height:36px;border-radius:var(--radius-sm);background:var(--blue-100);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--action-primary)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+              </div>
+              <div style="flex:1;">
+                <div style="font-size:13px;font-weight:700;color:var(--text-primary);font-family:var(--font-ui);margin-bottom:2px;">Lengua Castellana LOMLOE 2025</div>
+                <div style="font-size:12px;color:var(--text-muted);font-family:var(--font-body);">Dpto. de Lengua · 24 ítems · actualizada sep. 2025</div>
+              </div>
+              <div class="plantilla-check" style="display:none;width:20px;height:20px;border-radius:50%;background:var(--action-primary);align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
             </div>
+
+            <div onclick="cuaSelectPlantilla(this, 'Lengua Castellana Básica')" style="border:1px solid var(--border);border-radius:var(--radius-md);background:#fff;padding:16px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:border-color 0.15s,background 0.15s;" onmouseover="this.style.borderColor='var(--action-primary)';this.style.background='var(--blue-50)'" onmouseout="if(!this.classList.contains('plantilla-selected')){this.style.borderColor='var(--border)';this.style.background='#fff'}">
+              <div style="width:36px;height:36px;border-radius:var(--radius-sm);background:var(--blue-100);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--action-primary)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+              </div>
+              <div style="flex:1;">
+                <div style="font-size:13px;font-weight:700;color:var(--text-primary);font-family:var(--font-ui);margin-bottom:2px;">Lengua Castellana Básica</div>
+                <div style="font-size:12px;color:var(--text-muted);font-family:var(--font-body);">Dpto. de Lengua · 12 ítems · versión simplificada</div>
+              </div>
+              <div class="plantilla-check" style="display:none;width:20px;height:20px;border-radius:50%;background:var(--action-primary);align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+            </div>
+
+            <div onclick="cuaSelectPlantilla(this, 'Plantilla compartida por Manu García')" style="border:1px solid var(--border);border-radius:var(--radius-md);background:#fff;padding:16px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:border-color 0.15s,background 0.15s;" onmouseover="this.style.borderColor='var(--action-primary)';this.style.background='var(--blue-50)'" onmouseout="if(!this.classList.contains('plantilla-selected')){this.style.borderColor='var(--border)';this.style.background='#fff'}">
+              <div style="width:36px;height:36px;border-radius:50%;background:var(--grey-300);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:700;color:var(--text-secondary);font-family:var(--font-ui);">MG</div>
+              <div style="flex:1;">
+                <div style="font-size:13px;font-weight:700;color:var(--text-primary);font-family:var(--font-ui);margin-bottom:2px;">Compartida por Manu García</div>
+                <div style="font-size:12px;color:var(--text-muted);font-family:var(--font-body);">1º EB · 18 ítems · compartida contigo</div>
+              </div>
+              <div class="plantilla-check" style="display:none;width:20px;height:20px;border-radius:50%;background:var(--action-primary);align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+            </div>
+
           </div>
 
-          <!-- Acción bar -->
           <div style="display:flex;align-items:center;gap:12px;">
-            <button onclick="cuaCrear()" style="background:var(--action-primary);color:#fff;border:none;border-radius:var(--radius-sm);height:40px;padding:0 20px;font-size:14px;font-weight:700;font-family:var(--font-ui);cursor:pointer;display:flex;align-items:center;gap:8px;transition:background 0.15s;" onmouseover="this.style.background='var(--action-hover)'" onmouseout="this.style.background='var(--action-primary)'">
+            <button id="cua-btn-usar-plantilla" onclick="cuaUsarPlantilla()" disabled style="background:var(--grey-400);color:#fff;border:none;border-radius:var(--radius-sm);height:40px;padding:0 20px;font-size:14px;font-weight:700;font-family:var(--font-ui);cursor:not-allowed;display:flex;align-items:center;gap:8px;transition:background 0.15s;">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              Crear cuaderno
+              Usar esta plantilla
             </button>
             <button onclick="cuaBack(1)" style="background:none;border:1px solid var(--border);border-radius:var(--radius-sm);height:40px;padding:0 16px;font-size:13px;font-weight:600;font-family:var(--font-ui);color:var(--text-secondary);cursor:pointer;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--grey-600)'" onmouseout="this.style.borderColor='var(--border)'">Atrás</button>
           </div>
         </div>
 
-        <!-- STEP 3: Éxito -->
-        <div id="cua-step-3" class="cua-step" style="display:none;width:100%;max-width:560px;text-align:center;">
-          <div style="width:64px;height:64px;border-radius:50%;background:var(--green-50);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--support-positive)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        <!-- ═══ STEP 2: Revisar y configurar ═══ -->
+        <div id="cua-step-2" class="cua-step" style="display:none;width:100%;max-width:560px;">
+          <button onclick="cuaBackFromStep2()" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:6px;color:var(--text-muted);font-size:13px;font-family:var(--font-ui);font-weight:600;padding:0;margin-bottom:24px;transition:color 0.15s;" onmouseover="this.style.color='var(--action-primary)'" onmouseout="this.style.color='var(--text-muted)'">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+            Volver
+          </button>
+          <div style="margin-bottom:28px;">
+            <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);font-family:var(--font-ui);margin-bottom:6px;">Último paso</div>
+            <div style="font-size:22px;font-weight:800;color:var(--text-primary);font-family:var(--font-ui);line-height:1.2;margin-bottom:8px;">Revisa y crea</div>
+            <div style="font-size:14px;color:var(--text-secondary);font-family:var(--font-body);" id="cua-step2-subtitle">Copiando desde tu cuaderno 2024-25</div>
           </div>
-          <div style="font-size:22px;font-weight:800;color:var(--text-primary);font-family:var(--font-ui);margin-bottom:8px;">¡Cuaderno creado!</div>
-          <div style="font-size:14px;color:var(--text-secondary);font-family:var(--font-body);margin-bottom:32px;" id="cua-success-msg">Lengua Castellana 1º EB-A · listo para usar</div>
-          <div style="display:flex;align-items:center;justify-content:center;gap:12px;">
-            <button style="background:var(--action-primary);color:#fff;border:none;border-radius:var(--radius-sm);height:40px;padding:0 20px;font-size:14px;font-weight:700;font-family:var(--font-ui);cursor:pointer;display:flex;align-items:center;gap:8px;" onmouseover="this.style.background='var(--action-hover)'" onmouseout="this.style.background='var(--action-primary)'">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-              Abrir cuaderno
+
+          <!-- Nombre -->
+          <div style="margin-bottom:16px;">
+            <label style="display:block;font-size:11px;font-weight:700;color:var(--text-secondary);font-family:var(--font-ui);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.06em;">Nombre <span style="color:var(--support-danger)">*</span></label>
+            <input id="cua-nombre" type="text" value="Lengua Castellana 1º EB-A" style="width:100%;height:40px;border:1px solid var(--border);border-radius:var(--radius-sm);padding:0 12px;font-size:14px;font-family:var(--font-body);color:var(--text-primary);outline:none;transition:border-color 0.15s;box-sizing:border-box;" onfocus="this.style.borderColor='var(--action-primary)'" onblur="this.style.borderColor='var(--border)'">
+          </div>
+
+          <!-- Descripción -->
+          <div style="margin-bottom:20px;">
+            <label style="display:block;font-size:11px;font-weight:700;color:var(--text-secondary);font-family:var(--font-ui);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.06em;">Descripción</label>
+            <textarea id="cua-desc" rows="2" placeholder="Opcional — notas para ti sobre este cuaderno" style="width:100%;border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;font-size:13px;font-family:var(--font-body);color:var(--text-primary);outline:none;resize:none;transition:border-color 0.15s;box-sizing:border-box;line-height:1.5;" onfocus="this.style.borderColor='var(--action-primary)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+          </div>
+
+          <!-- Qué incluir — toggles dinámicos -->
+          <div id="cua-incluir-section" style="margin-bottom:20px;">
+            <div style="font-size:11px;font-weight:700;color:var(--text-secondary);font-family:var(--font-ui);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.06em;" id="cua-incluir-titulo">Qué incluir</div>
+            <div id="cua-incluir-opciones" style="display:flex;flex-direction:column;gap:2px;border:1px solid var(--border);border-radius:var(--radius-md);overflow:hidden;"></div>
+          </div>
+
+          <!-- Color -->
+          <div style="margin-bottom:20px;">
+            <div style="font-size:11px;font-weight:700;color:var(--text-secondary);font-family:var(--font-ui);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.06em;">Color del cuaderno</div>
+            <div id="cua-color-picker" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
+          </div>
+
+          <!-- Guardar como plantilla -->
+          <div style="margin-bottom:24px;padding:14px 16px;border:1px solid var(--border);border-radius:var(--radius-md);background:#fff;display:flex;align-items:center;justify-content:space-between;">
+            <div>
+              <div style="font-size:13px;font-weight:600;color:var(--text-primary);font-family:var(--font-ui);margin-bottom:2px;">Guardar como plantilla</div>
+              <div style="font-size:12px;color:var(--text-muted);font-family:var(--font-body);">Podrás reutilizarlo en otros grupos o compartirlo</div>
+            </div>
+            <label style="position:relative;display:inline-flex;align-items:center;cursor:pointer;flex-shrink:0;margin-left:16px;">
+              <input type="checkbox" id="cua-plantilla-toggle" style="opacity:0;width:0;height:0;position:absolute;">
+              <span id="cua-plantilla-track" onclick="cuaTogglePlantilla()" style="display:block;width:40px;height:22px;background:var(--grey-500);border-radius:11px;position:relative;cursor:pointer;transition:background 0.2s;">
+                <span id="cua-plantilla-thumb" style="position:absolute;top:3px;left:3px;width:16px;height:16px;background:#fff;border-radius:50%;transition:transform 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.2);"></span>
+              </span>
+            </label>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;">
+            <button onclick="cuaCrear()" style="background:var(--action-primary);color:#fff;border:none;border-radius:var(--radius-sm);height:40px;padding:0 20px;font-size:14px;font-weight:700;font-family:var(--font-ui);cursor:pointer;display:flex;align-items:center;gap:8px;transition:background 0.15s;" onmouseover="this.style.background='var(--action-hover)'" onmouseout="this.style.background='var(--action-primary)'">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              Crear cuaderno
             </button>
-            <button onclick="cuaReset()" style="background:none;border:1px solid var(--border);border-radius:var(--radius-sm);height:40px;padding:0 16px;font-size:13px;font-weight:600;font-family:var(--font-ui);color:var(--text-secondary);cursor:pointer;" onmouseover="this.style.borderColor='var(--grey-600)'" onmouseout="this.style.borderColor='var(--border)'">Crear otro</button>
+            <button onclick="cuaBackFromStep2()" style="background:none;border:1px solid var(--border);border-radius:var(--radius-sm);height:40px;padding:0 16px;font-size:13px;font-weight:600;font-family:var(--font-ui);color:var(--text-secondary);cursor:pointer;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--grey-600)'" onmouseout="this.style.borderColor='var(--border)'">Atrás</button>
           </div>
+        </div>
+
+        <!-- ═══ STEP 3: Éxito + otras asignaturas ═══ -->
+        <div id="cua-step-3" class="cua-step" style="display:none;width:100%;max-width:560px;">
+
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:28px;padding:20px;background:#fff;border-radius:var(--radius-md);border:1px solid var(--border);">
+            <div style="width:48px;height:48px;border-radius:50%;background:var(--green-50);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--support-positive)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div>
+              <div style="font-size:16px;font-weight:800;color:var(--text-primary);font-family:var(--font-ui);margin-bottom:2px;">¡Cuaderno creado!</div>
+              <div style="font-size:13px;color:var(--text-secondary);font-family:var(--font-body);" id="cua-success-msg">Lengua Castellana 1º EB-A · listo para usar</div>
+            </div>
+          </div>
+
+          <div style="margin-bottom:24px;">
+            <div style="font-size:14px;font-weight:700;color:var(--text-primary);font-family:var(--font-ui);margin-bottom:4px;">¿Lo aplicamos a otras asignaturas?</div>
+            <div style="font-size:13px;color:var(--text-secondary);font-family:var(--font-body);margin-bottom:14px;">Selecciona los grupos y crea el mismo cuaderno para todos de una vez.</div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+
+              <label onclick="cuaOtrasChange()" style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:12px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fff;transition:background 0.15s,border-color 0.15s;" onmouseover="this.style.background='var(--blue-50)';this.style.borderColor='var(--action-primary)'" onmouseout="this.style.background='#fff';this.style.borderColor='var(--border)'">
+                <input type="checkbox" class="cua-otras-check" style="width:16px;height:16px;accent-color:var(--action-primary);cursor:pointer;flex-shrink:0;">
+                <div>
+                  <div style="font-size:13px;font-weight:600;color:var(--text-primary);font-family:var(--font-ui);">Lengua Castellana · 1º EB-B</div>
+                  <div style="font-size:12px;color:var(--text-muted);font-family:var(--font-body);">Sin cuaderno creado este curso</div>
+                </div>
+              </label>
+
+              <label onclick="cuaOtrasChange()" style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:12px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fff;transition:background 0.15s,border-color 0.15s;" onmouseover="this.style.background='var(--blue-50)';this.style.borderColor='var(--action-primary)'" onmouseout="this.style.background='#fff';this.style.borderColor='var(--border)'">
+                <input type="checkbox" class="cua-otras-check" style="width:16px;height:16px;accent-color:var(--action-primary);cursor:pointer;flex-shrink:0;">
+                <div>
+                  <div style="font-size:13px;font-weight:600;color:var(--text-primary);font-family:var(--font-ui);">Lengua Castellana · 2º EB-A</div>
+                  <div style="font-size:12px;color:var(--text-muted);font-family:var(--font-body);">Sin cuaderno creado este curso</div>
+                </div>
+              </label>
+
+              <label onclick="cuaOtrasChange()" style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:12px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fff;transition:background 0.15s,border-color 0.15s;" onmouseover="this.style.background='var(--blue-50)';this.style.borderColor='var(--action-primary)'" onmouseout="this.style.background='#fff';this.style.borderColor='var(--border)'">
+                <input type="checkbox" class="cua-otras-check" style="width:16px;height:16px;accent-color:var(--action-primary);cursor:pointer;flex-shrink:0;">
+                <div>
+                  <div style="font-size:13px;font-weight:600;color:var(--text-primary);font-family:var(--font-ui);">Literatura Universal · 2º Bach-A</div>
+                  <div style="font-size:12px;color:var(--text-muted);font-family:var(--font-body);">Sin cuaderno creado este curso</div>
+                </div>
+              </label>
+
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;">
+            <button id="cua-btn-primary" onclick="cuaBtnPrimary()" style="background:var(--action-primary);color:#fff;border:none;border-radius:var(--radius-sm);height:40px;padding:0 20px;font-size:14px;font-weight:700;font-family:var(--font-ui);cursor:pointer;display:flex;align-items:center;gap:8px;transition:background 0.15s;" onmouseover="this.style.background='var(--action-hover)'" onmouseout="this.style.background='var(--action-primary)'">
+              <svg id="cua-btn-primary-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              <span id="cua-btn-primary-label">Abrir cuaderno</span>
+            </button>
+            <button id="cua-btn-abrir" style="display:none;background:none;border:1px solid var(--border);border-radius:var(--radius-sm);height:40px;padding:0 16px;font-size:13px;font-weight:600;font-family:var(--font-ui);color:var(--text-secondary);cursor:pointer;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--grey-600)'" onmouseout="this.style.borderColor='var(--border)'">Abrir cuaderno</button>
+            <button onclick="cuaReset()" style="background:none;border:1px solid var(--border);border-radius:var(--radius-sm);height:40px;padding:0 16px;font-size:13px;font-weight:600;font-family:var(--font-ui);color:var(--text-secondary);cursor:pointer;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--grey-600)'" onmouseout="this.style.borderColor='var(--border)'">Crear otro</button>
+          </div>
+
         </div>
 
       </div>
     </div>
 
-    <!-- PAGE: Comunicados -->
+        <!-- PAGE: Comunicados -->
     <div class="page-view" id="page-comunicados">
 
       <!-- Module Header -->
@@ -2438,12 +2560,13 @@
                   <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#fff;stroke-width:2;fill:none"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
                   Enviar
                 </button>
-                <button class="read-btn" style="gap:8px;">
+                <button class="read-btn" onclick="saveDraft()" style="gap:8px;">
                   <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;stroke-width:2;fill:none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
                   Guardar borrador
                 </button>
                 <div style="flex:1;"></div>
-                <button onclick="showDescartarModal()" style="background:none;border:none;cursor:pointer;font-size:13px;font-family:var(--font-ui);color:var(--text-muted);padding:0 8px;height:36px;border-radius:var(--radius-sm);transition:color 0.15s;" onmouseover="this.style.color='var(--text-secondary)'" onmouseout="this.style.color='var(--text-muted)'">Descartar</button>
+                <span id="draft-saved-feedback" style="display:none;font-size:13px;font-style:italic;color:var(--support-discovery);font-family:var(--font-body);"></span>
+                <button id="btn-descartar" onclick="showDescartarModal()" style="background:none;border:none;cursor:pointer;font-size:13px;font-family:var(--font-ui);color:var(--text-muted);padding:0 8px;height:36px;border-radius:var(--radius-sm);transition:color 0.15s;" onmouseover="this.style.color='var(--text-secondary)'" onmouseout="this.style.color='var(--text-muted)'">Descartar</button>
               </div>
 
               <!-- Scroll container -->
@@ -2462,7 +2585,13 @@
                 <div style="padding:16px 24px;border-bottom:1px solid var(--grey-400);display:grid;grid-template-columns:1fr 200px auto;gap:16px;align-items:end;">
                   <div>
                     <label style="display:block;font-size:12px;font-weight:700;color:var(--text-secondary);font-family:var(--font-ui);margin-bottom:6px;">Asunto</label>
-                    <input type="text" value="Pepito tiene muchas novias" style="width:100%;height:40px;border:1px solid var(--action-primary);border-radius:var(--radius-sm);padding:0 12px;font-size:14px;font-family:var(--font-body);color:var(--text-primary);background:var(--bg-primary);outline:none;">
+                    <input type="text" id="compose-asunto" value="Pepito tiene muchas novias" style="width:100%;height:40px;border:1px solid var(--action-primary);border-radius:var(--radius-sm);padding:0 12px;font-size:14px;font-family:var(--font-body);color:var(--text-primary);background:var(--bg-primary);outline:none;transition:border-color 0.15s;" oninput="clearAsuntoWarning()">
+                  </div>
+                  <div id="compose-asunto-warning" style="display:none;grid-column:1/-1;margin-top:-8px;">
+                    <div class="compose-info-banner compose-info-banner--warning">
+                      <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                      Para generar el comunicado, escribe primero el asunto. La IA lo usará como punto de partida.
+                    </div>
                   </div>
                   <div>
                     <label style="display:block;font-size:12px;font-weight:700;color:var(--text-secondary);font-family:var(--font-ui);margin-bottom:6px;">Categoria</label>
@@ -3225,12 +3354,12 @@
             </div>
             <!-- Toggle -->
             <div style="display:flex;align-items:stretch;gap:12px;">
-              <button id="toggle-mode-a" onclick="setIaReviewMode('A')" style="flex:1;display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:16px;border-radius:var(--radius-md);border:2px solid var(--border);background:var(--bg-surface);cursor:pointer;text-align:left;" onmouseover="if(!this.classList.contains('ia-mode-active'))this.style.borderColor='var(--support-discovery)'" onmouseout="if(!this.classList.contains('ia-mode-active'))this.style.borderColor='var(--border)'">
+              <button id="toggle-mode-a" onclick="setIaReviewMode('A')" style="flex:1;display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:16px;border-radius:var(--radius-md);border:2px solid var(--border);background:var(--bg-surface);cursor:pointer;text-align:left;transition:border-color 0.15s,background 0.15s;" onmouseover="if(!this.classList.contains('active-mode')){this.style.borderColor='var(--support-discovery)';this.style.background='#EEF0FC';this.querySelectorAll('span').forEach(function(s){s.style.color='var(--support-discovery)'})}" onmouseout="if(!this.classList.contains('active-mode')){this.style.borderColor='var(--border)';this.style.background='var(--bg-surface)';this.querySelectorAll('span').forEach(function(s){s.style.color='var(--text-secondary)'})}">
                 <span style="font-family:var(--font-ui);font-size:13px;font-weight:800;color:var(--text-secondary);">Opción 1 — Inline</span>
                 <span style="font-family:var(--font-body);font-size:12px;color:var(--text-secondary);line-height:1.5;">La sugerencia aparece justo debajo del editor. El texto original queda visible arriba y la propuesta de IA abajo. Todo ocurre en la misma vista, sin abrir paneles.</span>
-                <span style="font-family:var(--font-ui);font-size:12px;font-weight:700;color:var(--support-discovery);margin-top:4px;">Probar →</span>
+                <span style="font-family:var(--font-ui);font-size:12px;font-weight:700;color:var(--text-secondary);margin-top:4px;">Probar →</span>
               </button>
-                    <button id="toggle-mode-b" onclick="setIaReviewMode('B')" style="flex:1;display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:16px;border-radius:var(--radius-md);border:2px solid var(--border);background:var(--bg-surface);cursor:pointer;text-align:left;" onmouseover="if(!this.classList.contains('ia-mode-active'))this.style.borderColor='var(--support-discovery)'" onmouseout="if(!this.classList.contains('ia-mode-active'))this.style.borderColor='var(--border)'">
+                    <button id="toggle-mode-b" onclick="setIaReviewMode('B')" style="flex:1;display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:16px;border-radius:var(--radius-md);border:2px solid var(--border);background:var(--bg-surface);cursor:pointer;text-align:left;transition:border-color 0.15s,background 0.15s;" onmouseover="this.style.borderColor='var(--support-discovery)';this.style.background='#EEF0FC';this.querySelectorAll('span').forEach(function(s){s.style.color='var(--support-discovery)'})" onmouseout="if(!this.classList.contains('active-mode')){this.style.borderColor='var(--border)';this.style.background='var(--bg-surface)';this.querySelectorAll('span').forEach(function(s,i){s.style.color=i===0?'var(--text-secondary)':i===1?'var(--text-secondary)':'var(--text-secondary)'})}">
                 <span style="font-family:var(--font-ui);font-size:13px;font-weight:800;color:var(--text-secondary);">Opción 2 — Panel lateral</span>
                 <span style="font-family:var(--font-body);font-size:12px;color:var(--text-secondary);line-height:1.5;">La sugerencia se abre en un panel lateral sobre la pantalla. El profesor ve el texto original y la propuesta de IA juntos, y decide si aplicar o descartar antes de volver al editor.</span>
                 <span style="font-family:var(--font-ui);font-size:12px;font-weight:700;color:var(--text-secondary);margin-top:4px;">Probar →</span>
@@ -3281,7 +3410,7 @@
             <h2 style="font-family:var(--font-ui);font-size:18px;font-weight:800;color:var(--text-primary);">El componente — btn-ia</h2>
           </div>
           <p style="font-family:var(--font-body);font-size:14px;color:var(--text-secondary);line-height:1.7;max-width:680px;margin-bottom:20px;">
-            Un solo componente, tres variantes según contexto. El color de IA es <strong style="color:var(--support-discovery);">#6352C7</strong> (support/discovery) en la UI web — variante clara del morado de marca <strong>#342453</strong>.
+            Un solo componente, cuatro variantes según contexto. El color de IA es <strong style="color:var(--support-discovery);">#6352C7</strong> (support/discovery) en la UI web — variante clara del morado de marca <strong>#342453</strong>.
           </p>
 
           <!-- Tabla variantes -->
@@ -3310,6 +3439,12 @@
                 </tr>
                 <tr>
                   <td style="padding:12px 16px;"><span style="font-family:var(--font-ui);font-weight:700;color:var(--text-primary);">Solo icono</span></td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--border);">
+                  <td style="padding:12px 16px;"><span style="font-family:var(--font-ui);font-weight:700;color:var(--text-primary);">WebParts</span></td>
+                  <td style="padding:12px 16px;font-family:var(--font-body);font-size:13px;color:var(--text-secondary);">— (sin label)</td>
+                  <td style="padding:12px 16px;font-family:var(--font-body);font-size:13px;color:var(--text-secondary);">Circular · punto de entrada fijo en barra lateral</td>
+                  <td style="padding:12px 16px;font-family:var(--font-body);font-size:13px;color:var(--text-secondary);">Solo en la barra WebParts · no para acciones directas</td>
                   <td style="padding:12px 16px;color:var(--text-secondary);">— (sin label)</td>
                   <td style="padding:12px 16px;color:var(--text-secondary);">Icono + tooltip al hover</td>
                   <td style="padding:12px 16px;color:var(--text-secondary);">Espacio muy reducido (toolbars compactas)</td>
@@ -3337,15 +3472,15 @@
                 <span style="font-family:var(--font-body);font-size:11px;color:var(--text-muted);">Variante Acción directa</span>
               </div>
               <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
-                <button class="btn-ia" data-tooltip="Acciones de IA" style="width:32px;height:32px;padding:0;justify-content:center;pointer-events:none;">
+                <button class="btn-ia" data-tooltip="Acciones de IA" style="width:36px;height:36px;padding:0;justify-content:center;pointer-events:none;">
                   <div class="ia-icon" style="width:20px;height:20px;"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path class="s-big" d="M19.729 9.643C14.662 8.244 13.608 7.19 12.209 2.125a.39.39 0 0 0-.714 0C10.095 7.19 9.04 8.244 3.975 9.643a.39.39 0 0 0 0 .715C9.042 11.757 10.095 12.811 11.495 17.876a.39.39 0 0 0 .714 0C13.608 12.81 14.663 11.757 19.729 10.358a.39.39 0 0 0 0-.715z" fill="#30AAC6"/><path class="s-green" d="M3.717 7.877a.39.39 0 0 0 .714 0C5.08 5.531 5.53 5.08 7.877 4.432a.39.39 0 0 0 0-.715C5.53 3.069 5.08 2.619 4.43.272a.39.39 0 0 0-.714 0C3.068 2.618 2.618 3.069.27 3.717a.39.39 0 0 0 0 .715C2.618 5.08 3.069 5.53 3.717 7.877z" fill="#71A850"/><path class="s-yellow" d="M8.432 16.124c-1.968-.544-2.346-.921-2.889-2.89a.39.39 0 0 0-.714 0c-.544 1.97-.921 2.347-2.89 2.89a.39.39 0 0 0 0 .715c1.97.543 2.347.921 2.89 2.889a.39.39 0 0 0 .714 0c.543-1.968.921-2.346 2.889-2.89a.39.39 0 0 0 0-.714z" fill="#F5D83E"/></svg></div>
                 </button>
                 <span style="font-family:var(--font-body);font-size:11px;color:var(--text-muted);">Variante Solo icono</span>
               </div>
               <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
-                <div class="btn-ia" style="width:32px;height:32px;border-radius:50%;padding:0;justify-content:center;pointer-events:none;">
+                <button class="btn-ia" data-tooltip="Acciones de IA" style="width:36px;height:36px;border-radius:50%;padding:0;justify-content:center;pointer-events:none;">
                   <div class="ia-icon" style="width:20px;height:20px;"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path class="s-big" d="M19.729 9.643C14.662 8.244 13.608 7.19 12.209 2.125a.39.39 0 0 0-.714 0C10.095 7.19 9.04 8.244 3.975 9.643a.39.39 0 0 0 0 .715C9.042 11.757 10.095 12.811 11.495 17.876a.39.39 0 0 0 .714 0C13.608 12.81 14.663 11.757 19.729 10.358a.39.39 0 0 0 0-.715z" fill="#30AAC6"/><path class="s-green" d="M3.717 7.877a.39.39 0 0 0 .714 0C5.08 5.531 5.53 5.08 7.877 4.432a.39.39 0 0 0 0-.715C5.53 3.069 5.08 2.619 4.43.272a.39.39 0 0 0-.714 0C3.068 2.618 2.618 3.069.27 3.717a.39.39 0 0 0 0 .715C2.618 5.08 3.069 5.53 3.717 7.877z" fill="#71A850"/><path class="s-yellow" d="M8.432 16.124c-1.968-.544-2.346-.921-2.889-2.89a.39.39 0 0 0-.714 0c-.544 1.97-.921 2.347-2.89 2.89a.39.39 0 0 0 0 .715c1.97.543 2.347.921 2.89 2.889a.39.39 0 0 0 .714 0c.543-1.968.921-2.346 2.889-2.89a.39.39 0 0 0 0-.714z" fill="#F5D83E"/></svg></div>
-                </div>
+                </button>
                 <span style="font-family:var(--font-body);font-size:11px;color:var(--text-muted);">Variante WebParts</span>
               </div>
             </div>
@@ -3661,6 +3796,84 @@
       </div><!-- /body content -->
     </div><!-- /page-ia -->
 
+
+    <div class="page-view" id="page-filiacion">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:var(--bg-surface);">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--grey-500)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="13" y2="13"/></svg>
+        <div style="font-size:15px;font-weight:700;font-family:var(--font-ui);color:var(--text-secondary);">Filiación</div>
+        <div style="font-size:13px;font-family:var(--font-body);color:var(--text-muted);">Módulo en construcción</div>
+      </div>
+    </div>
+    <div class="page-view" id="page-ciclos">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:var(--bg-surface);">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--grey-500)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="13" y2="13"/></svg>
+        <div style="font-size:15px;font-weight:700;font-family:var(--font-ui);color:var(--text-secondary);">Ciclos Formativos</div>
+        <div style="font-size:13px;font-family:var(--font-body);color:var(--text-muted);">Módulo en construcción</div>
+      </div>
+    </div>
+    <div class="page-view" id="page-facturacion">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:var(--bg-surface);">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--grey-500)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="13" y2="13"/></svg>
+        <div style="font-size:15px;font-weight:700;font-family:var(--font-ui);color:var(--text-secondary);">Facturación</div>
+        <div style="font-size:13px;font-family:var(--font-body);color:var(--text-muted);">Módulo en construcción</div>
+      </div>
+    </div>
+    <div class="page-view" id="page-ventas">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:var(--bg-surface);">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--grey-500)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="13" y2="13"/></svg>
+        <div style="font-size:15px;font-weight:700;font-family:var(--font-ui);color:var(--text-secondary);">Ventas</div>
+        <div style="font-size:13px;font-family:var(--font-body);color:var(--text-muted);">Módulo en construcción</div>
+      </div>
+    </div>
+    <div class="page-view" id="page-actividades">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:var(--bg-surface);">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--grey-500)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="13" y2="13"/></svg>
+        <div style="font-size:15px;font-weight:700;font-family:var(--font-ui);color:var(--text-secondary);">Activid. y Servicios</div>
+        <div style="font-size:13px;font-family:var(--font-body);color:var(--text-muted);">Módulo en construcción</div>
+      </div>
+    </div>
+    <div class="page-view" id="page-utilidades">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:var(--bg-surface);">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--grey-500)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="13" y2="13"/></svg>
+        <div style="font-size:15px;font-weight:700;font-family:var(--font-ui);color:var(--text-secondary);">Utilidades</div>
+        <div style="font-size:13px;font-family:var(--font-body);color:var(--text-muted);">Módulo en construcción</div>
+      </div>
+    </div>
+    <div class="page-view" id="page-cuadromando">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:var(--bg-surface);">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--grey-500)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="13" y2="13"/></svg>
+        <div style="font-size:15px;font-weight:700;font-family:var(--font-ui);color:var(--text-secondary);">Cuadro Mando</div>
+        <div style="font-size:13px;font-family:var(--font-body);color:var(--text-muted);">Módulo en construcción</div>
+      </div>
+    </div>
+    <div class="page-view" id="page-listados">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:var(--bg-surface);">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--grey-500)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="13" y2="13"/></svg>
+        <div style="font-size:15px;font-weight:700;font-family:var(--font-ui);color:var(--text-secondary);">Listados</div>
+        <div style="font-size:13px;font-family:var(--font-body);color:var(--text-muted);">Módulo en construcción</div>
+      </div>
+    </div>
+    <div class="page-view" id="page-administracion">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:var(--bg-surface);">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--grey-500)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="13" y2="13"/></svg>
+        <div style="font-size:15px;font-weight:700;font-family:var(--font-ui);color:var(--text-secondary);">Administración</div>
+        <div style="font-size:13px;font-family:var(--font-body);color:var(--text-muted);">Módulo en construcción</div>
+      </div>
+    </div>
+    <div class="page-view" id="page-firma">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:var(--bg-surface);">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--grey-500)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="13" y2="13"/></svg>
+        <div style="font-size:15px;font-weight:700;font-family:var(--font-ui);color:var(--text-secondary);">Firma digital</div>
+        <div style="font-size:13px;font-family:var(--font-body);color:var(--text-muted);">Módulo en construcción</div>
+      </div>
+    </div>
+    <div class="page-view" id="page-salir">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:var(--bg-surface);">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--grey-500)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="13" y2="13"/></svg>
+        <div style="font-size:15px;font-weight:700;font-family:var(--font-ui);color:var(--text-secondary);">Salir</div>
+        <div style="font-size:13px;font-family:var(--font-body);color:var(--text-muted);">Módulo en construcción</div>
+      </div>
+    </div>
   </main>
 
   <!-- RIGHT PANEL (right-sidebar — parte do flex, não fixed) -->
@@ -3668,8 +3881,8 @@
     <div class="panel-loader" id="loader-inc"></div>
     <!-- Header home -->
     <div class="panel-header" id="header-home">
-      <div class="ph-icon">
-        <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <div class="ph-icon" style="background:#FFFDE7;">
+        <svg viewBox="0 0 24 24" width="20" height="20" style="stroke:#F9A825;fill:none;"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
       </div>
       <div class="ph-bar"></div>
       <div class="ph-titles">
@@ -3819,8 +4032,8 @@
     <div class="panel-loader" id="loader-alumnos"></div>
     <!-- Header home alumnos -->
     <div class="panel-header" id="alumnos-header-home">
-      <div class="ph-icon-green">
-        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <div class="ph-icon" style="background:#E8F5E9;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M21.597 0H2.40297C1.08282 0 0 1.08782 0 2.43072V14.5693C0 15.9047 1.0754 17 2.40297 17H21.597C22.9172 17 24 15.9122 24 14.5693V2.43072C24 1.09533 22.9246 0 21.597 0ZM10.0791 8.20743H3.33745C3.00371 8.20743 2.73671 7.93733 2.73671 7.59973C2.73671 7.26213 3.00371 6.99205 3.33745 6.99205H10.0791C10.4129 6.99205 10.6799 7.26213 10.6799 7.59973C10.6799 7.93733 10.4129 8.20743 10.0791 8.20743ZM6.48208 12.1836H3.33745C3.00371 12.1836 2.73671 11.9135 2.73671 11.5759C2.73671 11.2383 3.00371 10.9682 3.33745 10.9682H6.48208C6.81582 10.9682 7.08282 11.2383 7.08282 11.5759C7.08282 11.9135 6.81582 12.1836 6.48208 12.1836ZM10.0791 5.69419H3.33745C3.00371 5.69419 2.73671 5.42411 2.73671 5.08651C2.73671 4.74891 3.00371 4.47883 3.33745 4.47883H10.0791C10.4129 4.47883 10.6799 4.74891 10.6799 5.08651C10.6799 5.42411 10.4129 5.69419 10.0791 5.69419ZM21.2855 13.9616C20.9518 13.9616 20.6848 13.6915 20.6848 13.3539C20.6848 11.4634 19.1644 9.90292 17.2732 9.90292C15.382 9.90292 13.8616 11.4409 13.8616 13.3539C13.8616 13.6915 13.5946 13.9616 13.2608 13.9616C12.9271 13.9616 12.6601 13.6915 12.6601 13.3539C12.6601 11.4409 13.8096 9.79789 15.4413 9.08518C14.5661 8.4925 14.0025 7.4872 14.0025 6.33937C14.0025 4.51633 15.471 3.0384 17.2658 3.0384C19.0606 3.0384 20.529 4.52383 20.529 6.33937C20.529 7.4797 19.958 8.485 19.0902 9.08518C20.7219 9.80539 21.8714 11.4334 21.8714 13.3539C21.8714 13.6915 21.6045 13.9616 21.2707 13.9616H21.2855Z" fill="#7CBF86"/><path d="M19.3498 6.33937C19.3498 7.4872 18.4227 8.43249 17.288 8.43249C16.1533 8.43249 15.2188 7.49471 15.2188 6.33937C15.2188 5.18402 16.1459 4.25375 17.288 4.25375C18.4302 4.25375 19.3498 5.19153 19.3498 6.33937Z" fill="#7CBF86"/></svg>
       </div>
       <div class="ph-bar-green"></div>
       <div class="ph-titles">
@@ -3840,7 +4053,9 @@
       <button class="ph-btn" onclick="goAlumnosView('lista')">
         <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
-      <div class="ph-bar-green"></div>
+      <div class="ph-icon" style="background:#E8F5E9;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M21.597 0H2.40297C1.08282 0 0 1.08782 0 2.43072V14.5693C0 15.9047 1.0754 17 2.40297 17H21.597C22.9172 17 24 15.9122 24 14.5693V2.43072C24 1.09533 22.9246 0 21.597 0ZM10.0791 8.20743H3.33745C3.00371 8.20743 2.73671 7.93733 2.73671 7.59973C2.73671 7.26213 3.00371 6.99205 3.33745 6.99205H10.0791C10.4129 6.99205 10.6799 7.26213 10.6799 7.59973C10.6799 7.93733 10.4129 8.20743 10.0791 8.20743ZM6.48208 12.1836H3.33745C3.00371 12.1836 2.73671 11.9135 2.73671 11.5759C2.73671 11.2383 3.00371 10.9682 3.33745 10.9682H6.48208C6.81582 10.9682 7.08282 11.2383 7.08282 11.5759C7.08282 11.9135 6.81582 12.1836 6.48208 12.1836ZM10.0791 5.69419H3.33745C3.00371 5.69419 2.73671 5.42411 2.73671 5.08651C2.73671 4.74891 3.00371 4.47883 3.33745 4.47883H10.0791C10.4129 4.47883 10.6799 4.74891 10.6799 5.08651C10.6799 5.42411 10.4129 5.69419 10.0791 5.69419ZM21.2855 13.9616C20.9518 13.9616 20.6848 13.6915 20.6848 13.3539C20.6848 11.4634 19.1644 9.90292 17.2732 9.90292C15.382 9.90292 13.8616 11.4409 13.8616 13.3539C13.8616 13.6915 13.5946 13.9616 13.2608 13.9616C12.9271 13.9616 12.6601 13.6915 12.6601 13.3539C12.6601 11.4409 13.8096 9.79789 15.4413 9.08518C14.5661 8.4925 14.0025 7.4872 14.0025 6.33937C14.0025 4.51633 15.471 3.0384 17.2658 3.0384C19.0606 3.0384 20.529 4.52383 20.529 6.33937C20.529 7.4797 19.958 8.485 19.0902 9.08518C20.7219 9.80539 21.8714 11.4334 21.8714 13.3539C21.8714 13.6915 21.6045 13.9616 21.2707 13.9616H21.2855Z" fill="#7CBF86"/><path d="M19.3498 6.33937C19.3498 7.4872 18.4227 8.43249 17.288 8.43249C16.1533 8.43249 15.2188 7.49471 15.2188 6.33937C15.2188 5.18402 16.1459 4.25375 17.288 4.25375C18.4302 4.25375 19.3498 5.19153 19.3498 6.33937Z" fill="#7CBF86"/></svg>
+      </div>
       <div class="ph-titles">
         <span class="ph-title" id="alumnos-detail-title">Alejandra Abad Urrutia</span>
         <span class="ph-subtitle" id="alumnos-detail-subtitle">Ficha alumna</span>
@@ -4149,8 +4364,8 @@
     <div class="panel-loader" id="loader-areas"></div>
     <!-- Header home áreas -->
     <div class="panel-header" id="areas-header-home">
-      <div class="ph-icon-red">
-        <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+      <div class="ph-icon" style="background:#FDECEA;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M24 3.72172C24 3.90709 23.8802 4.06689 23.6938 4.11802L21.4306 4.76361V10.7145C21.6437 10.7145 21.8234 10.8615 21.8567 11.0597L22.2893 13.527C22.3293 13.7507 22.1695 13.9616 21.9365 14H20.146C19.913 14 19.7133 13.8146 19.7133 13.5845V13.5142L20.146 11.0469C20.1793 10.8488 20.359 10.7017 20.572 10.7017V4.98733L12.1251 7.39071C12.0452 7.40988 11.9653 7.40988 11.8788 7.39071L0.310049 4.09885C0.0837335 4.03493 -0.0493934 3.80482 0.0171701 3.58749C0.0571082 3.45326 0.170266 3.35099 0.310049 3.30624L11.8788 0.0143819C11.9587 -0.00479397 12.0385 -0.00479397 12.1251 0.0143819L23.6938 3.30624C23.8802 3.35738 24 3.52357 24 3.70255V3.72172Z" fill="#D15E5E"/><path d="M12.0059 8.24758C11.8861 8.24758 11.7596 8.22841 11.6398 8.19645L5.58249 6.47062V11.124C5.58249 12.5366 8.91067 13.1758 12.0059 13.1758C15.1011 13.1758 18.4292 12.5302 18.4292 11.124V6.47062L12.372 8.19645C12.2522 8.22841 12.1323 8.24758 12.0059 8.24758Z" fill="#D15E5E"/></svg>
       </div>
       <div class="ph-bar-red"></div>
       <div class="ph-titles">
@@ -4167,8 +4382,8 @@
 
     <!-- Header detalle áreas -->
     <div class="panel-header" id="areas-header-detail" style="display:none;">
-      <button class="ph-btn" onclick="goAreasView('lista')">
-        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      <div class="ph-icon" style="background:#FDECEA;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M24 3.72172C24 3.90709 23.8802 4.06689 23.6938 4.11802L21.4306 4.76361V10.7145C21.6437 10.7145 21.8234 10.8615 21.8567 11.0597L22.2893 13.527C22.3293 13.7507 22.1695 13.9616 21.9365 14H20.146C19.913 14 19.7133 13.8146 19.7133 13.5845V13.5142L20.146 11.0469C20.1793 10.8488 20.359 10.7017 20.572 10.7017V4.98733L12.1251 7.39071C12.0452 7.40988 11.9653 7.40988 11.8788 7.39071L0.310049 4.09885C0.0837335 4.03493 -0.0493934 3.80482 0.0171701 3.58749C0.0571082 3.45326 0.170266 3.35099 0.310049 3.30624L11.8788 0.0143819C11.9587 -0.00479397 12.0385 -0.00479397 12.1251 0.0143819L23.6938 3.30624C23.8802 3.35738 24 3.52357 24 3.70255V3.72172Z" fill="#D15E5E"/><path d="M12.0059 8.24758C11.8861 8.24758 11.7596 8.22841 11.6398 8.19645L5.58249 6.47062V11.124C5.58249 12.5366 8.91067 13.1758 12.0059 13.1758C15.1011 13.1758 18.4292 12.5302 18.4292 11.124V6.47062L12.372 8.19645C12.2522 8.22841 12.1323 8.24758 12.0059 8.24758Z" fill="#D15E5E"/></svg>
       </button>
       <div class="ph-bar-red"></div>
       <div class="ph-titles">
@@ -4384,17 +4599,20 @@
   <!-- PAINEL IA (Teste B) -->
   <aside class="right-panel-ia" id="panel-ia-review">
     <div class="panel-header">
-      <svg width="18" height="18" viewBox="0 0 20 20" fill="none" style="flex-shrink:0;stroke:none;">
-        <path d="M19.729 9.643C14.662 8.244 13.608 7.19 12.209 2.125a.39.39 0 0 0-.714 0C10.095 7.19 9.04 8.244 3.975 9.643a.39.39 0 0 0 0 .715C9.042 11.757 10.095 12.811 11.495 17.876a.39.39 0 0 0 .714 0C13.608 12.81 14.663 11.757 19.729 10.358a.39.39 0 0 0 0-.715z" fill="#30AAC6"/>
-        <path d="M3.717 7.877a.39.39 0 0 0 .714 0C5.08 5.531 5.53 5.08 7.877 4.432a.39.39 0 0 0 0-.715C5.53 3.069 5.08 2.619 4.43.272a.39.39 0 0 0-.714 0C3.068 2.618 2.618 3.069.27 3.717a.39.39 0 0 0 0 .715C2.618 5.08 3.069 5.53 3.717 7.877z" fill="#71A850"/>
-        <path d="M8.432 16.124c-1.968-.544-2.346-.921-2.889-2.89a.39.39 0 0 0-.714 0c-.544 1.97-.921 2.347-2.89 2.89a.39.39 0 0 0 0 .715c1.97.543 2.347.921 2.89 2.889a.39.39 0 0 0 .714 0c.543-1.968.921-2.346 2.889-2.89a.39.39 0 0 0 0-.714z" fill="#F5D83E"/>
-      </svg>
-      <div style="flex:1;">
-        <div style="font-family:var(--font-ui);font-weight:700;font-size:13px;color:var(--support-discovery);">Acciones IA</div>
-        <div id="ia-panel-subtitle" style="font-family:var(--font-body);font-size:11px;color:var(--text-secondary);">Sugerencia lista para revisar</div>
+      <div class="ph-icon" style="background:#ffffff;">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path class="s-big" d="M19.729 9.643C14.662 8.244 13.608 7.19 12.209 2.125a.39.39 0 0 0-.714 0C10.095 7.19 9.04 8.244 3.975 9.643a.39.39 0 0 0 0 .715C9.042 11.757 10.095 12.811 11.495 17.876a.39.39 0 0 0 .714 0C13.608 12.81 14.663 11.757 19.729 10.358a.39.39 0 0 0 0-.715z" fill="#30AAC6"/>
+          <path class="s-green" d="M3.717 7.877a.39.39 0 0 0 .714 0C5.08 5.531 5.53 5.08 7.877 4.432a.39.39 0 0 0 0-.715C5.53 3.069 5.08 2.619 4.43.272a.39.39 0 0 0-.714 0C3.068 2.618 2.618 3.069.27 3.717a.39.39 0 0 0 0 .715C2.618 5.08 3.069 5.53 3.717 7.877z" fill="#71A850"/>
+          <path class="s-yellow" d="M8.432 16.124c-1.968-.544-2.346-.921-2.889-2.89a.39.39 0 0 0-.714 0c-.544 1.97-.921 2.347-2.89 2.89a.39.39 0 0 0 0 .715c1.97.543 2.347.921 2.89 2.889a.39.39 0 0 0 .714 0c.543-1.968.921-2.346 2.889-2.89a.39.39 0 0 0 0-.714z" fill="#F5D83E"/>
+        </svg>
       </div>
-      <button onclick="iaDiscardPanel()" style="width:28px;height:28px;border-radius:50%;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-secondary);" title="Cerrar">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      <div class="ph-bar-ia"></div>
+      <div class="ph-titles">
+        <span class="ph-title">Acciones IA</span>
+        <span class="ph-subtitle" id="ia-panel-subtitle">Sugerencia lista para revisar</span>
+      </div>
+      <button class="ph-btn" onclick="iaDiscardPanel()">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
     <div class="panel-body">
@@ -4455,52 +4673,105 @@
   <div class="webparts-bar">
 
     <!-- 1. Acciones de IA -->
-    <button class="wp-btn" data-tip="Acciones de IA" style="background:#EEF0FC;"
-      onclick="closePanelAlumnos();closePanel()">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.7288 9.64308C14.662 8.24422 13.6084 7.18959 12.2092 2.12453C12.1648 1.96343 12.0185 1.85235 11.8518 1.85235C11.6851 1.85235 11.5388 1.96345 11.4944 2.12453C10.0954 7.19054 9.04062 8.24404 3.97488 9.64308C3.81376 9.68755 3.70359 9.83385 3.70359 10.0004C3.70359 10.1671 3.81469 10.3134 3.97488 10.3578C9.04156 11.7567 10.0952 12.8113 11.4944 17.8764C11.5388 18.0374 11.6851 18.1485 11.8518 18.1485C12.0185 18.1485 12.1648 18.0374 12.2092 17.8764C13.6082 12.8104 14.663 11.7568 19.7288 10.3578C19.8899 10.3134 20 10.1671 20 10.0004C20 9.83385 19.8889 9.68755 19.7288 9.64308Z" fill="#30AAC6"/><path d="M3.71663 7.87668C3.76107 8.03777 3.90737 8.14885 4.07403 8.14885C4.2407 8.14885 4.38699 8.03776 4.43143 7.87668C5.07959 5.53069 5.53051 5.07976 7.87677 4.43179C8.03788 4.38734 8.14806 4.24107 8.14806 4.07443C8.14806 3.90778 8.03695 3.76151 7.87677 3.71706C5.53048 3.069 5.07949 2.61906 4.43143 0.272179C4.38699 0.111088 4.2407 0 4.07403 0C3.90737 0 3.76107 0.111097 3.71663 0.272179C3.06847 2.61816 2.61756 3.06909 0.271289 3.71706C0.110178 3.76151 0 3.90778 0 4.07443C0 4.24107 0.111111 4.38734 0.271289 4.43179C2.61758 5.07985 3.06856 5.52979 3.71663 7.87668Z" fill="#71A850"/><path d="M8.43248 16.1238C6.46397 15.5803 6.08621 15.2026 5.54278 13.2345C5.49834 13.0733 5.35204 12.9622 5.18537 12.9622C5.01871 12.9622 4.87242 13.0733 4.82797 13.2345C4.28445 15.2027 3.90668 15.5804 1.93825 16.1238C1.77714 16.1682 1.66696 16.3145 1.66696 16.4812C1.66696 16.6478 1.77807 16.794 1.93825 16.8385C3.90677 17.3819 4.28454 17.7596 4.82797 19.7279C4.87242 19.889 5.01871 20 5.18537 20C5.35204 20 5.49834 19.889 5.54278 19.7279C6.08631 17.7596 6.46407 17.3818 8.43248 16.8385C8.59357 16.794 8.70379 16.6478 8.70379 16.4812C8.70379 16.3145 8.59272 16.1682 8.43248 16.1238Z" fill="#F5D83E"/></svg>
+    <button class="btn-ia wp-btn wp-btn-ia" id="btn-ia-wp" data-tip="Acciones de IA"
+      style="width:36px;height:36px;border-radius:50%;padding:0;justify-content:center;"
+      onclick="openGenericPanel('ia-review', 'btn-ia-wp')">
+      <div class="ia-icon" style="width:20px;height:20px;">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path class="s-big" d="M19.7288 9.64308C14.662 8.24422 13.6084 7.18959 12.2092 2.12453C12.1648 1.96343 12.0185 1.85235 11.8518 1.85235C11.6851 1.85235 11.5388 1.96345 11.4944 2.12453C10.0954 7.19054 9.04062 8.24404 3.97488 9.64308C3.81376 9.68755 3.70359 9.83385 3.70359 10.0004C3.70359 10.1671 3.81469 10.3134 3.97488 10.3578C9.04156 11.7567 10.0952 12.8113 11.4944 17.8764C11.5388 18.0374 11.6851 18.1485 11.8518 18.1485C12.0185 18.1485 12.1648 18.0374 12.2092 17.8764C13.6082 12.8104 14.663 11.7568 19.7288 10.3578C19.8899 10.3134 20 10.1671 20 10.0004C20 9.83385 19.8889 9.68755 19.7288 9.64308Z" fill="#30AAC6"/>
+            <path class="s-green" d="M3.717 7.877a.39.39 0 0 0 .714 0C5.08 5.531 5.53 5.08 7.877 4.432a.39.39 0 0 0 0-.715C5.53 3.069 5.08 2.619 4.43.272a.39.39 0 0 0-.714 0C3.068 2.618 2.618 3.069.27 3.717a.39.39 0 0 0 0 .715C2.618 5.08 3.069 5.53 3.717 7.877z" fill="#71A850"/>
+            <path class="s-yellow" d="M8.432 16.124c-1.968-.544-2.346-.921-2.889-2.89a.39.39 0 0 0-.714 0c-.544 1.97-.921 2.347-2.89 2.89a.39.39 0 0 0 0 .715c1.97.543 2.347.921 2.89 2.889a.39.39 0 0 0 .714 0c.543-1.968.921-2.346 2.889-2.89a.39.39 0 0 0 0-.714z" fill="#F5D83E"/>
+          </svg>
+      </div>
     </button>
 
-    <!-- 2. Mis alumnos -->
-    <button class="wp-btn" id="btn-alumnos" data-tip="Mis alumnos" style="background:#E8F5E9;"
-      onclick="togglePanelAlumnos()">
-      <svg viewBox="0 0 24 24" style="stroke:#43A047;fill:none">
-        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-        <circle cx="9" cy="7" r="4"/>
-        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-      </svg>
-    </button>
-
-    <!-- 3. Áreas -->
+    <!-- 2. Áreas -->
     <button class="wp-btn" id="btn-areas" data-tip="Mis áreas" style="background:#FDECEA;"
       onclick="togglePanelAreas()">
-      <svg viewBox="0 0 24 24" style="stroke:#C62828;fill:none">
-        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-        <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-      </svg>
+      <svg width="20" height="20" viewBox="0 0 24 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g opacity="0.9">
+<path d="M24 3.72172C24 3.90709 23.8802 4.06689 23.6938 4.11802L21.4306 4.76361V10.7145C21.6437 10.7145 21.8234 10.8615 21.8567 11.0597L22.2893 13.527C22.3293 13.7507 22.1695 13.9616 21.9365 14H20.146C19.913 14 19.7133 13.8146 19.7133 13.5845V13.5142L20.146 11.0469C20.1793 10.8488 20.359 10.7017 20.572 10.7017V4.98733L12.1251 7.39071C12.0452 7.40988 11.9653 7.40988 11.8788 7.39071L0.310049 4.09885C0.0837335 4.03493 -0.0493934 3.80482 0.0171701 3.58749C0.0571082 3.45326 0.170266 3.35099 0.310049 3.30624L11.8788 0.0143819C11.9587 -0.00479397 12.0385 -0.00479397 12.1251 0.0143819L23.6938 3.30624C23.8802 3.35738 24 3.52357 24 3.70255V3.72172Z" fill="#D15E5E"/>
+<path d="M12.0059 8.24758C11.8861 8.24758 11.7596 8.22841 11.6398 8.19645L5.58249 6.47062V11.124C5.58249 12.5366 8.91067 13.1758 12.0059 13.1758C15.1011 13.1758 18.4292 12.5302 18.4292 11.124V6.47062L12.372 8.19645C12.2522 8.22841 12.1323 8.24758 12.0059 8.24758Z" fill="#D15E5E"/>
+</g>
+</svg>
     </button>
 
-    <!-- 4. Entrevistas -->
-    <button class="wp-btn" data-tip="Entrevistas" style="background:#E3F2FD;"
-      onclick="closePanelAlumnos();closePanel()">
-      <svg viewBox="0 0 24 24" style="stroke:#1565C0;fill:none">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-      </svg>
+    <!-- 3. Alumnos -->
+    <button class="wp-btn" id="btn-alumnos" data-tip="Mis alumnos" style="background:#E8F5E9;"
+      onclick="togglePanelAlumnos()">
+      <svg width="20" height="20" viewBox="0 0 24 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M21.597 0H2.40297C1.08282 0 0 1.08782 0 2.43072V14.5693C0 15.9047 1.0754 17 2.40297 17H21.597C22.9172 17 24 15.9122 24 14.5693V2.43072C24 1.09533 22.9246 0 21.597 0ZM10.0791 8.20743H3.33745C3.00371 8.20743 2.73671 7.93733 2.73671 7.59973C2.73671 7.26213 3.00371 6.99205 3.33745 6.99205H10.0791C10.4129 6.99205 10.6799 7.26213 10.6799 7.59973C10.6799 7.93733 10.4129 8.20743 10.0791 8.20743ZM6.48208 12.1836H3.33745C3.00371 12.1836 2.73671 11.9135 2.73671 11.5759C2.73671 11.2383 3.00371 10.9682 3.33745 10.9682H6.48208C6.81582 10.9682 7.08282 11.2383 7.08282 11.5759C7.08282 11.9135 6.81582 12.1836 6.48208 12.1836ZM10.0791 5.69419H3.33745C3.00371 5.69419 2.73671 5.42411 2.73671 5.08651C2.73671 4.74891 3.00371 4.47883 3.33745 4.47883H10.0791C10.4129 4.47883 10.6799 4.74891 10.6799 5.08651C10.6799 5.42411 10.4129 5.69419 10.0791 5.69419ZM21.2855 13.9616C20.9518 13.9616 20.6848 13.6915 20.6848 13.3539C20.6848 11.4634 19.1644 9.90292 17.2732 9.90292C15.382 9.90292 13.8616 11.4409 13.8616 13.3539C13.8616 13.6915 13.5946 13.9616 13.2608 13.9616C12.9271 13.9616 12.6601 13.6915 12.6601 13.3539C12.6601 11.4409 13.8096 9.79789 15.4413 9.08518C14.5661 8.4925 14.0025 7.4872 14.0025 6.33937C14.0025 4.51633 15.471 3.0384 17.2658 3.0384C19.0606 3.0384 20.529 4.52383 20.529 6.33937C20.529 7.4797 19.958 8.485 19.0902 9.08518C20.7219 9.80539 21.8714 11.4334 21.8714 13.3539C21.8714 13.6915 21.6045 13.9616 21.2707 13.9616H21.2855Z" fill="#7CBF86"/>
+<path d="M19.3498 6.33937C19.3498 7.4872 18.4227 8.43249 17.288 8.43249C16.1533 8.43249 15.2188 7.49471 15.2188 6.33937C15.2188 5.18402 16.1459 4.25375 17.288 4.25375C18.4302 4.25375 19.3498 5.19153 19.3498 6.33937Z" fill="#7CBF86"/>
+</svg>
     </button>
 
-    <!-- 5. Encuestas -->
-    <button class="wp-btn" data-tip="Encuestas" style="background:#FFF3E0;"
-      onclick="closePanelAlumnos();closePanel()">
-      <svg viewBox="0 0 24 24" style="stroke:#E65100;fill:none">
-        <polyline points="9 11 12 14 22 4"/>
-        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
-      </svg>
+    <!-- 4. Secciones -->
+    <button class="wp-btn" id="btn-secciones" data-tip="Secciones" style="background:#E3F2FD;"
+      onclick="openGenericPanel('secciones', 'btn-secciones')">
+      <svg width="20" height="20" viewBox="0 0 23 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M22.5 2.28495H2.28852V24.5H22.5V2.28495Z" fill="white"/>
+<path d="M20.7115 0.5H0.5V22.7151H20.7115V0.5Z" fill="#54A0D2"/>
+<path d="M22.5 2.28495H2.28852V24.5H22.5V2.28495Z" stroke="#54A0D2" stroke-miterlimit="10"/>
+<path d="M20.7115 0.5H0.5V22.7151H20.7115V0.5Z" stroke="#54A0D2" stroke-miterlimit="10"/>
+</svg>
     </button>
 
-    <!-- 6. Incidencias -->
+    <!-- 5. Comunicados -->
+    <button class="wp-btn" id="btn-comunicados-wp" data-tip="Comunicados" style="background:#EEF3FB;"
+      onclick="openGenericPanel('comunicados-wp', 'btn-comunicados-wp')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M19.4981 1.57685V0.752036C19.4981 0.339629 19.1586 0 18.7463 0H0.751792C0.339519 0 0 0.339629 0 0.752036V1.57685L9.74905 5.92734L19.4981 1.57685Z" fill="#6F99D3"/>
+<path d="M22.5052 9.0078H9.00527C8.18072 9.0078 7.50977 9.67897 7.50977 10.5038V19.504C7.50977 20.3449 8.16455 20.9999 9.00527 20.9999H10.5008V23.2561C10.5008 23.5472 10.6624 23.8059 10.9292 23.9272C11.0343 23.9757 11.1475 24 11.2606 24C11.4223 24 11.6002 23.9515 11.7295 23.8383L15.2702 20.9999H22.5052C23.3459 20.9999 24.0007 20.3449 24.0007 19.504V10.5038C24.0007 9.6628 23.3459 9.0078 22.5052 9.0078Z" fill="#6F99D3"/>
+<path d="M19.499 3.21811L10.0572 7.43113C9.96018 7.47965 9.85509 7.49582 9.75 7.49582H19.499V3.21003V3.21811Z" fill="#6F99D3"/>
+<path d="M9.75686 7.49653C9.65177 7.49653 9.54668 7.47227 9.44967 7.43183L0.0078125 3.21882V12.7527C0.0078125 13.1651 0.347331 13.5047 0.759604 13.5047H6.01406V10.5047C6.01406 8.84695 7.35597 7.50461 9.01315 7.50461H9.76494H9.75686V7.49653Z" fill="#6F99D3"/>
+</svg>
+    </button>
+
+    <!-- 6. Entrevistas -->
+    <button class="wp-btn" id="btn-entrevistas" data-tip="Entrevistas" style="background:#EEEEF8;"
+      onclick="openGenericPanel('entrevistas', 'btn-entrevistas')">
+      <svg width="20" height="20" viewBox="0 0 24 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M24 2.22201V6.67969C24 7.91035 22.9547 8.9017 21.673 8.9017H18.8163L15.9165 10.9801C15.6802 11.1511 15.3652 11.1784 15.1003 11.0485C14.8354 10.9186 14.6707 10.6656 14.6707 10.3922V8.9017H12.3438C11.055 8.9017 10.0168 7.90351 10.0168 6.67969V2.22201C10.0168 0.991358 11.0621 0 12.3438 0H21.673C22.9618 0 24 0.998195 24 2.22201ZM14.6707 4.45769C14.6707 4.04747 14.3199 3.71246 13.8903 3.71246C13.4607 3.71246 13.1099 4.04747 13.1099 4.45769C13.1099 4.8679 13.4607 5.20292 13.8903 5.20292C14.3199 5.20292 14.6707 4.8679 14.6707 4.45769ZM17.7852 4.45769C17.7852 4.04747 17.4344 3.71246 17.0048 3.71246C16.5752 3.71246 16.2244 4.04747 16.2244 4.45769C16.2244 4.8679 16.5752 5.20292 17.0048 5.20292C17.4344 5.20292 17.7852 4.8679 17.7852 4.45769ZM20.8926 4.45769C20.8926 4.04747 20.5418 3.71246 20.1122 3.71246C19.6826 3.71246 19.3318 4.04747 19.3318 4.45769C19.3318 4.8679 19.6826 5.20292 20.1122 5.20292C20.5418 5.20292 20.8926 4.8679 20.8926 4.45769Z" fill="#95A2D8"/>
+<path d="M7.99756 12.9015C8.97846 12.3204 9.63717 11.288 9.63717 10.1052C9.63717 8.30023 8.0978 6.83028 6.20759 6.83028C4.31739 6.83028 2.77802 8.30023 2.77802 10.1052C2.77802 11.2811 3.43673 12.3204 4.41763 12.9015C1.86156 13.6262 0 15.8482 0 18.4736C0 18.6787 0.178996 18.8428 0.386632 18.8428C0.594268 18.8428 0.773264 18.6719 0.773264 18.4736C0.773264 15.6773 3.20045 13.4006 6.19327 13.4006C9.18609 13.4006 11.6133 15.6705 11.6133 18.4736C11.6133 18.6787 11.7923 18.8428 11.9999 18.8428C12.2076 18.8428 12.3865 18.6719 12.3865 18.4736C12.3865 15.8482 10.525 13.6262 7.96892 12.9015H7.99756ZM3.55845 10.112C3.55845 8.71728 4.73982 7.58234 6.20759 7.58234C7.67536 7.58234 8.85674 8.71044 8.85674 10.112C8.85674 11.5136 7.67536 12.6417 6.20759 12.6417C4.73982 12.6417 3.55845 11.5136 3.55845 10.112Z" fill="#95A2D8"/>
+<path d="M20.0545 15.0619C20.706 14.679 21.1356 13.9953 21.1356 13.2159C21.1356 12.0195 20.1189 11.0486 18.8659 11.0486C17.613 11.0486 16.5963 12.0195 16.5963 13.2159C16.5963 13.9953 17.033 14.679 17.6774 15.0619C15.9877 15.5405 14.749 17.0105 14.749 18.747C14.749 18.8838 14.8636 19 15.0139 19C15.1643 19 15.2789 18.8906 15.2789 18.747C15.2789 16.9011 16.8898 15.3901 18.8659 15.3901C20.8421 15.3901 22.453 16.8942 22.453 18.747C22.453 18.8838 22.5676 19 22.7179 19C22.8683 19 22.9829 18.8906 22.9829 18.747C22.9829 17.0105 21.7514 15.5405 20.0545 15.0619ZM17.1261 13.2228C17.1261 12.2998 17.9137 11.5477 18.8803 11.5477C19.8468 11.5477 20.6344 12.2998 20.6344 13.2228C20.6344 14.1458 19.8468 14.8978 18.8803 14.8978C17.9137 14.8978 17.1261 14.1458 17.1261 13.2228Z" fill="#95A2D8"/>
+</svg>
+    </button>
+
+    <!-- 7. Encuestas -->
+    <button class="wp-btn" id="btn-encuestas" data-tip="Encuestas" style="background:#FFF3E0;"
+      onclick="openGenericPanel('encuestas', 'btn-encuestas')">
+      <svg width="20" height="20" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M6.33674 4.06348H3.36542V7.00187H6.33674V4.06348Z" fill="#D89E64"/>
+<path d="M6.33674 16.9795H3.36542V19.9179H6.33674V16.9795Z" fill="#D89E64"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0.535966 0C0.235073 0 0 0.232475 0 0.530033V23.47C0 23.7675 0.235073 24 0.535966 24H19.464C19.7649 24 20 23.7675 20 23.47V0.530033C20 0.232475 19.7649 0 19.464 0H0.535966ZM7.54114 20.5315C7.54114 20.8663 7.26845 21.136 6.92995 21.136H2.74565C2.40715 21.136 2.13446 20.8663 2.13446 20.5315V16.3936C2.13446 16.0589 2.40715 15.7892 2.74565 15.7892H6.92995C7.26845 15.7892 7.54114 16.0589 7.54114 16.3936V20.5315ZM7.28726 9.42888C7.55994 9.61485 7.63517 9.98682 7.44711 10.2658L4.65444 14.413C4.60743 14.4781 4.55101 14.5339 4.48519 14.5804C4.2031 14.7664 3.82699 14.692 3.64833 14.413L2.2473 12.3487V12.3301C2.05924 12.0511 2.14386 11.6792 2.43535 11.5025C2.72685 11.3259 3.09356 11.4002 3.27221 11.6885L4.15609 13.0182L6.441 9.63348C6.54443 9.4661 6.73249 9.36378 6.93935 9.36378C7.07099 9.36378 7.19323 9.40102 7.29666 9.46611V9.44749H7.27786V9.42888H7.28726ZM7.54114 7.60634C7.54114 7.94109 7.26845 8.21075 6.92995 8.21075H2.74565C2.40715 8.21075 2.13446 7.94109 2.13446 7.60634V3.45912C2.13446 3.12437 2.40715 2.85471 2.74565 2.85471H6.92995C7.26845 2.85471 7.54114 3.12437 7.54114 3.45912V7.60634ZM13.0889 20.2805H9.72261C9.38411 20.2805 9.12083 20.0015 9.12083 19.6668C9.12083 19.332 9.40291 19.0716 9.74142 19.0716H13.1077C13.4462 19.0716 13.7094 19.3506 13.7094 19.6854C13.7094 20.0201 13.4274 20.2805 13.0889 20.2805ZM17.2449 17.8349H9.73202C9.39351 17.8349 9.13023 17.556 9.13023 17.2212C9.13023 16.8864 9.41232 16.6261 9.75082 16.6261H17.2638C17.6023 16.6261 17.8655 16.9051 17.8655 17.2398C17.8655 17.5746 17.5835 17.8349 17.2449 17.8349ZM9.12083 13.2135C9.12083 12.8787 9.40291 12.6183 9.74142 12.6183H13.1077C13.4462 12.6183 13.7094 12.8973 13.7094 13.2321C13.7094 13.5668 13.4274 13.8272 13.0889 13.8272H9.72261C9.38411 13.8272 9.12083 13.5482 9.12083 13.2135ZM17.2449 11.3816H9.73202C9.39351 11.3816 9.13023 11.1026 9.13023 10.7679C9.13023 10.4331 9.41232 10.1728 9.75082 10.1728H17.2638C17.6023 10.1728 17.8655 10.4518 17.8655 10.7865C17.8655 11.1213 17.5835 11.3816 17.2449 11.3816ZM9.12083 6.75087C9.12083 6.41612 9.40291 6.15574 9.74142 6.15574H13.1077C13.4462 6.15574 13.7094 6.43471 13.7094 6.76946C13.7094 7.10421 13.4274 7.36459 13.0889 7.36459H9.72261C9.38411 7.36459 9.12083 7.08563 9.12083 6.75087ZM17.2449 4.91903H9.73202C9.39351 4.91903 9.13023 4.64006 9.13023 4.30531C9.13023 3.97055 9.41232 3.71018 9.75082 3.71018H17.2638C17.6023 3.71018 17.8655 3.98914 17.8655 4.32389C17.8655 4.65865 17.5835 4.91903 17.2449 4.91903Z" fill="#D89E64"/>
+</svg>
+    </button>
+
+    <!-- 8. Cumpleaños -->
+    <button class="wp-btn" id="btn-cumple" data-tip="Cumpleaños" style="background:#E8F0FD;"
+      onclick="openGenericPanel('cumple', 'btn-cumple')">
+      <svg width="20" height="20" viewBox="0 0 21 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g opacity="0.9">
+<path d="M13.6732 6.75718C13.6732 3.00885 10.5945 0 6.83658 0C3.07861 0 0 3.04285 0 6.75718C0 9.80004 2.19286 15.1378 5.48646 16.3108L4.52332 18.1892C4.43732 18.3507 4.48032 18.5631 4.60931 18.6906C5.07369 19.1496 5.28007 18.1892 6.4668 18.6482C6.33781 19.7786 5.62405 19.9401 5.62405 21.521C5.62405 22.6855 6.04542 23.1445 6.33781 23.7224C6.4238 23.9349 6.68178 24.0624 6.88817 23.9689C7.10316 23.8839 7.23215 23.6289 7.13756 23.4249C7.04296 23.2209 6.97417 23.0509 6.88817 22.8809C5.83044 21.0025 7.13756 20.1356 7.35254 18.8776C7.48153 18.9201 7.65352 18.9201 7.81691 18.9201C8.1179 18.9201 8.45327 18.8776 8.87465 18.7926C9.00364 18.7501 9.08963 18.6651 9.17563 18.5461C9.33902 18.2062 9.08963 18.1297 8.21249 16.2937C11.3341 15.1293 13.6989 10.123 13.6989 6.74019L13.6817 6.75718H13.6732ZM9.02944 3.51032C8.81445 3.38282 8.78005 3.13636 8.90045 2.92387C9.02944 2.71138 9.27882 2.67736 9.49381 2.79635C11.1363 3.88431 12.0651 5.79672 11.3513 8.5931C11.3083 8.80559 11.0503 8.93309 10.8439 8.89059C10.6289 8.84809 10.4655 8.59311 10.5429 8.38912C11.0503 6.38321 10.7579 4.64077 9.02944 3.51032Z" fill="#75A1DF"/>
+<path d="M20.9746 8.75417C20.9746 5.9153 18.6527 3.62891 15.7891 3.62891C15.1527 3.62891 14.5679 3.7564 13.9746 3.96889C14.3186 4.85285 14.525 5.76231 14.525 6.71427C14.525 8.84767 13.6822 11.5506 12.2461 13.7265C12.8825 14.6784 13.6822 15.5199 14.6539 15.8938L14.0176 17.1858C13.9316 17.3473 13.9746 17.5598 14.1036 17.6873C14.2326 17.8148 14.4476 17.8488 14.6109 17.7723C15.0323 17.5258 15.1613 17.5598 15.4537 17.6448C15.4107 17.9422 15.3247 18.1037 15.2043 18.3077C14.2756 19.9822 15.2903 20.9766 15.4193 21.5631C15.4623 21.8096 15.7203 21.9371 15.9267 21.8606C16.1417 21.8181 16.305 21.5631 16.2276 21.3591C16.0127 20.5686 15.2129 19.9397 15.9267 18.6902C16.0557 18.4777 16.176 18.2312 16.2706 17.8573C16.907 17.9422 17.9131 17.7298 17.6208 17.1943L16.9844 15.9024C19.3493 14.8994 21.0004 11.0236 21.0004 8.77116L20.9832 8.75417H20.9746ZM18.0679 8.75417C18.0679 7.99771 17.6896 7.29225 17.0532 6.87577C16.8382 6.74827 16.8038 6.50178 16.9242 6.28929C17.0446 6.0768 17.3026 6.04281 17.5176 6.1618C18.3603 6.74827 18.9107 7.70872 18.9107 8.70318C18.9107 8.94967 18.7473 9.11965 18.4893 9.11965C18.2743 9.16215 18.0679 8.99215 18.0679 8.74566V8.76268V8.75417Z" fill="#75A1DF"/>
+</g>
+</svg>
+    </button>
+
+    <!-- 9. Galerías -->
+    <button class="wp-btn" id="btn-galerias" data-tip="Galerías" style="background:#F5EEF8;"
+      onclick="openGenericPanel('galerias', 'btn-galerias')">
+      <svg width="20" height="20" viewBox="0 0 24 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.18814 2.41258H21.2419C21.4791 2.41258 21.6719 2.613 21.6719 2.85965V15.6856H24V0H3.18814V2.42029V2.41258Z" fill="#B378BA"/>
+<path d="M0 18.9923H20.8044V3.31439H0.00741444V19V18.9846H0V18.9923ZM9.06024 5.64219C10.1724 5.64219 11.0843 6.58254 11.0843 7.74643C11.0843 8.91033 10.1798 9.85072 9.06024 9.85072C7.94069 9.85072 7.03614 8.91033 7.03614 7.74643C7.03614 6.58254 7.94069 5.64219 9.06024 5.64219ZM1.49768 17.0345L5.79796 11.0685C5.95366 10.845 6.32437 10.845 6.48007 11.0685L9.23818 14.8917L13.1677 9.44218C13.3234 9.21865 13.6942 9.21865 13.8499 9.44218L19.3216 17.0345C19.4625 17.2272 19.4254 17.5124 19.24 17.6588C19.0547 17.8053 18.7804 17.7667 18.6395 17.574L13.5088 10.4519L8.37813 17.574C8.29657 17.6896 8.16311 17.7513 8.02966 17.7513C7.94069 17.7513 7.85171 17.7205 7.77016 17.6665C7.5848 17.5201 7.54031 17.2426 7.6886 17.0422L8.69694 15.6394L6.1316 12.086L2.1798 17.5817C2.09824 17.6973 1.96478 17.759 1.83133 17.759C1.74235 17.759 1.65338 17.7282 1.57183 17.6742C1.38647 17.5278 1.34198 17.2503 1.49027 17.0499V17.0345H1.49768Z" fill="#B378BA"/>
+<path d="M9.06024 8.9643C9.70528 8.9643 10.2317 8.41702 10.2317 7.74643C10.2317 7.07585 9.70528 6.52862 9.06024 6.52862C8.4152 6.52862 7.88879 7.07585 7.88879 7.74643C7.88879 8.41702 8.4152 8.9643 9.06024 8.9643Z" fill="#B378BA"/>
+</svg>
+    </button>
+
+    <!-- 10. Incidencias -->
     <button class="wp-btn" id="btn-inc" data-tip="Incidencias" style="background:#FFFDE7;"
       onclick="togglePanel()">
-      <svg viewBox="0 0 24 24" style="stroke:#F9A825;fill:none">
+      <svg viewBox="0 0 24 24" style="stroke:#F9A825;fill:none;width:20px;height:20px;">
         <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
         <line x1="12" y1="9" x2="12" y2="13"/>
         <line x1="12" y1="17" x2="12.01" y2="17"/>
@@ -4511,6 +4782,145 @@
     <div class="wp-spacer"></div>
 
   </div><!-- /webparts-bar -->
+
+
+  <aside class="right-panel-2" id="panel-secciones" style="z-index:202;">
+    <div class="panel-header">
+      <div class="ph-icon" style="background:#E3F2FD;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M22.5 2.28495H2.28852V24.5H22.5V2.28495Z" fill="white"/><path d="M20.7115 0.5H0.5V22.7151H20.7115V0.5Z" fill="#54A0D2"/><path d="M22.5 2.28495H2.28852V24.5H22.5V2.28495Z" stroke="#54A0D2" stroke-miterlimit="10"/><path d="M20.7115 0.5H0.5V22.7151H20.7115V0.5Z" stroke="#54A0D2" stroke-miterlimit="10"/></svg>
+      </div>
+      <div class="ph-bar-blue"></div>
+      <div class="ph-titles">
+        <span class="ph-title">Secciones</span>
+        <span class="ph-subtitle">Panel del profesor</span>
+      </div>
+      <button class="ph-btn" onclick="closeGenericPanel('secciones', 'btn-secciones')">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="panel-body" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
+      <div style="width:48px;height:48px;border-radius:50%;background:#E3F2FD;display:flex;align-items:center;justify-content:center;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M22.5 2.28495H2.28852V24.5H22.5V2.28495Z" fill="white"/><path d="M20.7115 0.5H0.5V22.7151H20.7115V0.5Z" fill="#54A0D2"/><path d="M22.5 2.28495H2.28852V24.5H22.5V2.28495Z" stroke="#54A0D2" stroke-miterlimit="10"/><path d="M20.7115 0.5H0.5V22.7151H20.7115V0.5Z" stroke="#54A0D2" stroke-miterlimit="10"/></svg>
+      </div>
+      <div style="font-size:15px;font-weight:700;font-family:var(--font-ui);color:var(--text-secondary);">Secciones</div>
+      <div style="font-size:13px;font-family:var(--font-body);color:var(--text-muted);">Módulo en construcción</div>
+    </div>
+  </aside>
+
+  <aside class="right-panel-2" id="panel-comunicados-wp" style="z-index:202;">
+    <div class="panel-header">
+      <div class="ph-icon" style="background:#EEF3FB;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M19.4981 1.57685V0.752036C19.4981 0.339629 19.1586 0 18.7463 0H0.751792C0.339519 0 0 0.339629 0 0.752036V1.57685L9.74905 5.92734L19.4981 1.57685Z" fill="#6F99D3"/><path d="M22.5052 9.0078H9.00527C8.18072 9.0078 7.50977 9.67897 7.50977 10.5038V19.504C7.50977 20.3449 8.16455 20.9999 9.00527 20.9999H10.5008V23.2561C10.5008 23.5472 10.6624 23.8059 10.9292 23.9272C11.0343 23.9757 11.1475 24 11.2606 24C11.4223 24 11.6002 23.9515 11.7295 23.8383L15.2702 20.9999H22.5052C23.3459 20.9999 24.0007 20.3449 24.0007 19.504V10.5038C24.0007 9.6628 23.3459 9.0078 22.5052 9.0078Z" fill="#6F99D3"/><path d="M19.499 3.21811L10.0572 7.43113C9.96018 7.47965 9.85509 7.49582 9.75 7.49582H19.499V3.21003V3.21811Z" fill="#6F99D3"/><path d="M9.75686 7.49653C9.65177 7.49653 9.54668 7.47227 9.44967 7.43183L0.0078125 3.21882V12.7527C0.0078125 13.1651 0.347331 13.5047 0.759604 13.5047H6.01406V10.5047C6.01406 8.84695 7.35597 7.50461 9.01315 7.50461H9.76494H9.75686V7.49653Z" fill="#6F99D3"/></svg>
+      </div>
+      <div class="ph-bar-comms"></div>
+      <div class="ph-titles">
+        <span class="ph-title">Comunicados</span>
+        <span class="ph-subtitle">Panel del profesor</span>
+      </div>
+      <button class="ph-btn" onclick="closeGenericPanel('comunicados-wp', 'btn-comunicados-wp')">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="panel-body" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
+      <div style="width:48px;height:48px;border-radius:50%;background:#EEF3FB;display:flex;align-items:center;justify-content:center;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M19.4981 1.57685V0.752036C19.4981 0.339629 19.1586 0 18.7463 0H0.751792C0.339519 0 0 0.339629 0 0.752036V1.57685L9.74905 5.92734L19.4981 1.57685Z" fill="#6F99D3"/><path d="M22.5052 9.0078H9.00527C8.18072 9.0078 7.50977 9.67897 7.50977 10.5038V19.504C7.50977 20.3449 8.16455 20.9999 9.00527 20.9999H10.5008V23.2561C10.5008 23.5472 10.6624 23.8059 10.9292 23.9272C11.0343 23.9757 11.1475 24 11.2606 24C11.4223 24 11.6002 23.9515 11.7295 23.8383L15.2702 20.9999H22.5052C23.3459 20.9999 24.0007 20.3449 24.0007 19.504V10.5038C24.0007 9.6628 23.3459 9.0078 22.5052 9.0078Z" fill="#6F99D3"/><path d="M19.499 3.21811L10.0572 7.43113C9.96018 7.47965 9.85509 7.49582 9.75 7.49582H19.499V3.21003V3.21811Z" fill="#6F99D3"/><path d="M9.75686 7.49653C9.65177 7.49653 9.54668 7.47227 9.44967 7.43183L0.0078125 3.21882V12.7527C0.0078125 13.1651 0.347331 13.5047 0.759604 13.5047H6.01406V10.5047C6.01406 8.84695 7.35597 7.50461 9.01315 7.50461H9.76494H9.75686V7.49653Z" fill="#6F99D3"/></svg>
+      </div>
+      <div style="font-size:15px;font-weight:700;font-family:var(--font-ui);color:var(--text-secondary);">Comunicados</div>
+      <div style="font-size:13px;font-family:var(--font-body);color:var(--text-muted);">Módulo en construcción</div>
+    </div>
+  </aside>
+
+  <aside class="right-panel-2" id="panel-entrevistas" style="z-index:202;">
+    <div class="panel-header">
+      <div class="ph-icon" style="background:#EEEEF8;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M24 2.22201V6.67969C24 7.91035 22.9547 8.9017 21.673 8.9017H18.8163L15.9165 10.9801C15.6802 11.1511 15.3652 11.1784 15.1003 11.0485C14.8354 10.9186 14.6707 10.6656 14.6707 10.3922V8.9017H12.3438C11.055 8.9017 10.0168 7.90351 10.0168 6.67969V2.22201C10.0168 0.991358 11.0621 0 12.3438 0H21.673C22.9618 0 24 0.998195 24 2.22201ZM14.6707 4.45769C14.6707 4.04747 14.3199 3.71246 13.8903 3.71246C13.4607 3.71246 13.1099 4.04747 13.1099 4.45769C13.1099 4.8679 13.4607 5.20292 13.8903 5.20292C14.3199 5.20292 14.6707 4.8679 14.6707 4.45769ZM17.7852 4.45769C17.7852 4.04747 17.4344 3.71246 17.0048 3.71246C16.5752 3.71246 16.2244 4.04747 16.2244 4.45769C16.2244 4.8679 16.5752 5.20292 17.0048 5.20292C17.4344 5.20292 17.7852 4.8679 17.7852 4.45769ZM20.8926 4.45769C20.8926 4.04747 20.5418 3.71246 20.1122 3.71246C19.6826 3.71246 19.3318 4.04747 19.3318 4.45769C19.3318 4.8679 19.6826 5.20292 20.1122 5.20292C20.5418 5.20292 20.8926 4.8679 20.8926 4.45769Z" fill="#95A2D8"/><path d="M7.99756 12.9015C8.97846 12.3204 9.63717 11.288 9.63717 10.1052C9.63717 8.30023 8.0978 6.83028 6.20759 6.83028C4.31739 6.83028 2.77802 8.30023 2.77802 10.1052C2.77802 11.2811 3.43673 12.3204 4.41763 12.9015C1.86156 13.6262 0 15.8482 0 18.4736C0 18.6787 0.178996 18.8428 0.386632 18.8428C0.594268 18.8428 0.773264 18.6719 0.773264 18.4736C0.773264 15.6773 3.20045 13.4006 6.19327 13.4006C9.18609 13.4006 11.6133 15.6705 11.6133 18.4736C11.6133 18.6787 11.7923 18.8428 11.9999 18.8428C12.2076 18.8428 12.3865 18.6719 12.3865 18.4736C12.3865 15.8482 10.525 13.6262 7.96892 12.9015H7.99756ZM3.55845 10.112C3.55845 8.71728 4.73982 7.58234 6.20759 7.58234C7.67536 7.58234 8.85674 8.71044 8.85674 10.112C8.85674 11.5136 7.67536 12.6417 6.20759 12.6417C4.73982 12.6417 3.55845 11.5136 3.55845 10.112Z" fill="#95A2D8"/><path d="M20.0545 15.0619C20.706 14.679 21.1356 13.9953 21.1356 13.2159C21.1356 12.0195 20.1189 11.0486 18.8659 11.0486C17.613 11.0486 16.5963 12.0195 16.5963 13.2159C16.5963 13.9953 17.033 14.679 17.6774 15.0619C15.9877 15.5405 14.749 17.0105 14.749 18.747C14.749 18.8838 14.8636 19 15.0139 19C15.1643 19 15.2789 18.8906 15.2789 18.747C15.2789 16.9011 16.8898 15.3901 18.8659 15.3901C20.8421 15.3901 22.453 16.8942 22.453 18.747C22.453 18.8838 22.5676 19 22.7179 19C22.8683 19 22.9829 18.8906 22.9829 18.747C22.9829 17.0105 21.7514 15.5405 20.0545 15.0619ZM17.1261 13.2228C17.1261 12.2998 17.9137 11.5477 18.8803 11.5477C19.8468 11.5477 20.6344 12.2998 20.6344 13.2228C20.6344 14.1458 19.8468 14.8978 18.8803 14.8978C17.9137 14.8978 17.1261 14.1458 17.1261 13.2228Z" fill="#95A2D8"/></svg>
+      </div>
+      <div class="ph-bar-lilac"></div>
+      <div class="ph-titles">
+        <span class="ph-title">Entrevistas</span>
+        <span class="ph-subtitle">Panel del profesor</span>
+      </div>
+      <button class="ph-btn" onclick="closeGenericPanel('entrevistas', 'btn-entrevistas')">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="panel-body" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
+      <div style="width:48px;height:48px;border-radius:50%;background:#EEEEF8;display:flex;align-items:center;justify-content:center;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M24 2.22201V6.67969C24 7.91035 22.9547 8.9017 21.673 8.9017H18.8163L15.9165 10.9801C15.6802 11.1511 15.3652 11.1784 15.1003 11.0485C14.8354 10.9186 14.6707 10.6656 14.6707 10.3922V8.9017H12.3438C11.055 8.9017 10.0168 7.90351 10.0168 6.67969V2.22201C10.0168 0.991358 11.0621 0 12.3438 0H21.673C22.9618 0 24 0.998195 24 2.22201ZM14.6707 4.45769C14.6707 4.04747 14.3199 3.71246 13.8903 3.71246C13.4607 3.71246 13.1099 4.04747 13.1099 4.45769C13.1099 4.8679 13.4607 5.20292 13.8903 5.20292C14.3199 5.20292 14.6707 4.8679 14.6707 4.45769ZM17.7852 4.45769C17.7852 4.04747 17.4344 3.71246 17.0048 3.71246C16.5752 3.71246 16.2244 4.04747 16.2244 4.45769C16.2244 4.8679 16.5752 5.20292 17.0048 5.20292C17.4344 5.20292 17.7852 4.8679 17.7852 4.45769ZM20.8926 4.45769C20.8926 4.04747 20.5418 3.71246 20.1122 3.71246C19.6826 3.71246 19.3318 4.04747 19.3318 4.45769C19.3318 4.8679 19.6826 5.20292 20.1122 5.20292C20.5418 5.20292 20.8926 4.8679 20.8926 4.45769Z" fill="#95A2D8"/><path d="M7.99756 12.9015C8.97846 12.3204 9.63717 11.288 9.63717 10.1052C9.63717 8.30023 8.0978 6.83028 6.20759 6.83028C4.31739 6.83028 2.77802 8.30023 2.77802 10.1052C2.77802 11.2811 3.43673 12.3204 4.41763 12.9015C1.86156 13.6262 0 15.8482 0 18.4736C0 18.6787 0.178996 18.8428 0.386632 18.8428C0.594268 18.8428 0.773264 18.6719 0.773264 18.4736C0.773264 15.6773 3.20045 13.4006 6.19327 13.4006C9.18609 13.4006 11.6133 15.6705 11.6133 18.4736C11.6133 18.6787 11.7923 18.8428 11.9999 18.8428C12.2076 18.8428 12.3865 18.6719 12.3865 18.4736C12.3865 15.8482 10.525 13.6262 7.96892 12.9015H7.99756ZM3.55845 10.112C3.55845 8.71728 4.73982 7.58234 6.20759 7.58234C7.67536 7.58234 8.85674 8.71044 8.85674 10.112C8.85674 11.5136 7.67536 12.6417 6.20759 12.6417C4.73982 12.6417 3.55845 11.5136 3.55845 10.112Z" fill="#95A2D8"/><path d="M20.0545 15.0619C20.706 14.679 21.1356 13.9953 21.1356 13.2159C21.1356 12.0195 20.1189 11.0486 18.8659 11.0486C17.613 11.0486 16.5963 12.0195 16.5963 13.2159C16.5963 13.9953 17.033 14.679 17.6774 15.0619C15.9877 15.5405 14.749 17.0105 14.749 18.747C14.749 18.8838 14.8636 19 15.0139 19C15.1643 19 15.2789 18.8906 15.2789 18.747C15.2789 16.9011 16.8898 15.3901 18.8659 15.3901C20.8421 15.3901 22.453 16.8942 22.453 18.747C22.453 18.8838 22.5676 19 22.7179 19C22.8683 19 22.9829 18.8906 22.9829 18.747C22.9829 17.0105 21.7514 15.5405 20.0545 15.0619ZM17.1261 13.2228C17.1261 12.2998 17.9137 11.5477 18.8803 11.5477C19.8468 11.5477 20.6344 12.2998 20.6344 13.2228C20.6344 14.1458 19.8468 14.8978 18.8803 14.8978C17.9137 14.8978 17.1261 14.1458 17.1261 13.2228Z" fill="#95A2D8"/></svg>
+      </div>
+      <div style="font-size:15px;font-weight:700;font-family:var(--font-ui);color:var(--text-secondary);">Entrevistas</div>
+      <div style="font-size:13px;font-family:var(--font-body);color:var(--text-muted);">Módulo en construcción</div>
+    </div>
+  </aside>
+
+  <aside class="right-panel-2" id="panel-encuestas" style="z-index:202;">
+    <div class="panel-header">
+      <div class="ph-icon" style="background:#FFF3E0;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M6.33674 4.06348H3.36542V7.00187H6.33674V4.06348Z" fill="#D89E64"/><path d="M6.33674 16.9795H3.36542V19.9179H6.33674V16.9795Z" fill="#D89E64"/><path fill-rule="evenodd" clip-rule="evenodd" d="M0.535966 0C0.235073 0 0 0.232475 0 0.530033V23.47C0 23.7675 0.235073 24 0.535966 24H19.464C19.7649 24 20 23.7675 20 23.47V0.530033C20 0.232475 19.7649 0 19.464 0H0.535966ZM7.54114 20.5315C7.54114 20.8663 7.26845 21.136 6.92995 21.136H2.74565C2.40715 21.136 2.13446 20.8663 2.13446 20.5315V16.3936C2.13446 16.0589 2.40715 15.7892 2.74565 15.7892H6.92995C7.26845 15.7892 7.54114 16.0589 7.54114 16.3936V20.5315ZM7.28726 9.42888C7.55994 9.61485 7.63517 9.98682 7.44711 10.2658L4.65444 14.413C4.60743 14.4781 4.55101 14.5339 4.48519 14.5804C4.2031 14.7664 3.82699 14.692 3.64833 14.413L2.2473 12.3487V12.3301C2.05924 12.0511 2.14386 11.6792 2.43535 11.5025C2.72685 11.3259 3.09356 11.4002 3.27221 11.6885L4.15609 13.0182L6.441 9.63348C6.54443 9.4661 6.73249 9.36378 6.93935 9.36378C7.07099 9.36378 7.19323 9.40102 7.29666 9.46611V9.44749H7.27786V9.42888H7.28726ZM7.54114 7.60634C7.54114 7.94109 7.26845 8.21075 6.92995 8.21075H2.74565C2.40715 8.21075 2.13446 7.94109 2.13446 7.60634V3.45912C2.13446 3.12437 2.40715 2.85471 2.74565 2.85471H6.92995C7.26845 2.85471 7.54114 3.12437 7.54114 3.45912V7.60634ZM13.0889 20.2805H9.72261C9.38411 20.2805 9.12083 20.0015 9.12083 19.6668C9.12083 19.332 9.40291 19.0716 9.74142 19.0716H13.1077C13.4462 19.0716 13.7094 19.3506 13.7094 19.6854C13.7094 20.0201 13.4274 20.2805 13.0889 20.2805ZM17.2449 17.8349H9.73202C9.39351 17.8349 9.13023 17.556 9.13023 17.2212C9.13023 16.8864 9.41232 16.6261 9.75082 16.6261H17.2638C17.6023 16.6261 17.8655 16.9051 17.8655 17.2398C17.8655 17.5746 17.5835 17.8349 17.2449 17.8349ZM9.12083 13.2135C9.12083 12.8787 9.40291 12.6183 9.74142 12.6183H13.1077C13.4462 12.6183 13.7094 12.8973 13.7094 13.2321C13.7094 13.5668 13.4274 13.8272 13.0889 13.8272H9.72261C9.38411 13.8272 9.12083 13.5482 9.12083 13.2135ZM17.2449 11.3816H9.73202C9.39351 11.3816 9.13023 11.1026 9.13023 10.7679C9.13023 10.4331 9.41232 10.1728 9.75082 10.1728H17.2638C17.6023 10.1728 17.8655 10.4518 17.8655 10.7865C17.8655 11.1213 17.5835 11.3816 17.2449 11.3816ZM9.12083 6.75087C9.12083 6.41612 9.40291 6.15574 9.74142 6.15574H13.1077C13.4462 6.15574 13.7094 6.43471 13.7094 6.76946C13.7094 7.10421 13.4274 7.36459 13.0889 7.36459H9.72261C9.38411 7.36459 9.12083 7.08563 9.12083 6.75087ZM17.2449 4.91903H9.73202C9.39351 4.91903 9.13023 4.64006 9.13023 4.30531C9.13023 3.97055 9.41232 3.71018 9.75082 3.71018H17.2638C17.6023 3.71018 17.8655 3.98914 17.8655 4.32389C17.8655 4.65865 17.5835 4.91903 17.2449 4.91903Z" fill="#D89E64"/></svg>
+      </div>
+      <div class="ph-bar-orange"></div>
+      <div class="ph-titles">
+        <span class="ph-title">Encuestas</span>
+        <span class="ph-subtitle">Panel del profesor</span>
+      </div>
+      <button class="ph-btn" onclick="closeGenericPanel('encuestas', 'btn-encuestas')">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="panel-body" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
+      <div style="width:48px;height:48px;border-radius:50%;background:#FFF3E0;display:flex;align-items:center;justify-content:center;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M6.33674 4.06348H3.36542V7.00187H6.33674V4.06348Z" fill="#D89E64"/><path d="M6.33674 16.9795H3.36542V19.9179H6.33674V16.9795Z" fill="#D89E64"/><path fill-rule="evenodd" clip-rule="evenodd" d="M0.535966 0C0.235073 0 0 0.232475 0 0.530033V23.47C0 23.7675 0.235073 24 0.535966 24H19.464C19.7649 24 20 23.7675 20 23.47V0.530033C20 0.232475 19.7649 0 19.464 0H0.535966ZM7.54114 20.5315C7.54114 20.8663 7.26845 21.136 6.92995 21.136H2.74565C2.40715 21.136 2.13446 20.8663 2.13446 20.5315V16.3936C2.13446 16.0589 2.40715 15.7892 2.74565 15.7892H6.92995C7.26845 15.7892 7.54114 16.0589 7.54114 16.3936V20.5315ZM7.28726 9.42888C7.55994 9.61485 7.63517 9.98682 7.44711 10.2658L4.65444 14.413C4.60743 14.4781 4.55101 14.5339 4.48519 14.5804C4.2031 14.7664 3.82699 14.692 3.64833 14.413L2.2473 12.3487V12.3301C2.05924 12.0511 2.14386 11.6792 2.43535 11.5025C2.72685 11.3259 3.09356 11.4002 3.27221 11.6885L4.15609 13.0182L6.441 9.63348C6.54443 9.4661 6.73249 9.36378 6.93935 9.36378C7.07099 9.36378 7.19323 9.40102 7.29666 9.46611V9.44749H7.27786V9.42888H7.28726ZM7.54114 7.60634C7.54114 7.94109 7.26845 8.21075 6.92995 8.21075H2.74565C2.40715 8.21075 2.13446 7.94109 2.13446 7.60634V3.45912C2.13446 3.12437 2.40715 2.85471 2.74565 2.85471H6.92995C7.26845 2.85471 7.54114 3.12437 7.54114 3.45912V7.60634ZM13.0889 20.2805H9.72261C9.38411 20.2805 9.12083 20.0015 9.12083 19.6668C9.12083 19.332 9.40291 19.0716 9.74142 19.0716H13.1077C13.4462 19.0716 13.7094 19.3506 13.7094 19.6854C13.7094 20.0201 13.4274 20.2805 13.0889 20.2805ZM17.2449 17.8349H9.73202C9.39351 17.8349 9.13023 17.556 9.13023 17.2212C9.13023 16.8864 9.41232 16.6261 9.75082 16.6261H17.2638C17.6023 16.6261 17.8655 16.9051 17.8655 17.2398C17.8655 17.5746 17.5835 17.8349 17.2449 17.8349ZM9.12083 13.2135C9.12083 12.8787 9.40291 12.6183 9.74142 12.6183H13.1077C13.4462 12.6183 13.7094 12.8973 13.7094 13.2321C13.7094 13.5668 13.4274 13.8272 13.0889 13.8272H9.72261C9.38411 13.8272 9.12083 13.5482 9.12083 13.2135ZM17.2449 11.3816H9.73202C9.39351 11.3816 9.13023 11.1026 9.13023 10.7679C9.13023 10.4331 9.41232 10.1728 9.75082 10.1728H17.2638C17.6023 10.1728 17.8655 10.4518 17.8655 10.7865C17.8655 11.1213 17.5835 11.3816 17.2449 11.3816ZM9.12083 6.75087C9.12083 6.41612 9.40291 6.15574 9.74142 6.15574H13.1077C13.4462 6.15574 13.7094 6.43471 13.7094 6.76946C13.7094 7.10421 13.4274 7.36459 13.0889 7.36459H9.72261C9.38411 7.36459 9.12083 7.08563 9.12083 6.75087ZM17.2449 4.91903H9.73202C9.39351 4.91903 9.13023 4.64006 9.13023 4.30531C9.13023 3.97055 9.41232 3.71018 9.75082 3.71018H17.2638C17.6023 3.71018 17.8655 3.98914 17.8655 4.32389C17.8655 4.65865 17.5835 4.91903 17.2449 4.91903Z" fill="#D89E64"/></svg>
+      </div>
+      <div style="font-size:15px;font-weight:700;font-family:var(--font-ui);color:var(--text-secondary);">Encuestas</div>
+      <div style="font-size:13px;font-family:var(--font-body);color:var(--text-muted);">Módulo en construcción</div>
+    </div>
+  </aside>
+
+  <aside class="right-panel-2" id="panel-cumple" style="z-index:202;">
+    <div class="panel-header">
+      <div class="ph-icon" style="background:#E8F0FD;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M13.6732 6.75718C13.6732 3.00885 10.5945 0 6.83658 0C3.07861 0 0 3.04285 0 6.75718C0 9.80004 2.19286 15.1378 5.48646 16.3108L4.52332 18.1892C4.43732 18.3507 4.48032 18.5631 4.60931 18.6906C5.07369 19.1496 5.28007 18.1892 6.4668 18.6482C6.33781 19.7786 5.62405 19.9401 5.62405 21.521C5.62405 22.6855 6.04542 23.1445 6.33781 23.7224C6.4238 23.9349 6.68178 24.0624 6.88817 23.9689C7.10316 23.8839 7.23215 23.6289 7.13756 23.4249C7.04296 23.2209 6.97417 23.0509 6.88817 22.8809C5.83044 21.0025 7.13756 20.1356 7.35254 18.8776C7.48153 18.9201 7.65352 18.9201 7.81691 18.9201C8.1179 18.9201 8.45327 18.8776 8.87465 18.7926C9.00364 18.7501 9.08963 18.6651 9.17563 18.5461C9.33902 18.2062 9.08963 18.1297 8.21249 16.2937C11.3341 15.1293 13.6989 10.123 13.6989 6.74019L13.6817 6.75718H13.6732ZM9.02944 3.51032C8.81445 3.38282 8.78005 3.13636 8.90045 2.92387C9.02944 2.71138 9.27882 2.67736 9.49381 2.79635C11.1363 3.88431 12.0651 5.79672 11.3513 8.5931C11.3083 8.80559 11.0503 8.93309 10.8439 8.89059C10.6289 8.84809 10.4655 8.59311 10.5429 8.38912C11.0503 6.38321 10.7579 4.64077 9.02944 3.51032Z" fill="#75A1DF"/><path d="M20.9746 8.75417C20.9746 5.9153 18.6527 3.62891 15.7891 3.62891C15.1527 3.62891 14.5679 3.7564 13.9746 3.96889C14.3186 4.85285 14.525 5.76231 14.525 6.71427C14.525 8.84767 13.6822 11.5506 12.2461 13.7265C12.8825 14.6784 13.6822 15.5199 14.6539 15.8938L14.0176 17.1858C13.9316 17.3473 13.9746 17.5598 14.1036 17.6873C14.2326 17.8148 14.4476 17.8488 14.6109 17.7723C15.0323 17.5258 15.1613 17.5598 15.4537 17.6448C15.4107 17.9422 15.3247 18.1037 15.2043 18.3077C14.2756 19.9822 15.2903 20.9766 15.4193 21.5631C15.4623 21.8096 15.7203 21.9371 15.9267 21.8606C16.1417 21.8181 16.305 21.5631 16.2276 21.3591C16.0127 20.5686 15.2129 19.9397 15.9267 18.6902C16.0557 18.4777 16.176 18.2312 16.2706 17.8573C16.907 17.9422 17.9131 17.7298 17.6208 17.1943L16.9844 15.9024C19.3493 14.8994 21.0004 11.0236 21.0004 8.77116L20.9832 8.75417H20.9746ZM18.0679 8.75417C18.0679 7.99771 17.6896 7.29225 17.0532 6.87577C16.8382 6.74827 16.8038 6.50178 16.9242 6.28929C17.0446 6.0768 17.3026 6.04281 17.5176 6.1618C18.3603 6.74827 18.9107 7.70872 18.9107 8.70318C18.9107 8.94967 18.7473 9.11965 18.4893 9.11965C18.2743 9.16215 18.0679 8.99215 18.0679 8.74566V8.76268V8.75417Z" fill="#75A1DF"/></svg>
+      </div>
+      <div class="ph-bar-skyblue"></div>
+      <div class="ph-titles">
+        <span class="ph-title">Cumpleaños</span>
+        <span class="ph-subtitle">Panel del profesor</span>
+      </div>
+      <button class="ph-btn" onclick="closeGenericPanel('cumple', 'btn-cumple')">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="panel-body" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
+      <div style="width:48px;height:48px;border-radius:50%;background:#E8F0FD;display:flex;align-items:center;justify-content:center;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M13.6732 6.75718C13.6732 3.00885 10.5945 0 6.83658 0C3.07861 0 0 3.04285 0 6.75718C0 9.80004 2.19286 15.1378 5.48646 16.3108L4.52332 18.1892C4.43732 18.3507 4.48032 18.5631 4.60931 18.6906C5.07369 19.1496 5.28007 18.1892 6.4668 18.6482C6.33781 19.7786 5.62405 19.9401 5.62405 21.521C5.62405 22.6855 6.04542 23.1445 6.33781 23.7224C6.4238 23.9349 6.68178 24.0624 6.88817 23.9689C7.10316 23.8839 7.23215 23.6289 7.13756 23.4249C7.04296 23.2209 6.97417 23.0509 6.88817 22.8809C5.83044 21.0025 7.13756 20.1356 7.35254 18.8776C7.48153 18.9201 7.65352 18.9201 7.81691 18.9201C8.1179 18.9201 8.45327 18.8776 8.87465 18.7926C9.00364 18.7501 9.08963 18.6651 9.17563 18.5461C9.33902 18.2062 9.08963 18.1297 8.21249 16.2937C11.3341 15.1293 13.6989 10.123 13.6989 6.74019L13.6817 6.75718H13.6732ZM9.02944 3.51032C8.81445 3.38282 8.78005 3.13636 8.90045 2.92387C9.02944 2.71138 9.27882 2.67736 9.49381 2.79635C11.1363 3.88431 12.0651 5.79672 11.3513 8.5931C11.3083 8.80559 11.0503 8.93309 10.8439 8.89059C10.6289 8.84809 10.4655 8.59311 10.5429 8.38912C11.0503 6.38321 10.7579 4.64077 9.02944 3.51032Z" fill="#75A1DF"/><path d="M20.9746 8.75417C20.9746 5.9153 18.6527 3.62891 15.7891 3.62891C15.1527 3.62891 14.5679 3.7564 13.9746 3.96889C14.3186 4.85285 14.525 5.76231 14.525 6.71427C14.525 8.84767 13.6822 11.5506 12.2461 13.7265C12.8825 14.6784 13.6822 15.5199 14.6539 15.8938L14.0176 17.1858C13.9316 17.3473 13.9746 17.5598 14.1036 17.6873C14.2326 17.8148 14.4476 17.8488 14.6109 17.7723C15.0323 17.5258 15.1613 17.5598 15.4537 17.6448C15.4107 17.9422 15.3247 18.1037 15.2043 18.3077C14.2756 19.9822 15.2903 20.9766 15.4193 21.5631C15.4623 21.8096 15.7203 21.9371 15.9267 21.8606C16.1417 21.8181 16.305 21.5631 16.2276 21.3591C16.0127 20.5686 15.2129 19.9397 15.9267 18.6902C16.0557 18.4777 16.176 18.2312 16.2706 17.8573C16.907 17.9422 17.9131 17.7298 17.6208 17.1943L16.9844 15.9024C19.3493 14.8994 21.0004 11.0236 21.0004 8.77116L20.9832 8.75417H20.9746ZM18.0679 8.75417C18.0679 7.99771 17.6896 7.29225 17.0532 6.87577C16.8382 6.74827 16.8038 6.50178 16.9242 6.28929C17.0446 6.0768 17.3026 6.04281 17.5176 6.1618C18.3603 6.74827 18.9107 7.70872 18.9107 8.70318C18.9107 8.94967 18.7473 9.11965 18.4893 9.11965C18.2743 9.16215 18.0679 8.99215 18.0679 8.74566V8.76268V8.75417Z" fill="#75A1DF"/></svg>
+      </div>
+      <div style="font-size:15px;font-weight:700;font-family:var(--font-ui);color:var(--text-secondary);">Cumpleaños</div>
+      <div style="font-size:13px;font-family:var(--font-body);color:var(--text-muted);">Módulo en construcción</div>
+    </div>
+  </aside>
+
+  <aside class="right-panel-2" id="panel-galerias" style="z-index:202;">
+    <div class="panel-header">
+      <div class="ph-icon" style="background:#F5EEF8;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M3.18814 2.41258H21.2419C21.4791 2.41258 21.6719 2.613 21.6719 2.85965V15.6856H24V0H3.18814V2.42029V2.41258Z" fill="#B378BA"/><path d="M0 18.9923H20.8044V3.31439H0.00741444V19V18.9846H0V18.9923ZM9.06024 5.64219C10.1724 5.64219 11.0843 6.58254 11.0843 7.74643C11.0843 8.91033 10.1798 9.85072 9.06024 9.85072C7.94069 9.85072 7.03614 8.91033 7.03614 7.74643C7.03614 6.58254 7.94069 5.64219 9.06024 5.64219ZM1.49768 17.0345L5.79796 11.0685C5.95366 10.845 6.32437 10.845 6.48007 11.0685L9.23818 14.8917L13.1677 9.44218C13.3234 9.21865 13.6942 9.21865 13.8499 9.44218L19.3216 17.0345C19.4625 17.2272 19.4254 17.5124 19.24 17.6588C19.0547 17.8053 18.7804 17.7667 18.6395 17.574L13.5088 10.4519L8.37813 17.574C8.29657 17.6896 8.16311 17.7513 8.02966 17.7513C7.94069 17.7513 7.85171 17.7205 7.77016 17.6665C7.5848 17.5201 7.54031 17.2426 7.6886 17.0422L8.69694 15.6394L6.1316 12.086L2.1798 17.5817C2.09824 17.6973 1.96478 17.759 1.83133 17.759C1.74235 17.759 1.65338 17.7282 1.57183 17.6742C1.38647 17.5278 1.34198 17.2503 1.49027 17.0499V17.0345H1.49768Z" fill="#B378BA"/><path d="M9.06024 8.9643C9.70528 8.9643 10.2317 8.41702 10.2317 7.74643C10.2317 7.07585 9.70528 6.52862 9.06024 6.52862C8.4152 6.52862 7.88879 7.07585 7.88879 7.74643C7.88879 8.41702 8.4152 8.9643 9.06024 8.9643Z" fill="#B378BA"/></svg>
+      </div>
+      <div class="ph-bar-purple"></div>
+      <div class="ph-titles">
+        <span class="ph-title">Galerías</span>
+        <span class="ph-subtitle">Panel del profesor</span>
+      </div>
+      <button class="ph-btn" onclick="closeGenericPanel('galerias', 'btn-galerias')">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="panel-body" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
+      <div style="width:48px;height:48px;border-radius:50%;background:#F5EEF8;display:flex;align-items:center;justify-content:center;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M3.18814 2.41258H21.2419C21.4791 2.41258 21.6719 2.613 21.6719 2.85965V15.6856H24V0H3.18814V2.42029V2.41258Z" fill="#B378BA"/><path d="M0 18.9923H20.8044V3.31439H0.00741444V19V18.9846H0V18.9923ZM9.06024 5.64219C10.1724 5.64219 11.0843 6.58254 11.0843 7.74643C11.0843 8.91033 10.1798 9.85072 9.06024 9.85072C7.94069 9.85072 7.03614 8.91033 7.03614 7.74643C7.03614 6.58254 7.94069 5.64219 9.06024 5.64219ZM1.49768 17.0345L5.79796 11.0685C5.95366 10.845 6.32437 10.845 6.48007 11.0685L9.23818 14.8917L13.1677 9.44218C13.3234 9.21865 13.6942 9.21865 13.8499 9.44218L19.3216 17.0345C19.4625 17.2272 19.4254 17.5124 19.24 17.6588C19.0547 17.8053 18.7804 17.7667 18.6395 17.574L13.5088 10.4519L8.37813 17.574C8.29657 17.6896 8.16311 17.7513 8.02966 17.7513C7.94069 17.7513 7.85171 17.7205 7.77016 17.6665C7.5848 17.5201 7.54031 17.2426 7.6886 17.0422L8.69694 15.6394L6.1316 12.086L2.1798 17.5817C2.09824 17.6973 1.96478 17.759 1.83133 17.759C1.74235 17.759 1.65338 17.7282 1.57183 17.6742C1.38647 17.5278 1.34198 17.2503 1.49027 17.0499V17.0345H1.49768Z" fill="#B378BA"/><path d="M9.06024 8.9643C9.70528 8.9643 10.2317 8.41702 10.2317 7.74643C10.2317 7.07585 9.70528 6.52862 9.06024 6.52862C8.4152 6.52862 7.88879 7.07585 7.88879 7.74643C7.88879 8.41702 8.4152 8.9643 9.06024 8.9643Z" fill="#B378BA"/></svg>
+      </div>
+      <div style="font-size:15px;font-weight:700;font-family:var(--font-ui);color:var(--text-secondary);">Galerías</div>
+      <div style="font-size:13px;font-family:var(--font-body);color:var(--text-muted);">Módulo en construcción</div>
+    </div>
+  </aside>
 
 </div><!-- /body-row -->
 
@@ -4829,6 +5239,7 @@
     var navItem = document.getElementById('nav-' + id);
     if (navItem) navItem.classList.add('active');
   }
+  window.showPage = showPage;
 
   // ── COMUNICADOS ───────────────────────────────────────────────────────
   // ── ENGAGEMENT DRILL-DOWN ─────────────────────────────────────────────
@@ -5127,19 +5538,15 @@
     var btnA = document.getElementById('toggle-mode-a');
     var btnB = document.getElementById('toggle-mode-b');
     if (btnA && btnB) {
-      [btnA, btnB].forEach(function(b) {
-        b.classList.remove('ia-mode-active');
-        b.style.borderColor = 'var(--border)';
-        b.style.background = 'var(--bg-surface)';
-        b.querySelector('span').style.color = 'var(--text-secondary)';
-        b.querySelectorAll('span')[1].style.color = 'var(--text-muted)';
+      [btnA, btnB].forEach(function(btn) {
+        var isActive = (btn.id === 'toggle-mode-' + mode.toLowerCase());
+        btn.classList.toggle('active-mode', isActive);
+        btn.style.borderColor = isActive ? 'var(--support-discovery)' : 'var(--border)';
+        btn.style.background = isActive ? '#EEF0FC' : 'var(--bg-surface)';
+        btn.querySelectorAll('span').forEach(function(s) {
+          s.style.color = isActive ? 'var(--support-discovery)' : 'var(--text-secondary)';
+        });
       });
-      var active = mode === 'A' ? btnA : btnB;
-      active.classList.add('ia-mode-active');
-      active.style.borderColor = 'var(--support-discovery)';
-      active.style.background = '#EEF0FC';
-      active.querySelector('span').style.color = 'var(--support-discovery)';
-      active.querySelectorAll('span')[1].style.color = 'var(--support-discovery)';
     }
     // Reset any open reviews
     iaDiscardInline();
@@ -5338,10 +5745,25 @@
 
   function runIaAction(action) {
     var menu = document.getElementById('ia-menu-compose');
+    if (menu) menu.classList.remove('open');
+
+    // Verificar asunto vacio solo para generar
+    if (action === 'generar') {
+      var asuntoInput = document.getElementById('compose-asunto');
+      var asuntoWarning = document.getElementById('compose-asunto-warning');
+      if (asuntoInput && !asuntoInput.value.trim()) {
+        // Highlight campo
+        asuntoInput.style.borderColor = 'var(--support-warning)';
+        asuntoInput.focus();
+        // Mostrar banner warning
+        if (asuntoWarning) asuntoWarning.style.display = '';
+        return;
+      }
+    }
+
     var btn = document.getElementById('btn-ia-compose');
     var shimmer = document.getElementById('ia-editor-shimmer');
     var editor = document.getElementById('ia-compose-editor');
-    if (menu) menu.classList.remove('open');
     btn.classList.add('loading');
     shimmer.classList.add('visible');
     editor.style.opacity = '0.3';
@@ -5353,6 +5775,58 @@
       var label = ACTION_LABELS[action] || 'Sugerencia de IA';
       iaShowResult(result, label, 'compose');
     }, 1800);
+  }
+
+
+  function openGenericPanel(id, btnId) {
+    closePanel(); closePanelAlumnos(); closePanelAreas();
+    ['ia-review','secciones','comunicados-wp','entrevistas','encuestas','cumple','galerias'].forEach(function(pid) {
+      if (pid === id) return;
+      var p = document.getElementById('panel-' + pid);
+      if (p) p.classList.remove('open');
+      var b = document.getElementById('btn-' + pid);
+      if (b) b.classList.remove('active');
+    });
+    var panel = document.getElementById('panel-' + id);
+    if (!panel) return;
+    panel.classList.add('open');
+    showOverlay();
+    var btn = document.getElementById(btnId);
+    if (btn) btn.classList.add('active');
+  }
+
+  function closeGenericPanel(id, btnId) {
+    var panel = document.getElementById('panel-' + id);
+    if (panel) panel.classList.remove('open');
+    hideOverlay();
+    var btn = document.getElementById(btnId);
+    if (btn) btn.classList.remove('active');
+  }
+
+  function saveDraft() {
+    var now = new Date();
+    var hh = String(now.getHours()).padStart(2, '0');
+    var mm = String(now.getMinutes()).padStart(2, '0');
+    var feedback = document.getElementById('draft-saved-feedback');
+    var btnDescartar = document.getElementById('btn-descartar');
+    if (!feedback) return;
+    feedback.textContent = 'Guardado en borradores - ' + hh + ':' + mm;
+    feedback.style.display = 'inline';
+    if (btnDescartar) btnDescartar.style.display = 'none';
+    clearTimeout(window._draftTimer);
+    window._draftTimer = setTimeout(function() {
+      feedback.style.display = 'none';
+      if (btnDescartar) btnDescartar.style.display = '';
+    }, 4000);
+  }
+
+  function clearAsuntoWarning() {
+    var asuntoInput = document.getElementById('compose-asunto');
+    var asuntoWarning = document.getElementById('compose-asunto-warning');
+    if (asuntoInput && asuntoInput.value.trim()) {
+      asuntoInput.style.borderColor = 'var(--action-primary)';
+      if (asuntoWarning) asuntoWarning.style.display = 'none';
+    }
   }
   function comToggleAll(cb) {
     document.querySelectorAll('#com-tbody .row-check').forEach(c => c.checked = cb.checked);
@@ -5675,63 +6149,6 @@
     });
   })();
 
-  // ── CUADERNO ASISTENTE ────────────────────────────────────────────────
-  var cuaOrigen = 'rec';
-
-  function cuaShowStep(n) {
-    document.querySelectorAll('.cua-step').forEach(function(s) { s.style.display = 'none'; });
-    var step = document.getElementById('cua-step-' + n);
-    if (step) step.style.display = '';
-  }
-
-  function cuaSelectOrigen(origen) {
-    cuaOrigen = origen;
-    // Actualiza visual de la tarjeta recomendada
-    var rec = document.getElementById('cua-card-rec');
-    if (origen === 'rec') {
-      rec.style.border = '2px solid var(--action-primary)';
-    } else {
-      rec.style.border = '1px solid var(--border)';
-    }
-    // Si es opción alternativa, avanza directamente al paso 2
-    if (origen !== 'rec') {
-      var subtitles = {
-        'plantilla': 'Copiando desde la plantilla del centro',
-        'otro-grupo': 'Copiando desde cuaderno 1º EB-B · 2024-25',
-        'cero': 'Cuaderno en blanco'
-      };
-      document.getElementById('cua-step2-subtitle').textContent = subtitles[origen] || '';
-      // Ocultar checkboxes si es desde cero (no hay qué copiar)
-      var copiarSection = document.getElementById('cua-copiar-section');
-      copiarSection.style.display = (origen === 'cero') ? 'none' : '';
-      cuaShowStep(2);
-    }
-  }
-
-  function cuaUsarRecomendado() {
-    cuaOrigen = 'rec';
-    document.getElementById('cua-step2-subtitle').textContent = 'Copiando desde tu cuaderno 2024-25';
-    document.getElementById('cua-copiar-section').style.display = '';
-    cuaShowStep(2);
-  }
-
-  function cuaBack(n) {
-    cuaShowStep(n);
-  }
-
-  function cuaCrear() {
-    var nombre = document.getElementById('cua-nombre').value || 'Lengua Castellana 1º EB-A';
-    document.getElementById('cua-success-msg').textContent = nombre + ' · listo para usar';
-    cuaShowStep(3);
-  }
-
-  function cuaReset() {
-    cuaOrigen = 'rec';
-    document.getElementById('cua-card-rec').style.border = '2px solid var(--action-primary)';
-    document.getElementById('cua-nombre').value = 'Lengua Castellana 1º EB-A';
-    document.getElementById('cua-copiar-section').style.display = '';
-    cuaShowStep(1);
-  }
 
 </script>
 
@@ -5757,5 +6174,262 @@
   </div>
   <div id="fs-content" style="flex:1;display:flex;flex-direction:column;overflow:hidden;"></div>
 </div>
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page-view').forEach(function(v){ v.classList.remove('active'); });
+    document.querySelectorAll('.nav-item[id^="nav-"]').forEach(function(n){ n.classList.remove('active'); });
+    var page = document.getElementById('page-' + id);
+    if (page) page.classList.add('active');
+    var nav = document.getElementById('nav-' + id);
+    if (nav) nav.classList.add('active');
+  }
+
+  // ── CUADERNO ASISTENTE (global) ───────────────────────────────────────
+  var cuaOrigen = 'rec';
+  var cuaPlantillaSelected = null;
+  var cuaColorSelected = '#0A529F';
+  var cuaGuardarPlantilla = false;
+
+  var CUA_COLORS = [
+    { hex: '#0A529F', label: 'Azul' },
+    { hex: '#10855B', label: 'Verde' },
+    { hex: '#6352C7', label: 'Violeta' },
+    { hex: '#B6153A', label: 'Rojo' },
+    { hex: '#EBB851', label: 'Amarillo' },
+    { hex: '#E07B39', label: 'Naranja' },
+    { hex: '#3B82C4', label: 'Celeste' },
+    { hex: '#8B5CF6', label: 'Morado' },
+    { hex: '#EC4899', label: 'Rosa' },
+    { hex: '#14B8A6', label: 'Turquesa' },
+    { hex: '#64748B', label: 'Gris' },
+    { hex: '#333333', label: 'Negro' }
+  ];
+
+  var CUA_TOOLTIPS = {
+    reglada: 'Criterios y competencias especificas configurados por el centro segun la LOMLOE. Los define el departamento.',
+    notas:   'Columnas de nota final por evaluacion y observaciones sobre el alumno. Se usan en el boletin y los informes de trimestre.',
+    incid:   'Columna para anotar comportamientos, retrasos, expulsiones u otras incidencias del alumno.',
+    activ:   'Copia las columnas de actividades y controles del cuaderno anterior. Util si repites los mismos ejercicios cada curso.'
+  };
+
+  var CUA_CONFIGS = {
+    'rec':        { subtitle: 'Copiando desde tu cuaderno de Lengua Castellana 2024-25', backTo: '1', opciones: [
+      { id:'reglada', label: 'Items de evaluacion reglada',   desc: 'Criterios y competencias del centro',         on: true  },
+      { id:'notas',   label: 'Notas y observaciones finales', desc: 'Columnas de nota final por evaluacion',       on: true  },
+      { id:'incid',   label: 'Incidencias',                   desc: 'Columna de registro de incidencias',          on: false },
+      { id:'activ',   label: 'Actividades y tareas',          desc: 'Copia las actividades del cuaderno anterior', on: false }
+    ]},
+    'otro-grupo': { subtitle: 'Copiando desde cuaderno 1 EB-B 2024-25', backTo: '1', opciones: [
+      { id:'reglada', label: 'Items de evaluacion reglada',   desc: 'Criterios y competencias del centro',  on: true  },
+      { id:'notas',   label: 'Notas y observaciones finales', desc: 'Columnas de nota final por evaluacion',on: true  },
+      { id:'incid',   label: 'Incidencias',                   desc: 'Columna de registro de incidencias',   on: false },
+      { id:'activ',   label: 'Actividades y tareas',          desc: 'Copia las actividades del otro grupo', on: false }
+    ]},
+    'plantilla':  { subtitle: '', backTo: '1b', opciones: [
+      { id:'reglada', label: 'Items de evaluacion reglada',   desc: 'Definidos en la plantilla',            on: true  },
+      { id:'notas',   label: 'Notas y observaciones finales', desc: 'Columnas de nota final por evaluacion',on: true  }
+    ]},
+    'cero':       { subtitle: 'Cuaderno en blanco', backTo: '1', opciones: [
+      { id:'reglada', label: 'Items de evaluacion reglada',   desc: 'El centro ya tiene los criterios LOMLOE configurados', on: true  },
+      { id:'notas',   label: 'Notas y observaciones finales', desc: 'Columnas de nota final por evaluacion',                on: true  },
+      { id:'incid',   label: 'Incidencias',                   desc: 'Columna de registro de incidencias',                  on: false }
+    ]}
+  };
+
+  function cuaShowStep(n) {
+    document.querySelectorAll('.cua-step').forEach(function(s){ s.style.display = 'none'; });
+    var id = (n === '1b') ? 'cua-step-1b' : 'cua-step-' + n;
+    var el = document.getElementById(id);
+    if (el) el.style.display = '';
+  }
+
+  function cuaSelectOrigen(origen) {
+    cuaOrigen = origen;
+    if (origen === 'plantilla') { cuaShowStep('1b'); return; }
+    cuaGoToStep2(origen);
+  }
+
+  function cuaUsarRecomendado() { cuaOrigen = 'rec'; cuaGoToStep2('rec'); }
+
+  function cuaGoToStep2(origen) {
+    var cfg = CUA_CONFIGS[origen] || CUA_CONFIGS['rec'];
+    var sub = cfg.subtitle;
+    if (origen === 'plantilla' && cuaPlantillaSelected) sub = 'Usando plantilla: ' + cuaPlantillaSelected;
+    document.getElementById('cua-step2-subtitle').textContent = sub;
+    document.getElementById('cua-incluir-titulo').textContent = (origen === 'cero') ? 'Configuracion inicial' : 'Que incluir';
+
+    var container = document.getElementById('cua-incluir-opciones');
+    container.innerHTML = cfg.opciones.map(function(op, i) {
+      var isLast = i === cfg.opciones.length - 1;
+      var borderBottom = isLast ? '' : 'border-bottom:1px solid var(--border);';
+      var bg = op.on ? 'var(--action-primary)' : 'var(--grey-500)';
+      var thumbLeft = op.on ? '19px' : '3px';
+      var tip = CUA_TOOLTIPS[op.id] || '';
+      var tipIcon = tip ? '<span onclick="cuaTipToggle(this)" style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:var(--grey-400);color:var(--text-secondary);font-size:10px;font-weight:700;font-family:var(--font-ui);cursor:pointer;margin-left:6px;flex-shrink:0;user-select:none;">i</span>' : '';
+      var tipPanel = tip ? '<div class="cua-tip-panel" style="position:absolute;inset:0;background:var(--bg-surface);display:flex;align-items:center;gap:12px;padding:0 16px;transform:translateX(-100%);transition:transform 0.25s ease;z-index:5;overflow:hidden;">' +
+        '<div style="flex:1;font-size:13px;color:var(--text-secondary);font-family:var(--font-body);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">' + tip + '</div>' +
+        '<span onclick="cuaTipClose(this)" style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--grey-400);cursor:pointer;flex-shrink:0;">' +
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>' +
+        '</span></div>' : '';
+      return '<div style="display:flex;align-items:center;justify-content:space-between;padding:13px 16px;background:#fff;' + borderBottom + 'position:relative;overflow:hidden;">' +
+        '<div style="flex:1;min-width:0;">' +
+        '<div style="display:flex;align-items:center;">' +
+        '<div style="font-size:13px;font-weight:600;color:var(--text-primary);font-family:var(--font-ui);">' + op.label + '</div>' +
+        tipIcon + '</div>' +
+        '<div style="font-size:12px;color:var(--text-muted);font-family:var(--font-body);margin-top:1px;">' + op.desc + '</div></div>' +
+        '<span data-track data-checked="' + op.on + '" onclick="cuaToggleClick(this)" style="display:block;width:40px;height:22px;background:' + bg + ';border-radius:11px;position:relative;cursor:pointer;transition:background 0.2s;flex-shrink:0;margin-left:16px;">' +
+        '<span style="position:absolute;top:3px;left:' + thumbLeft + ';width:16px;height:16px;background:#fff;border-radius:50%;transition:left 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.2);"></span>' +
+        '</span>' + tipPanel + '</div>';
+    }).join('');
+
+    var colorPicker = document.getElementById('cua-color-picker');
+    colorPicker.innerHTML = CUA_COLORS.map(function(c) {
+      var sel = c.hex === cuaColorSelected;
+      return '<div onclick="cuaSelectColor(' + JSON.stringify(c.hex) + ', this)" title="' + c.label + '" style="width:32px;height:32px;border-radius:var(--radius-sm);background:' + c.hex + ';cursor:pointer;display:flex;align-items:center;justify-content:center;border:3px solid ' + (sel ? '#fff' : 'transparent') + ';box-shadow:' + (sel ? '0 0 0 2px ' + c.hex : 'none') + ';transition:all 0.15s;">' +
+        (sel ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>' : '') +
+        '</div>';
+    }).join('');
+
+    cuaGuardarPlantilla = false;
+    var track = document.getElementById('cua-plantilla-track');
+    var thumb = document.getElementById('cua-plantilla-thumb');
+    if (track) track.style.background = 'var(--grey-500)';
+    if (thumb) thumb.style.left = '3px';
+    cuaShowStep(2);
+  }
+
+  function cuaTipToggle(iconEl) {
+    var row = iconEl.closest('div[style*="position:relative"]');
+    if (!row) return;
+    var panel = row.querySelector('.cua-tip-panel');
+    if (!panel) return;
+    // Close all others first
+    document.querySelectorAll('.cua-tip-panel').forEach(function(p) {
+      if (p !== panel) p.style.transform = 'translateX(-100%)';
+    });
+    panel.style.transform = 'translateX(0)';
+  }
+
+  function cuaTipClose(closeBtn) {
+    var panel = closeBtn.closest('.cua-tip-panel');
+    if (panel) panel.style.transform = 'translateX(-100%)';
+  }
+
+  function cuaToggleClick(trackEl) {
+    var on = trackEl.getAttribute('data-checked') === 'true';
+    on = !on;
+    trackEl.setAttribute('data-checked', String(on));
+    trackEl.style.background = on ? 'var(--action-primary)' : 'var(--grey-500)';
+    var thumb = trackEl.querySelector('span');
+    if (thumb) thumb.style.left = on ? '19px' : '3px';
+  }
+
+  function cuaSelectColor(hex, el) {
+    cuaColorSelected = hex;
+    var picker = document.getElementById('cua-color-picker');
+    picker.querySelectorAll('div').forEach(function(d) {
+      d.style.border = '3px solid transparent';
+      d.style.boxShadow = 'none';
+      d.innerHTML = '';
+    });
+    el.style.border = '3px solid #fff';
+    el.style.boxShadow = '0 0 0 2px ' + hex;
+    el.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>';
+  }
+
+  function cuaTogglePlantilla() {
+    cuaGuardarPlantilla = !cuaGuardarPlantilla;
+    var track = document.getElementById('cua-plantilla-track');
+    var thumb = document.getElementById('cua-plantilla-thumb');
+    if (track) track.style.background = cuaGuardarPlantilla ? 'var(--action-primary)' : 'var(--grey-500)';
+    if (thumb) thumb.style.left = cuaGuardarPlantilla ? '19px' : '3px';
+  }
+
+  function cuaSelectPlantilla(el, nome) {
+    document.querySelectorAll('.plantilla-selected').forEach(function(e) {
+      e.classList.remove('plantilla-selected');
+      e.style.borderColor = 'var(--border)'; e.style.background = '#fff';
+      var c = e.querySelector('.plantilla-check'); if (c) c.style.display = 'none';
+    });
+    el.classList.add('plantilla-selected');
+    el.style.borderColor = 'var(--action-primary)'; el.style.background = 'var(--blue-50)';
+    var chk = el.querySelector('.plantilla-check'); if (chk) chk.style.display = 'flex';
+    cuaPlantillaSelected = nome;
+    var btn = document.getElementById('cua-btn-usar-plantilla');
+    btn.disabled = false; btn.style.background = 'var(--action-primary)'; btn.style.cursor = 'pointer';
+  }
+
+  function cuaUsarPlantilla() {
+    if (!cuaPlantillaSelected) return;
+    cuaOrigen = 'plantilla'; cuaGoToStep2('plantilla');
+  }
+
+  function cuaOtrasChange() {
+    setTimeout(function() {
+      var checked = document.querySelectorAll('.cua-otras-check:checked').length;
+      var btnPrimary = document.getElementById('cua-btn-primary');
+      var btnAbrir = document.getElementById('cua-btn-abrir');
+      var label = document.getElementById('cua-btn-primary-label');
+      var icon = document.getElementById('cua-btn-primary-icon');
+      if (checked > 0) {
+        var plural = checked === 1 ? 'este grupo' : 'estos ' + checked + ' grupos';
+        label.textContent = 'Crear tambien para ' + plural;
+        icon.innerHTML = '<polyline points="20 6 9 17 4 12"/>';
+        icon.setAttribute('viewBox','0 0 24 24');
+        btnAbrir.style.display = 'flex';
+      } else {
+        label.textContent = 'Abrir cuaderno';
+        icon.innerHTML = '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>';
+        btnAbrir.style.display = 'none';
+      }
+    }, 0);
+  }
+
+  function cuaBtnPrimary() {
+    var checked = document.querySelectorAll('.cua-otras-check:checked').length;
+    if (checked > 0) {
+      // Simula creacion — en produccion llamaria API
+      var label = document.getElementById('cua-btn-primary-label');
+      label.textContent = 'Creando...';
+      setTimeout(function() {
+        document.getElementById('cua-success-msg').textContent =
+          (checked + 1) + ' cuadernos creados · listos para usar';
+        document.querySelectorAll('.cua-otras-check').forEach(function(c){ c.closest('label').style.opacity='0.4'; });
+        label.textContent = 'Abrir cuaderno';
+        document.getElementById('cua-btn-primary-icon').innerHTML = '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>';
+        document.getElementById('cua-btn-abrir').style.display = 'none';
+      }, 800);
+    }
+    // Si no hay seleccion, "Abrir cuaderno" no hace nada en el prototipo
+  }
+
+  function cuaBack(n) { cuaShowStep(n); }
+
+  function cuaBackFromStep2() {
+    var cfg = CUA_CONFIGS[cuaOrigen] || CUA_CONFIGS['rec'];
+    cuaShowStep(cfg.backTo);
+  }
+
+  function cuaCrear() {
+    var nome = document.getElementById('cua-nombre').value || 'Lengua Castellana 1 EB-A';
+    document.getElementById('cua-success-msg').textContent = nome + ' - listo para usar';
+    cuaShowStep(3);
+  }
+
+  function cuaReset() {
+    cuaOrigen = 'rec'; cuaPlantillaSelected = null;
+    cuaColorSelected = '#0A529F'; cuaGuardarPlantilla = false;
+    document.getElementById('cua-nombre').value = 'Lengua Castellana 1 EB-A';
+    var desc = document.getElementById('cua-desc'); if (desc) desc.value = '';
+    document.querySelectorAll('.plantilla-selected').forEach(function(e) {
+      e.classList.remove('plantilla-selected');
+      e.style.borderColor = 'var(--border)'; e.style.background = '#fff';
+      var c = e.querySelector('.plantilla-check'); if (c) c.style.display = 'none';
+    });
+    var btn = document.getElementById('cua-btn-usar-plantilla');
+    if (btn) { btn.disabled = true; btn.style.background = 'var(--grey-400)'; btn.style.cursor = 'not-allowed'; }
+    cuaShowStep(1);
+  }
+</script>
 </body>
 </html>
