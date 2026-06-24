@@ -4207,11 +4207,11 @@
         <div class="form-section">
           <div class="toggle-row">
             <span class="form-label" style="margin-bottom:0">Dia completo</span>
-            <div class="toggle-track" onclick="this.classList.toggle('on')"><div class="toggle-thumb"></div></div>
+            <div class="toggle-track" id="toggle-dia-completo" onclick="this.classList.toggle('on'); document.getElementById('form-section-sesiones').style.display = this.classList.contains('on') ? 'none' : 'block';"><div class="toggle-thumb"></div></div>
           </div>
         </div>
 
-        <div class="form-section">
+        <div class="form-section" id="form-section-sesiones">
           <span class="form-label">Sesiones</span>
           <div class="session-list">
             <div class="session-item"><input type="checkbox" id="s1"><label for="s1">19/06 - 9:00 - 10:00 - Matematicas</label></div>
@@ -4223,12 +4223,17 @@
 
         <div class="form-section">
           <span class="form-label">Tipo de incidencia</span>
-          <select class="form-select"><option>Conducta en clase</option><option>Ausencia</option><option>Retraso</option></select>
+          <select class="form-select" id="inc-tipo-select"><option value="">Seleccionar tipo...</option><option value="conducta">Conducta en clase</option><option value="ausencia">Ausencia injustificada</option><option value="retraso">Retraso</option><option value="movil">Uso del móvil</option><option value="expulsion">Expulsión de clase</option><option value="material">No trae el material</option><option value="deberes">No entrega los deberes</option><option value="falta_respeto">Falta de respeto</option></select>
         </div>
 
         <div class="form-section" style="border-bottom:none">
-          <span class="form-label">Observaciones</span>
-          <textarea class="form-textarea" placeholder="Describe lo ocurrido..."></textarea>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <span class="form-label" style="margin-bottom:0;">Observaciones</span>
+            <button class="btn-ia" id="btn-ia-inc-obs" onclick="runIaIncidencia()" data-tooltip="Redactar observación con IA" style="width:32px;height:32px;padding:0;justify-content:center;">
+              <div class="ia-icon" style="width:20px;height:20px;"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path class="s-big" d="M19.729 9.643C14.662 8.244 13.608 7.19 12.209 2.125a.39.39 0 0 0-.714 0C10.095 7.19 9.04 8.244 3.975 9.643a.39.39 0 0 0 0 .715C9.042 11.757 10.095 12.811 11.495 17.876a.39.39 0 0 0 .714 0C13.608 12.81 14.663 11.757 19.729 10.358a.39.39 0 0 0 0-.715z" fill="#30AAC6"/><path class="s-green" d="M3.717 7.877a.39.39 0 0 0 .714 0C5.08 5.531 5.53 5.08 7.877 4.432a.39.39 0 0 0 0-.715C5.53 3.069 5.08 2.619 4.43.272a.39.39 0 0 0-.714 0C3.068 2.618 2.618 3.069.27 3.717a.39.39 0 0 0 0 .715C2.618 5.08 3.069 5.53 3.717 7.877z" fill="#71A850"/><path class="s-yellow" d="M8.432 16.124c-1.968-.544-2.346-.921-2.889-2.89a.39.39 0 0 0-.714 0c-.544 1.97-.921 2.347-2.89 2.89a.39.39 0 0 0 0 .715c1.97.543 2.347.921 2.89 2.889a.39.39 0 0 0 .714 0c.543-1.968.921-2.346 2.889-2.89a.39.39 0 0 0 0-.714z" fill="#F5D83E"/></svg></div>
+            </button>
+          </div>
+          <textarea class="form-textarea" id="inc-obs-textarea" placeholder="Describe lo ocurrido..."></textarea>
         </div>
       </div>
 
@@ -4925,6 +4930,40 @@
 </div><!-- /body-row -->
 
 <script>
+  // ── IA EN INCIDENCIAS — Redactar observación ─────────────────────────
+  var INC_OBS_RESULTS = {
+    'conducta':     'Durante la clase de hoy, el alumno/a ha mostrado un comportamiento disruptivo que ha dificultado el desarrollo normal de la sesión. Ha interrumpido en varias ocasiones con comentarios inapropiados y se ha negado a seguir las indicaciones del profesor.',
+    'ausencia':     'El alumno/a no ha asistido a la sesión sin justificación previa. Se trata de la tercera ausencia injustificada en las últimas dos semanas. Se recomienda contactar con la familia para conocer la situación.',
+    'retraso':      'El alumno/a ha llegado con 15 minutos de retraso al inicio de la clase, interrumpiendo la explicación y el ritmo del grupo. No ha aportado justificación por el retraso.',
+    'movil':        'El alumno/a ha sido sorprendido/a utilizando el teléfono móvil durante la explicación, incumpliendo el reglamento del centro que prohíbe el uso de dispositivos personales en el aula.',
+    'expulsion':    'Debido a la actitud reiterada y el comportamiento inapropiado durante la clase, el alumno/a ha sido expulsado/a del aula y derivado/a a Jefatura de Estudios. Se solicita entrevista con la familia.',
+    'material':     'El alumno/a ha acudido a clase sin el material necesario para la sesión (libro de texto, cuaderno y estuche), lo que le ha impedido seguir con normalidad las actividades programadas.',
+    'deberes':      'El alumno/a no ha entregado la tarea correspondiente a esta sesión. Es la segunda vez consecutiva que no presenta los deberes. Se recomienda hacer seguimiento desde casa.',
+    'falta_respeto': 'El alumno/a ha dirigido comentarios irrespetuosos hacia el profesor/a durante la clase. Tras la advertencia, la actitud no mejoró. Se considera necesaria la intervención del tutor/a y contacto con la familia.'
+  };
+
+  function runIaIncidencia() {
+    var btn = document.getElementById('btn-ia-inc-obs');
+    var textarea = document.getElementById('inc-obs-textarea');
+    var select = document.getElementById('inc-tipo-select');
+    if (!btn || !textarea) return;
+    var tipo = select ? select.value : '';
+    if (!tipo) {
+      select.style.outline = '2px solid var(--support-danger)';
+      setTimeout(function() { select.style.outline = ''; }, 2000);
+      return;
+    }
+    btn.classList.add('loading');
+    textarea.style.opacity = '0.3';
+    setTimeout(function() {
+      btn.classList.remove('loading');
+      textarea.style.opacity = '1';
+      var result = INC_OBS_RESULTS[tipo] || 'Se ha producido una incidencia durante la sesión. Por favor, complete los detalles manualmente.';
+      textarea.value = result;
+    }, 1600);
+  }
+
+
   // ── CONTEXT PANEL ─────────────────────────────────────────────────────
   var CTX_CONTENT = {
     comunicados: {
