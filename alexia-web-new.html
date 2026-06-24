@@ -731,9 +731,10 @@
   .right-panel {
     position: fixed; top: 0; right: 0; bottom: 0; width: 0; z-index: 200;
     background: var(--bg-primary); border-left: 1px solid var(--border);
-    box-shadow: -4px 0 24px rgba(0,0,0,0.18);
+    box-shadow: none;
     display: flex; flex-direction: column; overflow: hidden; transition: width 0.22s ease;
   }
+  .right-panel.open { box-shadow: -4px 0 24px rgba(0,0,0,0.18); }
   .right-panel.open { width: 420px; }
 
   /* Loading bar no topo do painel */
@@ -937,9 +938,10 @@
   .right-panel-2 {
     position: fixed; top: 0; right: 0; bottom: 0; width: 0; z-index: 200;
     background: var(--bg-primary); border-left: 1px solid var(--border);
-    box-shadow: -4px 0 24px rgba(0,0,0,0.18);
+    box-shadow: none;
     display: flex; flex-direction: column; overflow: hidden; transition: width 0.22s ease;
   }
+  .right-panel-2.open { box-shadow: -4px 0 24px rgba(0,0,0,0.18); }
   .right-panel-2.open { width: 420px; }
 
   /* Header alumnos — ícone verde */
@@ -1120,9 +1122,10 @@
   .right-panel-3 {
     position: fixed; top: 0; right: 0; bottom: 0; width: 0; z-index: 200;
     background: var(--bg-primary); border-left: 1px solid var(--border);
-    box-shadow: -4px 0 24px rgba(0,0,0,0.18);
+    box-shadow: none;
     display: flex; flex-direction: column; overflow: hidden; transition: width 0.22s ease;
   }
+  .right-panel-3.open { box-shadow: -4px 0 24px rgba(0,0,0,0.18); }
   .right-panel-3.open { width: 420px; }
 
   /* Ícone de livro com cor */
@@ -1550,10 +1553,11 @@
   }
   .right-panel-ia {
     position: fixed; top: 0; right: 0; bottom: 0; width: 0; z-index: 200;
-    background: var(--bg-primary); border-left: 1px solid var(--border);
-    box-shadow: -4px 0 24px rgba(0,0,0,0.18);
+    background: var(--bg-primary); border-left: 0px solid var(--border);
+    box-shadow: none;
     display: flex; flex-direction: column; overflow: hidden; transition: width 0.22s ease;
   }
+  .right-panel-ia.open { box-shadow: -4px 0 24px rgba(0,0,0,0.18); border-left-width: 1px; }
    .right-panel.expanded { width: 720px; }
   .right-panel-2.open { width: 420px; }
   .right-panel-2.expanded { width: 720px; }
@@ -1606,10 +1610,11 @@
   /* ── CONTEXT PANEL (info) ────────────────────────────────────────────── */
   .right-panel-ctx {
     position: fixed; top: 0; right: 0; bottom: 0; width: 0; z-index: 200;
-    background: var(--bg-primary); border-left: 1px solid var(--border);
-    box-shadow: -4px 0 24px rgba(0,0,0,0.18);
+    background: var(--bg-primary); border-left: 0px solid var(--border);
+    box-shadow: none;
     display: flex; flex-direction: column; overflow: hidden; transition: width 0.22s ease;
   }
+  .right-panel-ctx.open { box-shadow: -4px 0 24px rgba(0,0,0,0.18); border-left-width: 1px; }
   .right-panel-ctx.open { width: 480px; }
   .ctx-section { margin-bottom: 24px; }
   .ctx-section-title {
@@ -1733,8 +1738,7 @@
     <div class="nav-item" data-tooltip="Listados" onclick="showPage('listados')">
       <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
     </div>
-    <div class="nav-spacer"></div>
-    <div class="nav-bottom">
+
       <!-- Administración -->
       <div class="nav-item" data-tooltip="Administración" onclick="showPage('administracion')">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
@@ -1743,11 +1747,7 @@
       <div class="nav-item" data-tooltip="Firma digital" onclick="showPage('firma')">
         <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
       </div>
-      <!-- Salir -->
-      <div class="nav-item" data-tooltip="Salir" onclick="showPage('salir')">
-        <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-      </div>
-    </div>
+
   </nav>
 
   <!-- CONTENT (page-views) -->
@@ -3375,7 +3375,7 @@
             <h2 style="font-family:var(--font-ui);font-size:18px;font-weight:800;color:var(--text-primary);">Qué son las Acciones IA</h2>
           </div>
           <p style="font-family:var(--font-body);font-size:14px;color:var(--text-secondary);line-height:1.7;max-width:680px;margin-bottom:20px;">
-            Las <strong style="color:var(--text-primary);">Acciones IA</strong> son el patrón unificado de IA en Alexia. Reemplazan al "Asistente IA" disperso del MVP actual y establecen una sola forma de acceder a capacidades de inteligencia artificial — siempre explícita, siempre contextual, siempre bajo control del usuario.
+            Las <strong style="color:var(--text-primary);">Acciones IA</strong> son el patrón unificado de IA en Alexia. Establecen una sola forma de acceder a capacidades de inteligencia artificial — siempre explícita, siempre contextual, siempre bajo control del usuario.
           </p>
 
           <!-- Dos modos -->
@@ -3393,7 +3393,7 @@
             <div style="background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--radius-md);padding:20px;">
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
                 <span style="width:8px;height:8px;border-radius:50%;background:#30AAC6;display:inline-block;flex-shrink:0;"></span>
-                <span style="font-family:var(--font-ui);font-weight:700;font-size:13px;color:var(--text-primary);">Modo General («la casita»)</span>
+                <span style="font-family:var(--font-ui);font-weight:700;font-size:13px;color:var(--text-primary);">Modo General (a través de los WebParts)</span>
               </div>
               <p style="font-family:var(--font-body);font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:12px;">Punto de entrada fijo en la barra WebParts (lateral derecho). Para cuando no hay contexto concreto o el usuario quiere explorar qué puede hacer la IA.</p>
               <div style="background:var(--bg-surface);border-radius:var(--radius-sm);padding:10px 12px;font-family:var(--font-body);font-size:12px;color:var(--text-muted);">
@@ -3437,17 +3437,17 @@
                   <td style="padding:12px 16px;color:var(--text-secondary);">Ejecuta directamente, sin menú</td>
                   <td style="padding:12px 16px;color:var(--text-secondary);">Cuando hay una sola acción clara en el contexto</td>
                 </tr>
-                <tr>
-                  <td style="padding:12px 16px;"><span style="font-family:var(--font-ui);font-weight:700;color:var(--text-primary);">Solo icono</span></td>
-                </tr>
                 <tr style="border-bottom:1px solid var(--border);">
-                  <td style="padding:12px 16px;"><span style="font-family:var(--font-ui);font-weight:700;color:var(--text-primary);">WebParts</span></td>
-                  <td style="padding:12px 16px;font-family:var(--font-body);font-size:13px;color:var(--text-secondary);">— (sin label)</td>
-                  <td style="padding:12px 16px;font-family:var(--font-body);font-size:13px;color:var(--text-secondary);">Circular · punto de entrada fijo en barra lateral</td>
-                  <td style="padding:12px 16px;font-family:var(--font-body);font-size:13px;color:var(--text-secondary);">Solo en la barra WebParts · no para acciones directas</td>
+                  <td style="padding:12px 16px;"><span style="font-family:var(--font-ui);font-weight:700;color:var(--text-primary);">Solo icono</span></td>
                   <td style="padding:12px 16px;color:var(--text-secondary);">— (sin label)</td>
                   <td style="padding:12px 16px;color:var(--text-secondary);">Icono + tooltip al hover</td>
                   <td style="padding:12px 16px;color:var(--text-secondary);">Espacio muy reducido (toolbars compactas)</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--border);">
+                  <td style="padding:12px 16px;"><span style="font-family:var(--font-ui);font-weight:700;color:var(--text-primary);">WebParts</span></td>
+                  <td style="padding:12px 16px;color:var(--text-secondary);">— (sin label)</td>
+                  <td style="padding:12px 16px;color:var(--text-secondary);">Circular · punto de entrada fijo en barra lateral</td>
+                  <td style="padding:12px 16px;color:var(--text-secondary);">Solo en la barra WebParts · no para acciones directas</td>
                 </tr>
               </tbody>
             </table>
