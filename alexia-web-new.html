@@ -94,15 +94,38 @@
 
   /* ── BUTTONS DS ─────────────────────────────────────────────────────── */
   .btn-secondary {
+    background: #ffffff; color: #333333; border: 1px solid #AECFE6;
     display: inline-flex; align-items: center; justify-content: center;
-    height: 40px; padding: 0 16px;
-    background: #FFFFFF; border: 1px solid #AECFE6;
-    border-radius: var(--radius-sm);
-    color: #333333; font-size: 14px; font-weight: 700; font-family: var(--font-ui);
-    cursor: pointer; white-space: nowrap; line-height: 1;
-    transition: color 0.15s, border-color 0.15s;
+    border-radius: var(--radius-sm); cursor: pointer;
+    white-space: nowrap; line-height: 1; font-weight: 700; font-family: var(--font-ui);
+    transition: color 0.15s, border-color 0.15s; gap: 8px;
   }
   .btn-secondary:hover { color: #285A92; border-color: #285A92; }
+  /* ── DESIGN SYSTEM — BTN ────────────────────────────────────────────── */
+  [class*="btn-primary"], [class*="btn-secondary"], [class*="btn-ghost"] {
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 700; font-family: var(--font-ui);
+    border-radius: var(--radius-sm); cursor: pointer;
+    white-space: nowrap; line-height: 1;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    gap: 8px;
+  }
+  [class*="btn-primary"]:disabled,
+  [class*="btn-secondary"]:disabled,
+  [class*="btn-ghost"]:disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+
+  .btn-primary { background: var(--action-primary); color: #fff; border: none; }
+  .btn-primary:hover { background: var(--action-hover); }
+
+  .btn-ghost { background: none; color: var(--text-muted); border: none; }
+  .btn-ghost:hover { color: var(--text-secondary); }
+
+  .btn-xs { height: 28px; padding: 0 16px; font-size: 12px; }
+  .btn-sm { height: 32px; padding: 0 16px; font-size: 12px; }
+  .btn-md { height: 36px; padding: 0 16px; font-size: 14px; }
+  .btn-lg { height: 40px; padding: 0 20px; font-size: 16px; }
+  .btn-xl { height: 44px; padding: 0 24px; font-size: 20px; }
+
 
   /* ── CONTENT (container de page-views) ─────────────────────────────── */
   .content { flex: 1; overflow: hidden; display: flex; flex-direction: column; background: var(--blue-50); }
@@ -736,6 +759,7 @@
   }
   .right-panel.open { box-shadow: -4px 0 24px rgba(0,0,0,0.18); }
   .right-panel.open { width: 420px; }
+  .right-panel.expanded { width: 720px; }
 
   /* Loading bar no topo do painel */
   .panel-loader {
@@ -819,14 +843,14 @@
   .ph-title { display: block; font-size: 16px; font-weight: 700; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: var(--font-ui); }
   .ph-subtitle { display: block; font-size: 12px; font-weight: 400; color: var(--text-secondary); font-family: var(--font-body); }
   .ph-btn {
-    width: 40px; height: 40px; flex-shrink: 0; cursor: pointer;
+    width: 28px; height: 28px; flex-shrink: 0; cursor: pointer;
     background: var(--bg-primary); border: 1px solid rgba(51,51,51,0.1);
     border-radius: var(--radius-sm);
     display: flex; align-items: center; justify-content: center;
     color: var(--text-primary); transition: background 0.15s;
   }
   .ph-btn:hover { background: var(--grey-300); }
-  .ph-btn svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2; fill: none; }
+  .ph-btn svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2; fill: none; }
 
   /* ── PANEL BODY ─────────────────────────────────────────────────────── */
   .panel-body { flex: 1; overflow-y: auto; }
@@ -915,19 +939,7 @@
   .wc-status[status="info"]    { background: var(--blue-100);  color: var(--action-primary);    border-color: var(--blue-200); }
 
   /* ── WC-BUTTON ──────────────────────────────────────────────────────── */
-  .wcb {
-    display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-8);
-    font-family: var(--font-ui); font-size: 12px; font-weight: 700;
-    cursor: pointer; border-radius: var(--radius-sm);
-    padding: 0 var(--sp-16); height: 32px; white-space: nowrap; border: none;
-    transition: background 0.15s;
-  }
-  .wcb[variant="primary"] { background: var(--action-primary); color: #fff; }
-  .wcb[variant="primary"]:hover { background: var(--action-hover); }
-  .wcb[variant="outline"] { background: var(--bg-primary); color: var(--action-primary); border: 1px solid var(--blue-200); }
-  .wcb[variant="outline"]:hover { background: var(--bg-surface); }
-  .wcb[full-width] { width: 100%; }
-  .wcb svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2; fill: none; }
+
 
   /* ── ITEM BADGE (número inline) ─────────────────────────────────────── */
   .num-badge { font-size: 12px; font-weight: 700; flex-shrink: 0; font-family: var(--font-ui); }
@@ -943,6 +955,7 @@
   }
   .right-panel-2.open { box-shadow: -4px 0 24px rgba(0,0,0,0.18); }
   .right-panel-2.open { width: 420px; }
+  .right-panel-2.expanded { width: 720px; }
 
   /* Header alumnos — ícone verde */
   .ph-icon-green {
@@ -1127,6 +1140,7 @@
   }
   .right-panel-3.open { box-shadow: -4px 0 24px rgba(0,0,0,0.18); }
   .right-panel-3.open { width: 420px; }
+  .right-panel-3.expanded { width: 720px; }
 
   /* Ícone de livro com cor */
   .area-icon { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
@@ -1564,6 +1578,7 @@
   .right-panel-3.open { width: 420px; }
   .right-panel-3.expanded { width: 720px; }
   .right-panel-ia.open { width: 420px; }
+  .right-panel-ia.expanded { width: 720px; }
   .right-panel-ia .panel-header {
     display: flex; align-items: center; gap: 10px;
     padding: 12px 16px; flex-shrink: 0;
@@ -1616,6 +1631,7 @@
   }
   .right-panel-ctx.open { box-shadow: -4px 0 24px rgba(0,0,0,0.18); border-left-width: 1px; }
   .right-panel-ctx.open { width: 480px; }
+  .right-panel-ctx.expanded { width: 720px; }
   .ctx-section { margin-bottom: 24px; }
   .ctx-section-title {
     font-family: var(--font-ui); font-size: 11px; font-weight: 700;
@@ -3600,7 +3616,7 @@
               </div>
               <div>
                 <span style="font-family:var(--font-ui);font-weight:700;font-size:14px;color:var(--text-primary);">Gestionar Incidencias</span>
-                <span style="font-family:var(--font-body);font-size:12px;color:var(--text-muted);margin-left:8px;">2 acciones propuestas</span>
+                <span style="font-family:var(--font-body);font-size:12px;color:var(--text-muted);margin-left:8px;">3 acciones · 1 implementada</span>
               </div>
               <button onclick="showPage('incidencias')" style="margin-left:auto;font-family:var(--font-ui);font-size:12px;font-weight:700;color:var(--action-primary);background:none;border:1px solid var(--action-primary);border-radius:var(--radius-sm);padding:4px 12px;cursor:pointer;">Ver módulo →</button>
             </div>
@@ -3616,18 +3632,25 @@
               </thead>
               <tbody>
                 <tr style="border-bottom:1px solid var(--border);">
-                  <td style="padding:10px 16px;color:var(--text-secondary);">Formulario nueva incidencia</td>
-                  <td style="padding:10px 16px;color:var(--text-primary);font-weight:500;">Sugerir tipo de incidencia y redactar descripción</td>
-                  <td style="padding:10px 16px;color:var(--text-secondary);">Acción directa</td>
-                  <td style="padding:10px 16px;"><span style="background:var(--bg-surface);color:var(--text-secondary);font-size:11px;font-weight:700;font-family:var(--font-ui);padding:2px 8px;border-radius:4px;border:1px solid var(--border);">Propuesto</span></td>
-                  <td style="padding:10px 16px;color:var(--text-secondary);">RAG</td>
+                  <td style="padding:10px 16px;color:var(--text-secondary);">Panel Mis Alumnos · campo Observaciones</td>
+                  <td style="padding:10px 16px;color:var(--text-primary);font-weight:500;">Redactar observación según tipo de incidencia</td>
+                  <td style="padding:10px 16px;color:var(--text-secondary);">Solo icono (btn-ia 32px)</td>
+                  <td style="padding:10px 16px;"><span style="background:#EDF7EE;color:#10855B;font-size:11px;font-weight:700;font-family:var(--font-ui);padding:2px 8px;border-radius:4px;">Implementado</span></td>
+                  <td style="padding:10px 16px;color:var(--text-secondary);">API LLM</td>
                 </tr>
-                <tr>
+                <tr style="border-bottom:1px solid var(--border);">
                   <td style="padding:10px 16px;color:var(--text-secondary);">Ficha alumno · panel derecho</td>
                   <td style="padding:10px 16px;color:var(--text-primary);font-weight:500;">Comunicar a familia desde incidencia</td>
                   <td style="padding:10px 16px;color:var(--text-secondary);">Acción directa</td>
                   <td style="padding:10px 16px;"><span style="background:var(--bg-surface);color:var(--text-secondary);font-size:11px;font-weight:700;font-family:var(--font-ui);padding:2px 8px;border-radius:4px;border:1px solid var(--border);">Propuesto</span></td>
                   <td style="padding:10px 16px;color:var(--text-secondary);">API LLM</td>
+                </tr>
+                <tr>
+                  <td style="padding:10px 16px;color:var(--text-secondary);">Panel Mis Alumnos · dropdown tipo</td>
+                  <td style="padding:10px 16px;color:var(--text-primary);font-weight:500;">Sugerir tipo de incidencia desde descripción libre</td>
+                  <td style="padding:10px 16px;color:var(--text-secondary);">Acción directa</td>
+                  <td style="padding:10px 16px;"><span style="background:var(--bg-surface);color:var(--text-secondary);font-size:11px;font-weight:700;font-family:var(--font-ui);padding:2px 8px;border-radius:4px;border:1px solid var(--border);">Propuesto</span></td>
+                  <td style="padding:10px 16px;color:var(--text-secondary);">RAG</td>
                 </tr>
               </tbody>
             </table>
@@ -3889,7 +3912,7 @@
         <span class="ph-title">Incidencias</span>
         <span class="ph-subtitle">Panel del profesor</span>
       </div>
-      <button class="ph-btn" onclick="togglePanelExpand('right-panel', this)" title="Expandir panel">
+      <button class="com-toggle-btn" style="width:28px;height:28px;" onclick="togglePanelExpand('right-panel', this)" title="Expandir panel">
         <svg viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"/><polyline points="18 17 13 12 18 7"/></svg>
       </button>
       <button class="ph-btn" onclick="closePanel()">
@@ -3907,7 +3930,7 @@
         <span class="ph-title" id="detail-title">Incidencias</span>
         <span class="ph-subtitle" id="detail-subtitle"></span>
       </div>
-      <button class="ph-btn" onclick="togglePanelExpand('right-panel', this)" title="Expandir panel">
+      <button class="com-toggle-btn" style="width:28px;height:28px;" onclick="togglePanelExpand('right-panel', this)" title="Expandir panel">
         <svg viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"/><polyline points="18 17 13 12 18 7"/></svg>
       </button>
       <button class="ph-btn" onclick="closePanel()">
@@ -3980,50 +4003,50 @@
       <!-- VIEW: Riesgo -->
       <div class="view" id="view-riesgo">
         <div class="list-row"><div class="wc-avatar">CG</div><div class="info"><div class="info-name">Carlos Gómez</div><div class="info-detail">Matemáticas · 18 de 20 faltas permitidas</div></div><span class="num-badge danger">18/20</span></div>
-        <div class="list-actions"><button class="wcb" variant="primary">Comunicar a familia</button><button class="wcb" variant="outline">Ver historial</button></div>
+        <div class="list-actions"><button class="btn-primary btn-sm">Comunicar a familia</button><button class="btn-secondary btn-sm">Ver historial</button></div>
         <div class="list-row"><div class="wc-avatar">LM</div><div class="info"><div class="info-name">Lucía Martínez</div><div class="info-detail">Lengua · 17 de 20 faltas permitidas</div></div><span class="num-badge warning">17/20</span></div>
-        <div class="list-actions"><button class="wcb" variant="primary">Comunicar a familia</button><button class="wcb" variant="outline">Ver historial</button></div>
+        <div class="list-actions"><button class="btn-primary btn-sm">Comunicar a familia</button><button class="btn-secondary btn-sm">Ver historial</button></div>
       </div>
 
       <!-- VIEW: Sin justificar -->
       <div class="view" id="view-sinjustificar">
         <div class="list-row"><div class="wc-avatar">AU</div><div class="info"><div class="info-name">Ana Urrutia</div><div class="info-detail">Ausencia · Lunes 16/06 · Matemáticas</div></div><span class="wc-status" status="warning">Sin leer</span></div>
-        <div class="list-actions"><button class="wcb" variant="primary">Comunicar a familia</button><button class="wcb" variant="outline">Ver detalle</button></div>
+        <div class="list-actions"><button class="btn-primary btn-sm">Comunicar a familia</button><button class="btn-secondary btn-sm">Ver detalle</button></div>
         <div class="list-row"><div class="wc-avatar">CG</div><div class="info"><div class="info-name">Carlos Gómez</div><div class="info-detail">Retraso · Martes 17/06 · Lengua</div></div><span class="wc-status" status="warning">Sin leer</span></div>
-        <div class="list-actions"><button class="wcb" variant="primary">Comunicar a familia</button><button class="wcb" variant="outline">Ver detalle</button></div>
+        <div class="list-actions"><button class="btn-primary btn-sm">Comunicar a familia</button><button class="btn-secondary btn-sm">Ver detalle</button></div>
         <div class="list-row"><div class="wc-avatar">JR</div><div class="info"><div class="info-name">Javier Ruiz</div><div class="info-detail">Ausencia · Martes 17/06 · Ciencias</div></div><span class="wc-status" status="warning">Sin leer</span></div>
-        <div class="list-actions"><button class="wcb" variant="primary">Comunicar a familia</button><button class="wcb" variant="outline">Ver detalle</button></div>
-        <div class="bulk"><button class="wcb" variant="primary" full-width>Comunicar a todas las familias</button></div>
+        <div class="list-actions"><button class="btn-primary btn-sm">Comunicar a familia</button><button class="btn-secondary btn-sm">Ver detalle</button></div>
+        <div class="bulk"><button class="btn-primary btn-sm" style="width:100%">Comunicar a todas las familias</button></div>
       </div>
 
       <!-- VIEW: Respuestas -->
       <div class="view" id="view-respuestas">
         <div class="list-row"><div class="wc-avatar">AU</div><div class="info"><div class="info-name">Ana Urrutia</div><div class="info-detail">Comunicado enviado · hace 3 días · sin respuesta</div></div><span class="wc-status" status="warning">3 días</span></div>
-        <div class="list-actions"><button class="wcb" variant="primary">Reenviar comunicado</button><button class="wcb" variant="outline">Ver detalle</button></div>
+        <div class="list-actions"><button class="btn-primary btn-sm">Reenviar comunicado</button><button class="btn-secondary btn-sm">Ver detalle</button></div>
         <div class="list-row"><div class="wc-avatar">CG</div><div class="info"><div class="info-name">Carlos Gómez</div><div class="info-detail">Comunicado enviado · hace 5 días · sin respuesta</div></div><span class="wc-status" status="error">5 días</span></div>
-        <div class="list-actions"><button class="wcb" variant="primary">Reenviar comunicado</button><button class="wcb" variant="outline">Ver detalle</button></div>
-        <div class="bulk"><button class="wcb" variant="primary" full-width>Reenviar a todas las familias</button></div>
+        <div class="list-actions"><button class="btn-primary btn-sm">Reenviar comunicado</button><button class="btn-secondary btn-sm">Ver detalle</button></div>
+        <div class="bulk"><button class="btn-primary btn-sm" style="width:100%">Reenviar a todas las familias</button></div>
       </div>
 
       <!-- VIEW: Anunciadas -->
       <div class="view" id="view-anunciadas">
         <div class="list-row"><div class="wc-avatar">ML</div><div class="info"><div class="info-name">María López</div><div class="info-detail">Mañana 19/06 · Día completo · Médico</div></div><span class="wc-status" status="success">Mañana</span></div>
-        <div class="list-actions"><button class="wcb" variant="primary">Confirmar ausencia</button><button class="wcb" variant="outline">Ver detalle</button></div>
+        <div class="list-actions"><button class="btn-primary btn-sm">Confirmar ausencia</button><button class="btn-secondary btn-sm">Ver detalle</button></div>
         <div class="list-row"><div class="wc-avatar">BR</div><div class="info"><div class="info-name">Bruno Reyes</div><div class="info-detail">Viernes 20/06 · Mañana · Viaje familiar</div></div><span class="wc-status" status="success">Viernes</span></div>
-        <div class="list-actions"><button class="wcb" variant="primary">Confirmar ausencia</button><button class="wcb" variant="outline">Ver detalle</button></div>
+        <div class="list-actions"><button class="btn-primary btn-sm">Confirmar ausencia</button><button class="btn-secondary btn-sm">Ver detalle</button></div>
         <div class="list-row"><div class="wc-avatar">SR</div><div class="info"><div class="info-name">Sara Romero</div><div class="info-detail">Lun–Mié 23–25/06 · Día completo</div></div><span class="wc-status" status="info">Próx. semana</span></div>
-        <div class="list-actions"><button class="wcb" variant="primary">Confirmar ausencia</button><button class="wcb" variant="outline">Ver detalle</button></div>
-        <div class="bulk"><button class="wcb" variant="primary" full-width>Confirmar todas</button></div>
+        <div class="list-actions"><button class="btn-primary btn-sm">Confirmar ausencia</button><button class="btn-secondary btn-sm">Ver detalle</button></div>
+        <div class="bulk"><button class="btn-primary btn-sm" style="width:100%">Confirmar todas</button></div>
       </div>
 
     </div><!-- /panel-body -->
 
     <footer class="panel-footer">
-      <button class="wcb" variant="primary">
+      <button class="btn-primary btn-sm">
         <svg viewBox="0 0 24 24" style="stroke:#fff"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         Nueva incidencia
       </button>
-      <button class="wcb" variant="outline">Ver todas</button>
+      <button class="btn-secondary btn-sm">Ver todas</button>
     </footer>
   </aside>
 
@@ -4040,7 +4063,7 @@
         <span class="ph-title">Alumnos</span>
         <span class="ph-subtitle">Mis alumnos</span>
       </div>
-      <button class="ph-btn" onclick="togglePanelExpand('panel-alumnos', this)" title="Expandir panel">
+      <button class="com-toggle-btn" style="width:28px;height:28px;" onclick="togglePanelExpand('panel-alumnos', this)" title="Expandir panel">
         <svg viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"/><polyline points="18 17 13 12 18 7"/></svg>
       </button>
       <button class="ph-btn" onclick="closePanelAlumnos()">
@@ -4060,7 +4083,7 @@
         <span class="ph-title" id="alumnos-detail-title">Alejandra Abad Urrutia</span>
         <span class="ph-subtitle" id="alumnos-detail-subtitle">Ficha alumna</span>
       </div>
-      <button class="ph-btn" onclick="togglePanelExpand('panel-alumnos', this)" title="Expandir panel">
+      <button class="com-toggle-btn" style="width:28px;height:28px;" onclick="togglePanelExpand('panel-alumnos', this)" title="Expandir panel">
         <svg viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"/><polyline points="18 17 13 12 18 7"/></svg>
       </button>
       <button class="ph-btn" onclick="closePanelAlumnos()">
@@ -4358,8 +4381,8 @@
     </div><!-- /panel-body -->
 
     <footer class="panel-footer" id="alumnos-footer" style="display:none;">
-      <button class="wcb" variant="primary" id="alumnos-footer-btn" onclick="handleAlumnosFooter()">Crear incidencia</button>
-      <button class="wcb" variant="outline" id="alumnos-footer-secondary" onclick="closePanelAlumnos()">Cancelar</button>
+      <button class="btn-primary btn-sm" id="alumnos-footer-btn" onclick="handleAlumnosFooter()">Crear incidencia</button>
+      <button class="btn-secondary btn-sm" id="alumnos-footer-secondary" onclick="closePanelAlumnos()">Cancelar</button>
     </footer>
 
   </aside>
@@ -4377,7 +4400,7 @@
         <span class="ph-title">Áreas</span>
         <span class="ph-subtitle">Mis áreas</span>
       </div>
-      <button class="ph-btn" onclick="togglePanelExpand('panel-areas', this)" title="Expandir panel">
+      <button class="com-toggle-btn" style="width:28px;height:28px;" onclick="togglePanelExpand('panel-areas', this)" title="Expandir panel">
         <svg viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"/><polyline points="18 17 13 12 18 7"/></svg>
       </button>
             <button class="ph-btn" onclick="closePanelAreas()">
@@ -4595,8 +4618,8 @@
     </div><!-- /panel-body -->
 
     <footer class="panel-footer" id="areas-footer" style="display:none;">
-      <button class="wcb" variant="primary" id="areas-footer-btn" onclick="handleAreasFooter()">Pasar lista</button>
-      <button class="wcb" variant="outline" onclick="closePanelAreas()">Cancelar</button>
+      <button class="btn-primary btn-sm" id="areas-footer-btn" onclick="handleAreasFooter()">Pasar lista</button>
+      <button class="btn-secondary btn-sm" onclick="closePanelAreas()">Cancelar</button>
     </footer>
 
   </aside>
@@ -4616,6 +4639,7 @@
         <span class="ph-title">Acciones IA</span>
         <span class="ph-subtitle" id="ia-panel-subtitle">Sugerencia lista para revisar</span>
       </div>
+      <button class="com-toggle-btn" style="width:28px;height:28px;" onclick="togglePanelExpand('panel-ia-review', this)" title="Expandir panel"></button>
       <button class="ph-btn" onclick="iaDiscardPanel()">
         <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
@@ -4799,6 +4823,7 @@
         <span class="ph-title">Secciones</span>
         <span class="ph-subtitle">Panel del profesor</span>
       </div>
+      <button class="com-toggle-btn" style="width:28px;height:28px;" onclick="togglePanelExpand('panel-secciones', this)" title="Expandir panel"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
       <button class="ph-btn" onclick="closeGenericPanel('secciones', 'btn-secciones')">
         <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
@@ -4822,6 +4847,7 @@
         <span class="ph-title">Comunicados</span>
         <span class="ph-subtitle">Panel del profesor</span>
       </div>
+      <button class="com-toggle-btn" style="width:28px;height:28px;" onclick="togglePanelExpand('panel-comunicados-wp', this)" title="Expandir panel"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
       <button class="ph-btn" onclick="closeGenericPanel('comunicados-wp', 'btn-comunicados-wp')">
         <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
@@ -4845,6 +4871,7 @@
         <span class="ph-title">Entrevistas</span>
         <span class="ph-subtitle">Panel del profesor</span>
       </div>
+      <button class="com-toggle-btn" style="width:28px;height:28px;" onclick="togglePanelExpand('panel-entrevistas', this)" title="Expandir panel"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
       <button class="ph-btn" onclick="closeGenericPanel('entrevistas', 'btn-entrevistas')">
         <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
@@ -4868,6 +4895,7 @@
         <span class="ph-title">Encuestas</span>
         <span class="ph-subtitle">Panel del profesor</span>
       </div>
+      <button class="com-toggle-btn" style="width:28px;height:28px;" onclick="togglePanelExpand('panel-encuestas', this)" title="Expandir panel"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
       <button class="ph-btn" onclick="closeGenericPanel('encuestas', 'btn-encuestas')">
         <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
@@ -4891,6 +4919,7 @@
         <span class="ph-title">Cumpleaños</span>
         <span class="ph-subtitle">Panel del profesor</span>
       </div>
+      <button class="com-toggle-btn" style="width:28px;height:28px;" onclick="togglePanelExpand('panel-cumple', this)" title="Expandir panel"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
       <button class="ph-btn" onclick="closeGenericPanel('cumple', 'btn-cumple')">
         <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
@@ -4914,6 +4943,7 @@
         <span class="ph-title">Galerías</span>
         <span class="ph-subtitle">Panel del profesor</span>
       </div>
+      <button class="com-toggle-btn" style="width:28px;height:28px;" onclick="togglePanelExpand('panel-galerias', this)" title="Expandir panel"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
       <button class="ph-btn" onclick="closeGenericPanel('galerias', 'btn-galerias')">
         <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
@@ -5198,12 +5228,12 @@
   function togglePanelExpand(panelId, btn) {
     var panel = document.getElementById(panelId);
     var expanded = panel.classList.toggle('expanded');
-    // Limpar width inline do resize para não conflituar com o CSS do expanded
     panel.style.width = '';
-    btn.innerHTML = expanded ? ICON_CHEV_R : ICON_CHEV_L;
+    var chevron = expanded ? ICON_CHEV_R : ICON_CHEV_L;
+    btn.innerHTML = chevron;
     btn.title = expanded ? 'Reducir panel' : 'Expandir panel';
-    panel.querySelectorAll('.ph-btn[onclick*="togglePanelExpand"]').forEach(function(b) {
-      b.innerHTML = expanded ? ICON_CHEV_R : ICON_CHEV_L;
+    panel.querySelectorAll('[onclick*="togglePanelExpand"]').forEach(function(b) {
+      if (b !== btn) b.innerHTML = chevron;
     });
   }
 
@@ -5667,9 +5697,11 @@
     document.getElementById('right-panel').classList.remove('open');
     document.getElementById('panel-alumnos').classList.remove('open');
     document.getElementById('panel-areas').classList.remove('open');
+    panel.classList.remove('expanded');
     panel.classList.add('open');
     showOverlay();
-    showOverlay();
+    var expandBtn = panel.querySelector('[onclick*="togglePanelExpand"]');
+    if (expandBtn) expandBtn.innerHTML = ICON_CHEV_L;
     // Show shimmer briefly then result
     if (shimmer) { shimmer.classList.add('visible'); }
     if (resultWrap) resultWrap.classList.remove('visible');
@@ -5828,10 +5860,14 @@
     });
     var panel = document.getElementById('panel-' + id);
     if (!panel) return;
+    panel.classList.remove('expanded');
     panel.classList.add('open');
     showOverlay();
     var btn = document.getElementById(btnId);
     if (btn) btn.classList.add('active');
+    // Initialize expand button icon
+    var expandBtn = panel.querySelector('[onclick*="togglePanelExpand"]');
+    if (expandBtn) expandBtn.innerHTML = ICON_CHEV_L;
   }
 
   function closeGenericPanel(id, btnId) {
@@ -5922,8 +5958,11 @@
     closePanelAreas();
     var p = document.getElementById('right-panel');
     p.style.width = '';
+    p.classList.remove('expanded');
     p.classList.add('open');
     showOverlay();
+    var expandBtn = p.querySelector('[onclick*="togglePanelExpand"]');
+    if (expandBtn) expandBtn.innerHTML = ICON_CHEV_L;
     document.getElementById('btn-inc').classList.add('active');
     runShimmer('shimmer-inc');
   }
@@ -5962,8 +6001,11 @@
     closePanelAreas();
     var p = document.getElementById('panel-alumnos');
     p.style.width = '';
+    p.classList.remove('expanded');
     p.classList.add('open');
     showOverlay();
+    var expandBtn = p.querySelector('[onclick*="togglePanelExpand"]');
+    if (expandBtn) expandBtn.innerHTML = ICON_CHEV_L;
     document.getElementById('btn-alumnos').classList.add('active');
     goAlumnosView('lista');
     runShimmer('shimmer-alumnos');
@@ -6051,8 +6093,11 @@
     closePanel(); closePanelAlumnos();
     var p = document.getElementById('panel-areas');
     p.style.width = '';
+    p.classList.remove('expanded');
     p.classList.add('open');
     showOverlay();
+    var expandBtn = p.querySelector('[onclick*="togglePanelExpand"]');
+    if (expandBtn) expandBtn.innerHTML = ICON_CHEV_L;
     document.getElementById('btn-areas').classList.add('active');
     goAreasView('lista');
     runShimmer('shimmer-areas');
