@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alexia DS - Colores</title>
+<style>html { scroll-behavior: smooth; }</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" media="print" onload="this.media='all'"
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700;800&family=Roboto:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700;800&family=Roboto:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap"></noscript>
+
+<!-- Orden: primitivos+semánticos base -> capa ampliada -> chrome -->
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="../foundations/semantic-colors.css">
+<link rel="stylesheet" href="assets/ref-paletas.css">
+<link rel="stylesheet" href="assets/ref-pablo.css">
+<link rel="stylesheet" href="assets/ds-chrome.css">
+</head>
+<body>
+
+<!-- ============ SIDEBAR ============ -->
+<nav class="ds-sidebar">
+  <div class="ds-brand">
+    <span class="ds-brand-name">Alexia DS <span style="font-weight:500;opacity:.55;">· Colores</span></span>
+    <span class="ds-version">v1</span>
+  </div>
+  <div class="ds-nav">
+    <div class="ds-group-label">En esta página</div>
+    <a class="ds-link" href="#modelo">Niveles de tokens</a>
+    <a class="ds-link" href="#primitivos">Primitivos</a>
+    <a class="ds-link" href="#semanticos">Semánticos</a>
+    <a class="ds-link" href="#ejemplos-status">Ejemplos de status</a>
+    <a class="ds-link" href="#campos">Estados de campo</a>
+    <a class="ds-link" href="#menus">Menús / desplegables</a>
+    <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--color-border-subtle);">
+      <div class="ds-group-label">Referencia</div>
+      <a class="ds-link" href="colores-fuera-wc.html">Colores fuera del WC</a>
+      <a class="ds-link" href="comparativa.html">Comparativa de paletas</a>
+    </div>
+  </div>
+  <div class="ds-footer">
+    <button class="ds-theme-btn" id="themeBtn" type="button">Tema: claro</button>
+  </div>
+</nav>
+
+<!-- ============ MAIN ============ -->
+<main class="ds-main">
+
+  <header style="margin-bottom:48px;">
+    <div class="ds-section-eyebrow">Foundations</div>
+    <h1 class="ds-section-title">Colores</h1>
+    <p class="ds-section-desc">
+      El sistema de color de Alexia y cómo está organizado. Esta página se genera a partir de los
+      tokens reales: los valores que ves son exactamente los que aplica el código. Cada decisión
+      de diseño incluye su justificación.
+    </p>
+  </header>
+
+  <!-- ===== Modelo ===== -->
+  <section class="ds-section" id="modelo">
+    <h2 class="ds-section-title" style="font-size:20px;">Niveles de tokens</h2>
+    <div class="ds-why">
+      <div class="ds-why-title">Por qué tres niveles</div>
+      <p>Los <strong>Primitivos</strong> son los valores base (<code>--color-blue-500</code>), sin rol asignado.
+      Los <strong>Semánticos</strong> asignan un rol a esos valores (<code>--color-action-primary</code>)
+      y son los que se usan en el código. El nivel de <strong>Componente</strong> (<code>--wcb-*</code>)
+      consume el semántico a través del puente.</p>
+      <p>El nombre de un token semántico describe el <strong>rol, no el valor</strong>. Cambias el primitivo
+      y todos los semánticos que lo referencian se actualizan, sin tocar el código de cada componente.
+      Por eso los valores de esta página son provisionales: la arquitectura es lo definitivo; los hex se
+      revisan después.</p>
+    </div>
+  </section>
+
+  <!-- ===== Primitivos ===== -->
+  <section class="ds-section" id="primitivos">
+    <h2 class="ds-section-title" style="font-size:20px;">Primitivos</h2>
+    <p class="ds-block-desc" style="margin-bottom:24px;">7 escalas de color × 10 pasos. Numeración estándar
+      (50&rarr;900). Pasa el ratón sobre cada muestra para ver el token y el valor hex. Haz clic para copiarlo.</p>
+    <div id="primitives"></div>
+    <div class="ds-why">
+      <div class="ds-why-title">Por qué numeración estándar</div>
+      <p><code>50&rarr;900</code> es la convención habitual en la industria (Tailwind, Material, Radix):
+      permite identificar de inmediato que 500 es el valor base y 700 es más oscuro. Además, la escala
+      puede crecer: caben valores intermedios si fuera necesario. Los adjetivos (<em>light / dark /
+      ultra-dark</em>) mezclan tono con rol y no tienen margen para crecer.</p>
+      <p>El gris cubre el rango completo, de <strong>blanco puro</strong> (#FFFFFF) a <strong>negro</strong> (#111),
+      porque es la escala que más se usa en la interfaz: fondos, bordes y texto.</p>
+    </div>
+  </section>
+
+  <!-- ===== Semanticos ===== -->
+  <section class="ds-section" id="semanticos">
+    <h2 class="ds-section-title" style="font-size:20px;">Semánticos</h2>
+    <p class="ds-block-desc" style="margin-bottom:8px;">Usa los <strong>tokens semánticos</strong> en el
+      código, nunca los primitivos directamente. Están organizados por función. Cada token muestra el
+      valor real al que se resuelve.</p>
+
+    <div class="ds-why">
+      <div class="ds-why-title">Por qué una jerarquía de fondos</div>
+      <p>El fondo general de la aplicación (<code>--color-bg-canvas</code>) es un gris neutro, no blanco.
+      El blanco se reserva para los elementos en primer plano: tarjetas, paneles y menús. Esta diferencia
+      de niveles (fondo &rarr; superficie &rarr; primer plano) crea profundidad visual y separa
+      el contenido de forma clara. Antes solo había dos fondos, ambos blancos, y esa separación no existía.</p>
+    </div>
+
+    <div class="ds-block"><div class="ds-block-header"><div class="ds-block-title">Fondos</div></div>
+      <div class="token-grid" id="sem-surfaces"></div></div>
+    <div class="ds-block"><div class="ds-block-header"><div class="ds-block-title">Texto</div></div>
+      <div class="token-grid" id="sem-text"></div></div>
+    <div class="ds-block"><div class="ds-block-header"><div class="ds-block-title">Bordes</div></div>
+      <div class="token-grid" id="sem-border"></div></div>
+    <div class="ds-block"><div class="ds-block-header"><div class="ds-block-title">Acciones</div></div>
+      <div class="token-grid" id="sem-action"></div></div>
+
+    <div class="ds-why">
+      <div class="ds-why-title">Por qué un conjunto de tokens por estado</div>
+      <p>Un mismo estado (p. ej. <em>danger</em>) aparece como botón sólido, badge, banner claro, texto
+      en línea y borde. Un único valor no es suficiente: el sólido necesita contraste fuerte, el banner
+      requiere un fondo claro, y el texto sobre ese fondo debe pasar <strong>AA</strong>. Por eso cada
+      estado es un conjunto: <code>sólido / subtle / text / border</code>.</p>
+      <p>La etiqueta <span class="aa-badge aa-pass">AA</span> confirma el contraste de <em>text</em> sobre
+      <em>subtle</em> (objetivo &ge; 4,5:1). Cumplimiento de WCAG 2.1 AA / EN 301 549.</p>
+    </div>
+
+    <div class="ds-block"><div class="ds-block-header"><div class="ds-block-title">Estados (status)</div></div>
+      <div class="token-grid" id="sem-status"></div></div>
+
+    <div class="ds-why">
+      <div class="ds-why-title">Regla: fondos opacos, sin transparencias</div>
+      <p>Los fondos de estado (<em>subtle</em>) son siempre un primitivo fijo (<code>xxx-50</code>).
+      Nunca se usa <code>color-mix(..., transparent)</code>, <code>rgba(r,g,b, 0.x)</code> ni
+      <code>opacity</code> para calcular el fondo en tiempo de render.</p>
+      <p><strong>Motivo:</strong> un fondo con transparencia cambia de aspecto segun el fondo que haya
+      debajo. El mismo componente parece rosa sobre blanco, grisaceo sobre gris y casi invisible sobre
+      fondo oscuro. Un sistema predecible no puede depender del entorno.</p>
+      <p><strong>En su lugar:</strong> <code>--color-status-danger-subtle</code> apunta a
+      <code>var(--color-red-50)</code>, un valor opaco y consistente en cualquier contexto.</p>
+    </div>
+
+    <div class="ds-block" id="ejemplos-status">
+      <div class="ds-block-header"><div class="ds-block-title">Ejemplos de uso en contexto</div></div>
+      <p class="ds-block-desc" style="margin-bottom:16px;">Los mismos tokens aplicados a banners y badges.
+      El fondo es siempre el <em>subtle</em> opaco; el texto usa el token <em>text</em> del mismo estado.</p>
+
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:24px;">
+        <div style="background:var(--color-status-info-subtle);border:1px solid var(--color-status-info-border);border-left:4px solid var(--color-status-info);border-radius:var(--radius-md);padding:12px 16px;">
+          <span style="color:var(--color-status-info-text);font-size:14px;font-weight:700;">Info: </span><span style="color:var(--color-status-info-text);font-size:14px;">Nueva version del documento disponible.</span>
+        </div>
+        <div style="background:var(--color-status-success-subtle);border:1px solid var(--color-status-success-border);border-left:4px solid var(--color-status-success);border-radius:var(--radius-md);padding:12px 16px;">
+          <span style="color:var(--color-status-success-text);font-size:14px;font-weight:700;">Exito: </span><span style="color:var(--color-status-success-text);font-size:14px;">Entrega registrada correctamente.</span>
+        </div>
+        <div style="background:var(--color-status-warning-subtle);border:1px solid var(--color-status-warning-border);border-left:4px solid var(--color-status-warning);border-radius:var(--radius-md);padding:12px 16px;">
+          <span style="color:var(--color-status-warning-text);font-size:14px;font-weight:700;">Aviso: </span><span style="color:var(--color-status-warning-text);font-size:14px;">El plazo vence en 2 dias.</span>
+        </div>
+        <div style="background:var(--color-status-danger-subtle);border:1px solid var(--color-status-danger-border);border-left:4px solid var(--color-status-danger);border-radius:var(--radius-md);padding:12px 16px;">
+          <span style="color:var(--color-status-danger-text);font-size:14px;font-weight:700;">Error: </span><span style="color:var(--color-status-danger-text);font-size:14px;">No se pudo guardar el archivo.</span>
+        </div>
+        <div style="background:var(--color-status-discovery-subtle);border:1px solid var(--color-status-discovery-border);border-left:4px solid var(--color-status-discovery);border-radius:var(--radius-md);padding:12px 16px;">
+          <span style="color:var(--color-status-discovery-text);font-size:14px;font-weight:700;">Novedad: </span><span style="color:var(--color-status-discovery-text);font-size:14px;">Recurso nuevo disponible.</span>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:8px;">
+        <span style="background:var(--color-status-info-subtle);color:var(--color-status-info-text);border:1px solid var(--color-status-info-border);padding:2px 10px;border-radius:var(--radius-sm);font-size:12px;font-weight:700;">Info</span>
+        <span style="background:var(--color-status-success-subtle);color:var(--color-status-success-text);border:1px solid var(--color-status-success-border);padding:2px 10px;border-radius:var(--radius-sm);font-size:12px;font-weight:700;">Exito</span>
+        <span style="background:var(--color-status-warning-subtle);color:var(--color-status-warning-text);border:1px solid var(--color-status-warning-border);padding:2px 10px;border-radius:var(--radius-sm);font-size:12px;font-weight:700;">Aviso</span>
+        <span style="background:var(--color-status-danger-subtle);color:var(--color-status-danger-text);border:1px solid var(--color-status-danger-border);padding:2px 10px;border-radius:var(--radius-sm);font-size:12px;font-weight:700;">Error</span>
+        <span style="background:var(--color-status-discovery-subtle);color:var(--color-status-discovery-text);border:1px solid var(--color-status-discovery-border);padding:2px 10px;border-radius:var(--radius-sm);font-size:12px;font-weight:700;">Novedad</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ===== Estados de campo ===== -->
+  <section class="ds-section" id="campos">
+    <h2 class="ds-section-title" style="font-size:20px;">Estados de campo</h2>
+    <p class="ds-block-desc" style="margin-bottom:8px;">Inputs, textarea, select, datepicker, checkbox.
+      Los estados <strong>no crean tokens nuevos</strong>: se componen a partir de los semánticos existentes.
+      Esta tabla es la referencia: garantiza que todos los campos usen los mismos colores de error,
+      foco y aviso.</p>
+    <div class="ds-ref-table">
+      <table>
+        <thead><tr><th>Estado</th><th>Tokens</th><th>Muestra</th></tr></thead>
+        <tbody>
+          <tr><td>Reposo</td><td><code>--color-bg-subtle</code> + <code>--color-border-default</code></td>
+            <td><span class="ds-chip" style="background:var(--color-bg-subtle)"></span><span class="ds-chip" style="background:var(--color-border-default)"></span></td></tr>
+          <tr><td>Hover</td><td><code>--color-border-strong</code></td>
+            <td><span class="ds-chip" style="background:var(--color-border-strong)"></span></td></tr>
+          <tr><td>Foco</td><td><code>--color-border-focus</code> + anillo <code>--color-focus-ring</code></td>
+            <td><span class="ds-chip" style="background:var(--color-border-focus)"></span><span class="ds-chip" style="background:var(--color-focus-ring)"></span></td></tr>
+          <tr><td>Relleno</td><td><code>--color-border-focus</code></td>
+            <td><span class="ds-chip" style="background:var(--color-border-focus)"></span></td></tr>
+          <tr><td>Placeholder</td><td><code>--color-text-muted</code></td>
+            <td><span class="ds-chip" style="background:var(--color-text-muted)"></span></td></tr>
+          <tr><td>Deshabilitado</td><td>fondo <code>--color-bg-disabled</code> · texto <code>--color-text-disabled</code></td>
+            <td><span class="ds-chip" style="background:var(--color-bg-disabled)"></span><span class="ds-chip" style="background:var(--color-text-disabled)"></span></td></tr>
+          <tr><td>Solo lectura</td><td>fondo <code>--color-bg-disabled</code> · texto <code>--color-text-secondary</code></td>
+            <td><span class="ds-chip" style="background:var(--color-bg-disabled)"></span><span class="ds-chip" style="background:var(--color-text-secondary)"></span></td></tr>
+          <tr><td>Error</td><td>borde <code>--color-status-danger</code> · texto <code>--color-status-danger-text</code></td>
+            <td><span class="ds-chip" style="background:var(--color-status-danger)"></span><span class="ds-chip" style="background:var(--color-status-danger-text)"></span></td></tr>
+          <tr><td>Éxito</td><td>borde <code>--color-status-success</code> · texto <code>--color-status-success-text</code></td>
+            <td><span class="ds-chip" style="background:var(--color-status-success)"></span><span class="ds-chip" style="background:var(--color-status-success-text)"></span></td></tr>
+          <tr><td>Aviso</td><td>borde <code>--color-status-warning</code> · texto <code>--color-status-warning-text</code></td>
+            <td><span class="ds-chip" style="background:var(--color-status-warning)"></span><span class="ds-chip" style="background:var(--color-status-warning-text)"></span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===== Menus ===== -->
+  <section class="ds-section" id="menus">
+    <h2 class="ds-section-title" style="font-size:20px;">Menús / desplegables</h2>
+    <p class="ds-block-desc" style="margin-bottom:8px;">Superficies en primer plano: select abierto, popover,
+      menú de IA. La sombra es la que los separa visualmente del fondo; eso corresponde a la
+      fundación de elevación, no a color.</p>
+    <div class="ds-ref-table">
+      <table>
+        <thead><tr><th>Parte</th><th>Token</th><th>Muestra</th></tr></thead>
+        <tbody>
+          <tr><td>Superficie del menú</td><td><code>--color-bg-raised</code> (+ sombra)</td>
+            <td><span class="ds-chip" style="background:var(--color-bg-raised)"></span></td></tr>
+          <tr><td>Borde</td><td><code>--color-border-default</code></td>
+            <td><span class="ds-chip" style="background:var(--color-border-default)"></span></td></tr>
+          <tr><td>Opción en hover</td><td><code>--color-bg-hover</code></td>
+            <td><span class="ds-chip" style="background:var(--color-bg-hover)"></span></td></tr>
+          <tr><td>Opción seleccionada</td><td><code>--color-bg-selected</code> · texto <code>--color-action-primary</code></td>
+            <td><span class="ds-chip" style="background:var(--color-bg-selected)"></span><span class="ds-chip" style="background:var(--color-action-primary)"></span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+
+</main>
+
+<script src="assets/js/colors-live.js"></script>
+</body>
+</html>
