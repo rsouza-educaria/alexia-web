@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alexia Design OS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-500:#285A92; --blue-700:#1A3D66; --blue-800:#153252;
+    --cyan-600:#1E7AA5; --green-700:#4E7D36; --purple-500:#6352C7;
+    --grey-900:#111111;
+    --font-ui:'Nunito',sans-serif; --font-body:'Roboto',sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+  body{font-family:var(--font-body);color:#fff;background:var(--grey-900);line-height:1.5}
+
+  .slide{
+    min-height:100vh; scroll-snap-align:start;
+    display:flex; flex-direction:column; justify-content:center;
+    padding:clamp(32px,7vw,110px); position:relative; overflow:hidden;
+  }
+  .eyebrow{
+    font-family:var(--font-ui); font-weight:800; font-size:clamp(11px,1vw,14px);
+    letter-spacing:.22em; text-transform:uppercase; opacity:.7; margin-bottom:20px;
+  }
+  h1{font-family:var(--font-ui); font-weight:900; font-size:clamp(44px,7.5vw,104px); line-height:.98; letter-spacing:-.02em}
+  h2{font-family:var(--font-ui); font-weight:800; font-size:clamp(28px,4.4vw,58px); line-height:1.05; letter-spacing:-.015em; max-width:18ch}
+  .sub{font-family:var(--font-ui); font-weight:700; font-size:clamp(17px,2.2vw,28px); opacity:.9; margin-top:24px; max-width:24ch}
+  .lead{font-size:clamp(16px,1.7vw,22px); line-height:1.55; opacity:.94; margin-top:22px; max-width:44ch}
+  .small{font-size:clamp(13px,1.1vw,16px); opacity:.62; margin-top:26px; max-width:46ch; letter-spacing:.01em}
+  strong{font-weight:700}
+
+  .quote{
+    font-family:var(--font-ui); font-weight:800; font-size:clamp(24px,3.6vw,50px);
+    line-height:1.18; letter-spacing:-.01em; max-width:20ch;
+  }
+  .quote .mark{opacity:.4}
+  .cite{margin-top:24px; font-family:var(--font-ui); font-weight:700; font-size:clamp(14px,1.3vw,18px); opacity:.7; letter-spacing:.02em}
+
+  .chips{display:flex; flex-wrap:wrap; gap:12px; margin-top:30px}
+  .chip{font-family:var(--font-ui); font-weight:700; font-size:clamp(13px,1.3vw,18px); padding:9px 18px; border:2px solid rgba(255,255,255,.35); border-radius:999px}
+
+  ul{list-style:none; margin-top:26px; display:flex; flex-direction:column; gap:15px; max-width:50ch}
+  li{font-size:clamp(15px,1.6vw,21px); line-height:1.4; padding-left:32px; position:relative}
+  li::before{content:""; position:absolute; left:0; top:.5em; width:12px; height:12px; border-radius:50%; background:#fff; opacity:.85}
+  li strong{font-family:var(--font-ui)}
+
+  .cards{display:flex; flex-wrap:wrap; gap:14px; margin-top:34px}
+  .card{flex:1 1 150px; min-width:140px; background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.18); border-radius:16px; padding:22px}
+  .card .k{font-family:var(--font-ui); font-weight:800; font-size:clamp(16px,1.7vw,22px)}
+  .card .v{font-size:clamp(12px,1.1vw,15px); opacity:.82; margin-top:7px; line-height:1.35}
+
+  .num{position:absolute; top:clamp(20px,3.5vw,50px); right:clamp(20px,3.5vw,50px); font-family:var(--font-ui); font-weight:900; font-size:clamp(40px,6vw,104px); opacity:.09; line-height:1}
+  .foot{position:absolute; bottom:clamp(16px,2.5vw,34px); left:clamp(32px,7vw,110px); font-family:var(--font-ui); font-weight:700; font-size:12px; letter-spacing:.14em; text-transform:uppercase; opacity:.5}
+
+  .s1{background:var(--blue-800)} .s2{background:var(--blue-500)} .s3{background:var(--cyan-600)}
+  .s4{background:var(--grey-900)} .s5{background:var(--blue-700)} .s6{background:var(--purple-500)}
+  .s7{background:var(--cyan-600)} .s8{background:var(--blue-500)} .s9{background:var(--green-700)}
+  .s10{background:var(--blue-800)} .s11{background:var(--blue-700)} .s12{background:var(--cyan-600)}
+  .s13{background:var(--green-700)} .s14{background:var(--purple-500)} .s15{background:var(--blue-500)}
+  .s16{background:var(--purple-500)} .s17{background:var(--blue-800)} .s18{background:var(--blue-500)}
+</style>
+</head>
+<body>
+
+<section class="slide s1">
+  <div class="num">01</div>
+  <div class="eyebrow">Una exploración · Julio 2026</div>
+  <h1>Alexia<br>Design OS</h1>
+  <div class="sub">Diseñar y evolucionar Alexia en la era de la IA</div>
+  <div class="foot">Alexia Design OS</div>
+</section>
+
+<section class="slide s2">
+  <div class="num">02</div>
+  <div class="eyebrow">Por qué esta conversación</div>
+  <h2>La IA está cambiando cómo trabajamos.</h2>
+  <p class="lead">No solo cómo escribimos código o dibujamos pantallas. Cambia cómo investigamos, documentamos, decidimos y aprendemos del producto.</p>
+  <p class="small">No vengo con respuestas cerradas. Quiero que lo miremos juntos, con calma.</p>
+  <div class="foot">Alexia Design OS</div>
+</section>
+
+<section class="slide s3">
+  <div class="num">03</div>
+  <div class="eyebrow">No somos los únicos</div>
+  <p class="quote"><span class="mark">“</span>Context engineering is the natural progression of prompt engineering.<span class="mark">”</span></p>
+  <div class="cite">— Anthropic</div>
+  <p class="lead">El sector deja de hablar de herramientas y empieza a hablar de <strong>contexto</strong>. La IA vale por lo que sabe de nosotros, no solo por el modelo que use.</p>
+  <div class="foot">Alexia Design OS</div>
+</section>
+
+<section class="slide s4">
+  <div class="num">04</div>
+  <div class="eyebrow">El reto que veo</div>
+  <h2>Aprender del usuario, rápido.</h2>
+  <p class="lead">Hoy, para saber qué necesita el usuario, invitamos, agendamos y hacemos sesiones. Es valioso, pero lento. El producto cambia más rápido de lo que aprendemos.</p>
+  <ul>
+    <li>Invitar y coordinar lleva semanas.</li>
+    <li>Cada estudio es un esfuerzo puntual.</li>
+    <li>Lo aprendido acaba en un informe que pocos releen.</li>
+  </ul>
+  <div class="foot">Alexia Design OS</div>
+</section>
+
+<section class="slide s5">
+  <div class="num">05</div>
+  <div class="eyebrow">Lo que ya tenemos y no usamos</div>
+  <h2>Cada día generamos señales del usuario.</h2>
+  <p class="lead">Sin invitar a nadie ya sabemos mucho: soporte conoce qué pantallas generan más dudas, Clarity muestra dónde se atascan los usuarios, el uso dice qué se abre y qué no. Pero está disperso y nadie lo junta.</p>
+  <div class="cards">
+    <div class="card"><div class="k">Experiencia</div><div class="v">Lo que el equipo ya sabe</div></div>
+    <div class="card"><div class="k">Soporte</div><div class="v">Dudas y quejas reales</div></div>
+    <div class="card"><div class="k">Producto</div><div class="v">Uso real, cada día</div></div>
+    <div class="card"><div class="k">Analytics · Clarity</div><div class="v">Comportamiento medido</div></div>
+  </div>
+  <div class="foot">Alexia Design OS</div>
+</section>
+
+<section class="slide s6">
+  <div class="num">06</div>
+  <div class="eyebrow">La oportunidad</div>
+  <h2>¿Y si la IA pudiera leer todo eso?</h2>
+  <p class="lead">Aprenderíamos del producto de forma <strong>continua</strong>, no solo en sesiones puntuales. Un feedback mucho más ágil.</p>
+  <p class="lead" style="opacity:.82">Ejemplo: preguntar <strong>“¿en qué paso abandonan la matrícula los usuarios?”</strong> y que responda cruzando soporte, Clarity y uso real, en minutos.</p>
+  <p class="small">Es una hipótesis. Y para que funcione, el conocimiento tiene que estar ordenado y ser legible por una IA.</p>
+  <div class="foot">Alexia Design OS</div>
+</section>
+
+<section class="slide s7">
+  <div class="num">07</div>
+  <div class="eyebrow">Ya está pasando, aquí dentro</div>
+  <h2>El trabajo de Pablo.</h2>
+  <p class="lead">Pablo ya está construyendo agentes de IA que consumen el conocimiento del producto (hoy, sobre todo desde Confluence) para responder preguntas sobre Alexia.</p>
+  <ul>
+    <li><strong>Lo que hace</strong> — agentes que leen el conocimiento que ya vive en Confluence.</li>
+    <li><strong>Cómo se conecta</strong> — ese mismo enfoque puede beber también del conocimiento de diseño y UX que estamos ordenando.</li>
+  </ul>
+  <p class="small">Dos piezas de la misma idea. Estamos en la fase de construirlo juntos.</p>
+  <div class="foot">Alexia Design OS</div>
+</section>
+
+<section class="slide s8">
+  <div class="num">08</div>
+  <div class="eyebrow">La idea</div>
+  <h2>De un Design System a un Design OS.</h2>
+  <ul>
+    <li>Un <strong>Design System</strong> comparte componentes: las piezas.</li>
+    <li>Un <strong>Design OS</strong> comparte también los criterios: el porqué de cada decisión.</li>
+  </ul>
+  <p class="lead">Los criterios son justo lo que una IA necesita para proponer algo alineado con Alexia, y no genérico.</p>
+  <p class="lead" style="opacity:.82">Ejemplo: no basta con tener un botón de aviso. El criterio dice <strong>cuándo</strong> usarlo: en amarillo, con icono y texto, nunca solo color.</p>
+  <div class="foot">Alexia Design OS</div>
+</section>
+
+<section class="slide s9">
+  <div class="num">09</div>
+  <div class="eyebrow">Por qué importa en el producto</div>
+  <h2>Unificar criterios dentro de los Web Components.</h2>
+  <p class="lead">Los componentes son los mismos en todo Alexia. Si el criterio de diseño vive dentro de ellos (color, accesibilidad, espaciado), la coherencia deja de depender de que cada uno se acuerde.</p>
+  <ul>
+    <li>Una sola fuente para diseño y código.</li>
+    <li>Menos divergencia entre pantallas.</li>
+    <li>Accesibilidad de serie, no a mano.</li>
+    <li>Menos retrabajo.</li>
+  </ul>
+  <div class="foot">Alexia Design OS</div>
+</section>
+
+<section class="slide s10">
+  <div class="num">10</div>
+  <div class="eyebrow">Cómo lo organizo</div>
+  <h2>Cinco cajones. Nada más.</h2>
+  <div class="cards">
+    <div class="card"><div class="k">Contexto</div><div class="v">Qué es Alexia</div></div>
+    <div class="card"><div class="k">Principios</div><div class="v">Cómo pensamos</div></div>
+    <div class="card"><div class="k">Design System</div><div class="v">La práctica</div></div>
+    <div class="card"><div class="k">Decisiones</div><div class="v">Qué y por qué</div></div>
+    <div class="card"><div class="k">Trabajo</div><div class="v">El día a día</div></div>
+  </div>
+  <div class="foot">Alexia Design OS</div>
+</section>
+
+<section class="slide s11">
+  <div class="num">11</div>
+  <div class="eyebrow">Qué hay en cada uno, y por qué</div>
+  <ul>
+    <li><strong>Contexto</strong> — qué es Alexia, personas, glosario. Lo primero que lee una persona o una IA.</li>
+    <li><strong>Principios</strong> — cómo diseñamos y pensamos. El porqué que guía todo.</li>
+    <li><strong>Design System</strong> — la práctica: tokens, componentes, prototipos.</li>
+    <li><strong>Decisiones</strong> — qué elegimos y por qué. Para no repetir debates.</li>
+    <li><strong>Trabajo</strong> — el día a día: research, comunicaciones, prototipos.</li>
+  </ul>
+  <div class="foot">Alexia Design OS</div>
+</section>
+
+<section class="slide s12">
+  <div class="num">12</div>
+  <div class="eyebrow">Por qué así</div>
+  <h2>La estructura también es diseño.</h2>
+  <ul>
+    <li>Se entiende de un vistazo, como una buena interfaz.</li>
+    <li>Una cosa, un sitio. Sin duplicados.</li>
+    <li>Legible por personas y por IA.</li>
+    <li>Crece solo cuando hace falta.</li>
+  </ul>
+  <p class="small">Si un humano no la entiende, una IA tampoco la usa bien.</p>
+  <div class="foot">Alexia Design OS</div>
+</section>
+
+<section class="slide s13">
+  <div class="num">13</div>
+  <div class="eyebrow">No es teoría</div>
+  <h2>Lo que ya está en marcha.</h2>
+  <ul>
+    <li><strong>Con Julián</strong> — base de estilos de los Web Components unificada, accesibilidad desde el inicio.</li>
+    <li><strong>Con Borja</strong> — generar propuestas con IA usando nuestro contexto.</li>
+    <li>Todo sobre la base que <strong>ya existía</strong> en Alexia.</li>
+  </ul>
+  <div class="foot">Alexia Design OS</div>
+</section>
+
+<section class="slide s14">
+  <div class="num">14</div>
+  <div class="eyebrow">Para quién es</div>
+  <h2>Para el equipo, y más allá.</h2>
+  <ul>
+    <li><strong>Un diseñador nuevo</strong> pregunta "¿cómo hacemos un estado de error?" y recibe el criterio, no la opinión de turno.</li>
+    <li><strong>Producto</strong> consulta qué se decidió sobre una pantalla y por qué, sin reabrir el debate.</li>
+    <li><strong>Desarrollo</strong> aplica el mismo token de color y ya está alineado con diseño.</li>
+    <li><strong>Y la IA</strong> usa todo eso para proponer algo que ya parece Alexia.</li>
+  </ul>
+  <div class="foot">Alexia Design OS</div>
+</section>
+
+<section class="slide s15">
+  <div class="num">15</div>
+  <div class="eyebrow">A dónde queremos llegar</div>
+  <h2>Una base viva que aprende con nosotros.</h2>
+  <p class="lead">El conocimiento de Alexia (diseño, producto, datos, uso) ordenado y consultable. Personas e IA trabajando sobre la misma fuente. Aprender del producto de forma continua y decidir más rápido, con evidencia.</p>
+  <p class="small">No es un destino cerrado. Es la dirección.</p>
+  <div class="foot">Alexia Design OS</div>
+</section>
+
+<section class="slide s16">
+  <div class="num">16</div>
+  <div class="eyebrow">Una idea para explorar</div>
+  <h2>Alexia LAB.</h2>
+  <p class="lead">Un espacio abierto dentro de Alexia donde cualquier usuario entra, prueba funciones en beta y nos dice qué le parece. Feedback directo, sin montar una sesión.</p>
+  <div class="cards">
+    <div class="card"><div class="k">Pasar lista con IA</div><div class="v">Beta · pruébalo</div></div>
+    <div class="card"><div class="k">Comunicados con IA</div><div class="v">Beta · pruébalo</div></div>
+    <div class="card"><div class="k">…</div><div class="v">Lo que queramos validar</div></div>
+  </div>
+  <p class="small">Google y GitHub hacen versiones de esto. Lo nuevo aquí es el propósito: convertirlo en nuestra forma de aprender del usuario, rápido.</p>
+  <div class="foot">Alexia Design OS</div>
+</section>
+
+<section class="slide s17">
+  <div class="num">17</div>
+  <div class="eyebrow">Conversación</div>
+  <h2>¿Tiene sentido? ¿Qué falta?</h2>
+  <p class="lead">Estamos en la fase de construir esto <strong>juntos</strong>. ¿Dónde veis que aportaría más valor? Vuestra visión es parte.</p>
+  <div class="foot">Alexia Design OS</div>
+</section>
+
+<section class="slide s18">
+  <div class="num">18</div>
+  <h2>Gracias =) </h2>
+  <p class="lead">Compartir mejor lo que ya sabemos, para las personas y para la IA, y evolucionar Alexia con más coherencia.</p>
+  <div class="foot">Alexia Design OS</div>
+</section>
+
+<button id="fsbtn"
+  onclick="document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()"
+  style="position:fixed;bottom:20px;right:20px;z-index:99;background:rgba(255,255,255,.16);color:#fff;border:1.5px solid rgba(255,255,255,.45);border-radius:999px;padding:10px 18px;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;letter-spacing:.02em;cursor:pointer;backdrop-filter:blur(6px)">
+  ⛶ Pantalla completa
+</button>
+<script>
+  document.addEventListener('fullscreenchange',function(){
+    document.getElementById('fsbtn').textContent =
+      document.fullscreenElement ? '⛶ Salir' : '⛶ Pantalla completa';
+  });
+</script>
+</body>
+</html>
