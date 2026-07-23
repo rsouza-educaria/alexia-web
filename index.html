@@ -4636,7 +4636,7 @@
             <div class="ficha-action-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
             <span>Programación</span>
           </button>
-          <button class="ficha-action" onclick="sesOpenCuaderno()">
+          <button class="ficha-action">
             <div class="ficha-action-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
             <span>Cuaderno</span>
           </button>
@@ -4785,16 +4785,6 @@
           <div class="ses-note">
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
             <div class="ses-note-body"><strong>Programación</strong> — contenido pendiente de diseño (job futuro). Aquí irá la programación didáctica asociada a la sesión.</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- VISTA: Cuaderno (marcador — abre el panel Cuaderno V2) -->
-      <div class="view" id="ses-view-cuaderno">
-        <div class="ses-placeholder">
-          <div class="ses-note">
-            <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            <div class="ses-note-body">«Cuaderno» abre el panel <strong>Cuaderno del profesor V2</strong> ya existente.</div>
           </div>
         </div>
       </div>
@@ -6894,7 +6884,7 @@
   }
 
   // ══ PANEL DETALLE DE SESIÓN ══════════════════════════════════════════
-  var SES = { titles: { ficha: 'Ficha', 'pasar-lista': 'Pasar lista', programacion: 'Programación', cuaderno: 'Cuaderno', 'crear-item': 'Crear', 'crear-anotacion': 'Crear anotación' } };
+  var SES = { titles: { ficha: 'Ficha', 'pasar-lista': 'Pasar lista', programacion: 'Programación', 'crear-item': 'Crear', 'crear-anotacion': 'Crear anotación' } };
 
   function openPanelDetalleSesion() {
     closeAllPanels();
@@ -6938,11 +6928,6 @@
       if (showFooter) footerBtn.textContent = footerLabels[view];
     }
     sesCloseCreateMenu();
-  }
-
-  function sesOpenCuaderno() {
-    closePanelDetalleSesion();
-    openPanelCuaderno();
   }
 
   function sesToggleStar(el) {
