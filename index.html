@@ -1757,6 +1757,91 @@
   /* Switch + texto: el switch va SIEMPRE a la izquierda, el texto después
      (convención nueva — feedback: un switch lejos de su texto confunde). */
   .cua-switch-row { display: flex; align-items: center; gap: var(--sp-12); }
+
+  /* ═══ DETALLE DE SESIÓN — piezas nuevas (.ses-*) ═══════════════════════
+     Solo lo que NO existe en el DS; el resto reutiliza .right-panel-3,
+     .panel-header/.ph-*, .ficha-actions, .view, .p-section, .form-*, etc. */
+  .ses-meta { display: flex; align-items: center; gap: var(--sp-12); padding: var(--sp-12) var(--sp-16); border-bottom: 1px solid var(--grey-400); background: var(--bg-surface); }
+  .ses-nav { display: flex; align-items: center; gap: var(--sp-4); flex-shrink: 0; }
+  .ses-navbtn { width: 28px; height: 28px; border-radius: var(--radius-sm); border: 1px solid var(--grey-500); background: var(--bg-primary); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-secondary); transition: background .15s, border-color .15s, color .15s; }
+  .ses-navbtn:hover { background: var(--grey-300); border-color: var(--action-primary); color: var(--action-primary); }
+  .ses-navbtn svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2; fill: none; }
+  .ses-when { flex: 1; min-width: 0; display: flex; align-items: center; gap: var(--sp-8); font-size: 13px; font-weight: 500; color: var(--text-secondary); font-family: var(--font-body); }
+  .ses-when svg { width: 15px; height: 15px; stroke: var(--grey-600); stroke-width: 2; fill: none; flex-shrink: 0; }
+  .ses-star { width: 32px; height: 32px; border-radius: 50%; border: none; background: var(--blue-50); color: var(--action-primary); display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: background .15s, color .15s; }
+  .ses-star svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2; fill: none; }
+  .ses-star.on { background: var(--action-primary); color: #fff; }
+  .ses-star.on svg { fill: currentColor; }
+
+  .ses-sec-head { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-8); margin-bottom: var(--sp-12); }
+  .ses-sec-title { display: flex; align-items: center; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); font-family: var(--font-ui); }
+  .ses-count { display: inline-flex; align-items: center; justify-content: center; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--grey-500); color: var(--text-secondary); font-size: 11px; font-weight: 700; font-family: var(--font-ui); margin-left: 6px; }
+  .ses-sec-actions { display: flex; align-items: center; gap: var(--sp-8); flex-shrink: 0; }
+  .ses-iconbtn { width: 28px; height: 28px; border-radius: var(--radius-sm); border: 1px solid var(--grey-500); background: var(--bg-primary); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-secondary); transition: background .15s, border-color .15s, color .15s; }
+  .ses-iconbtn:hover { background: var(--grey-300); color: var(--action-primary); border-color: var(--action-primary); }
+  .ses-iconbtn svg { width: 15px; height: 15px; stroke: currentColor; stroke-width: 2; fill: none; }
+
+  .ses-add-menu { display: none; position: absolute; min-width: 190px; background: var(--bg-primary); border: 1px solid var(--grey-400); border-radius: var(--radius-md); box-shadow: 0 6px 20px rgba(0,0,0,0.14); padding: var(--sp-4); z-index: 30; }
+  .ses-add-menu.open { display: block; }
+  .ses-add-menu button { display: flex; align-items: center; gap: var(--sp-8); width: 100%; padding: var(--sp-8) var(--sp-12); border: none; background: none; border-radius: var(--radius-sm); cursor: pointer; font-size: 13px; font-weight: 600; color: var(--text-primary); font-family: var(--font-ui); text-align: left; }
+  .ses-add-menu button:hover { background: var(--blue-50); }
+  .ses-add-menu svg { width: 16px; height: 16px; stroke: var(--action-primary); stroke-width: 2; fill: none; flex-shrink: 0; }
+  .ses-create-menu { top: 150px; right: var(--sp-16); left: auto; }
+
+  .ses-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: var(--sp-16) var(--sp-16) var(--sp-8); gap: 6px; }
+  .ses-empty-icon { width: 40px; height: 40px; border-radius: 50%; background: var(--grey-300); display: flex; align-items: center; justify-content: center; margin-bottom: 2px; }
+  .ses-empty-icon svg { width: 20px; height: 20px; stroke: var(--grey-600); stroke-width: 1.8; fill: none; }
+  .ses-empty-title { font-size: 13px; font-weight: 700; color: var(--text-secondary); font-family: var(--font-ui); }
+  .ses-empty-hint { font-size: 12px; color: var(--text-muted); font-family: var(--font-body); max-width: 250px; line-height: 1.45; }
+
+  .ses-placeholder { padding: var(--sp-16); }
+  .ses-note { display: flex; gap: var(--sp-12); padding: var(--sp-12); border: 1px dashed var(--grey-500); border-radius: var(--radius-md); background: var(--bg-surface); }
+  .ses-note svg { width: 18px; height: 18px; stroke: var(--action-primary); stroke-width: 2; fill: none; flex-shrink: 0; margin-top: 1px; }
+  .ses-note-body { font-size: 13px; color: var(--text-secondary); font-family: var(--font-body); line-height: 1.5; }
+  .ses-note-body strong { color: var(--text-primary); font-family: var(--font-ui); }
+
+  .ses-color-row { display: flex; align-items: center; gap: var(--sp-8); }
+  .ses-color-swatch { width: 36px; height: 36px; padding: 2px; border: 1px solid var(--grey-400); border-radius: var(--radius-sm); background: var(--bg-surface); cursor: pointer; flex-shrink: 0; }
+  .ses-switch { display: flex; align-items: center; gap: var(--sp-12); }
+  .ses-switch label { font-size: 14px; font-family: var(--font-body); color: var(--text-primary); cursor: pointer; }
+  .ses-req { color: var(--support-danger); }
+
+  #panel-detalle-sesion .ficha-action-icon { background: var(--bg-primary); border: 1px solid var(--grey-500); }
+  #panel-detalle-sesion .ficha-action.ses-create .ficha-action-icon { background: var(--action-primary); border-color: var(--action-primary); }
+  #panel-detalle-sesion .ficha-action.ses-create .ficha-action-icon svg { stroke: #fff; }
+
+  .ses-radio-group { display: flex; flex-wrap: wrap; gap: var(--sp-16); }
+  .ses-radio { display: flex; align-items: center; gap: var(--sp-8); cursor: pointer; font-size: 14px; font-family: var(--font-body); color: var(--text-primary); }
+  .ses-radio input[type="radio"] { width: 16px; height: 16px; accent-color: var(--action-primary); cursor: pointer; }
+
+  .ses-req-note { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); font-family: var(--font-body); margin-bottom: var(--sp-16); }
+  .ses-req-note svg { width: 14px; height: 14px; stroke: var(--support-discovery); stroke-width: 2; fill: none; flex-shrink: 0; }
+  .ses-attach { align-self: flex-start; height: 32px; padding: 0 var(--sp-12); font-size: 13px; }
+  .ses-attach svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2; fill: none; }
+  .ses-urlrow { display: flex; align-items: center; gap: var(--sp-8); }
+  .ses-urllink { font-size: 12px; font-weight: 700; color: var(--action-primary); font-family: var(--font-ui); white-space: nowrap; cursor: pointer; text-decoration: none; }
+
+  .ses-item { display: flex; align-items: center; gap: var(--sp-12); padding: var(--sp-8); border-radius: var(--radius-sm); cursor: pointer; transition: background 0.15s; }
+  .ses-item:hover { background: var(--blue-50); }
+  .ses-item-icon { width: 32px; height: 32px; border-radius: var(--radius-sm); background: var(--grey-300); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .ses-item-icon svg { width: 16px; height: 16px; stroke: var(--grey-600); stroke-width: 2; fill: none; }
+  .ses-item-body { flex: 1; min-width: 0; }
+  .ses-item-name { font-size: 14px; font-weight: 600; color: var(--text-primary); font-family: var(--font-body); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ses-item-meta { display: flex; align-items: center; gap: 6px; flex-shrink: 0; font-size: 12px; color: var(--text-muted); font-family: var(--font-body); }
+  .ses-item-meta svg { width: 14px; height: 14px; stroke: var(--grey-600); stroke-width: 2; fill: none; }
+
+  /* Card de sesión en la home (stand-in del calendario) */
+  .ses-launch { max-width: 420px; margin: 48px auto; }
+  .ses-launch-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); font-family: var(--font-ui); margin-bottom: var(--sp-12); text-align: center; }
+  .ses-card { display: flex; align-items: center; gap: var(--sp-12); padding: var(--sp-16); background: var(--bg-primary); border: 1px solid var(--grey-400); border-left: 4px solid var(--action-primary); border-radius: var(--radius-md); cursor: pointer; transition: box-shadow .15s, transform .15s; }
+  .ses-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.10); transform: translateY(-1px); }
+  .ses-card-icon { width: 44px; height: 44px; border-radius: var(--radius-md); background: #E1EDF8; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .ses-card-icon svg { width: 22px; height: 22px; stroke: var(--action-primary); stroke-width: 1.8; fill: none; }
+  .ses-card-body { flex: 1; min-width: 0; }
+  .ses-card-title { font-size: 15px; font-weight: 700; color: var(--text-primary); font-family: var(--font-ui); }
+  .ses-card-sub { font-size: 13px; color: var(--text-secondary); font-family: var(--font-body); margin-top: 2px; }
+  .ses-card-chev { color: var(--grey-600); flex-shrink: 0; }
+  .ses-card-chev svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; fill: none; }
 </style>
 </head>
 <body>
@@ -1877,8 +1962,18 @@
 
     <!-- PAGE: Home (placeholder) -->
     <div class="page-view active" id="page-home">
-      <div class="page-placeholder">
-        <p style="font-size:14px;font-weight:500;color:var(--text-muted);font-family:var(--font-body);">Contenido de la página</p>
+      <div class="ses-launch">
+        <div class="ses-launch-label">Mi Horario · sesión de ejemplo</div>
+        <div class="ses-card" onclick="openPanelDetalleSesion()">
+          <div class="ses-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </div>
+          <div class="ses-card-body">
+            <div class="ses-card-title">Ciencias naturales · 011A</div>
+            <div class="ses-card-sub">Jueves 23/7 · 12:00–13:30 · Detalle de sesión</div>
+          </div>
+          <div class="ses-card-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </div>
       </div>
     </div>
 
@@ -4471,6 +4566,320 @@
 
   </aside>
 
+  <!-- PANEL DETALLE DE SESIÓN — abre al pulsar una sesión en "Mi Horario" -->
+  <aside class="right-panel-3" id="panel-detalle-sesion">
+
+    <!-- Header HOME (vista Resumen) -->
+    <div class="panel-header" id="ses-header-home">
+      <div class="ph-icon" style="background:#E1EDF8;">
+        <svg viewBox="0 0 24 24" style="stroke:#285A92" fill="none"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      </div>
+      <div class="ph-bar" style="background:#285A92;"></div>
+      <div class="ph-titles">
+        <span class="ph-title">Ciencias naturales</span>
+        <span class="ph-subtitle">011A</span>
+      </div>
+      <button class="com-toggle-btn" style="width:28px;height:28px;" onclick="togglePanelExpand('panel-detalle-sesion', this)" title="Expandir panel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="4" x2="21" y2="20"/><line x1="16" y1="12" x2="3" y2="12"/><polyline points="10 19 3 12 10 5"/></svg>
+      </button>
+      <button class="ph-btn" onclick="closePanelDetalleSesion()" title="Cerrar">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <!-- Header DETALLE (vistas empujadas) -->
+    <div class="panel-header" id="ses-header-detail" style="display:none;">
+      <button class="ph-btn" onclick="sesGoView('resumen')" title="Volver">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="ph-bar" style="background:#285A92;"></div>
+      <div class="ph-titles">
+        <span class="ph-title" id="ses-detail-title">Ficha</span>
+        <span class="ph-subtitle">Ciencias naturales · 011A</span>
+      </div>
+      <button class="com-toggle-btn" style="width:28px;height:28px;" onclick="togglePanelExpand('panel-detalle-sesion', this)" title="Expandir panel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="4" x2="21" y2="20"/><line x1="16" y1="12" x2="3" y2="12"/><polyline points="10 19 3 12 10 5"/></svg>
+      </button>
+      <button class="ph-btn" onclick="closePanelDetalleSesion()" title="Cerrar">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="panel-body">
+
+      <!-- VISTA: Resumen (home) -->
+      <div class="view active" id="ses-view-resumen">
+        <div class="ses-meta">
+          <div class="ses-nav">
+            <button class="ses-navbtn" title="Sesión anterior"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <button class="ses-navbtn" title="Sesión siguiente"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+          </div>
+          <div class="ses-when">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Jue 23/7 · 12:00–13:30 · 1:30 h
+          </div>
+          <button class="ses-star" onclick="sesToggleStar(this)" title="Marcar como favorita" aria-pressed="false">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </button>
+        </div>
+
+        <div class="ficha-actions">
+          <button class="ficha-action" onclick="sesGoView('ficha')">
+            <div class="ficha-action-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+            <span>Ficha</span>
+          </button>
+          <button class="ficha-action" onclick="sesGoView('pasar-lista')">
+            <div class="ficha-action-icon"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+            <span>Pasar lista</span>
+          </button>
+          <button class="ficha-action" onclick="sesGoView('programacion')">
+            <div class="ficha-action-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+            <span>Programación</span>
+          </button>
+          <button class="ficha-action" onclick="sesOpenCuaderno()">
+            <div class="ficha-action-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+            <span>Cuaderno</span>
+          </button>
+          <button class="ficha-action ses-create" onclick="sesToggleCreateMenu(event)" title="Crear">
+            <div class="ficha-action-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+            <span>Crear</span>
+          </button>
+        </div>
+
+        <div class="p-section">
+          <div class="ses-sec-head">
+            <span class="ses-sec-title">Actividades / Tareas <span class="ses-count" id="ses-tareas-count">0</span></span>
+            <div class="ses-sec-actions">
+              <button class="ses-iconbtn" title="Buscar"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+            </div>
+          </div>
+          <div id="ses-tareas-list">
+            <div class="ses-item" onclick="sesEditItem(this)" data-tipo="tarea" data-title="Home work" data-min="30" data-eval="0" data-vis="alumno" data-desc="" data-url="">
+              <div class="ses-item-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+              <div class="ses-item-body"><div class="ses-item-name">Home work</div></div>
+              <div class="ses-item-meta"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>30 min</span></div>
+            </div>
+          </div>
+          <div class="ses-empty" id="ses-tareas-empty" style="display:none;">
+            <div class="ses-empty-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg></div>
+            <div class="ses-empty-title">Aún no hay actividades ni tareas</div>
+            <div class="ses-empty-hint">Usa «Crear» para añadir una tarea o actividad a esta sesión.</div>
+          </div>
+        </div>
+
+        <div class="p-section" style="border-bottom:none;">
+          <div class="ses-sec-head">
+            <span class="ses-sec-title">Anotaciones <span class="ses-count" id="ses-anot-count">0</span></span>
+          </div>
+          <div id="ses-anot-list"></div>
+          <div class="ses-empty" id="ses-anot-empty">
+            <div class="ses-empty-icon"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/></svg></div>
+            <div class="ses-empty-title">Sin anotaciones</div>
+            <div class="ses-empty-hint">Añade una anotación privada sobre lo ocurrido en la sesión.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VISTA: Ficha (formulario editable, adaptado del legado) -->
+      <div class="view" id="ses-view-ficha">
+        <div class="form-section">
+          <span class="section-label">Identificación</span>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--sp-8);margin-bottom:var(--sp-12);">
+            <div class="field-group"><span class="field-label">Mat 1</span><input class="form-input" value="MCOM"></div>
+            <div class="field-group"><span class="field-label">Mat 2</span><input class="form-input" value="CCNA"></div>
+            <div class="field-group"><span class="field-label">Mat 3</span><input class="form-input" value=""></div>
+          </div>
+          <div class="field-group" style="margin-bottom:var(--sp-12);">
+            <span class="field-label">Nombre <span class="ses-req">*</span></span>
+            <input class="form-input" value="Ciencias naturales">
+          </div>
+          <div class="form-row-2">
+            <div class="field-group"><span class="field-label">Secciones</span><input class="form-input" value="011A"></div>
+            <div class="field-group"><span class="field-label">Curso escolar</span><input class="form-input" value="2015/16"></div>
+          </div>
+        </div>
+        <div class="form-section">
+          <span class="section-label">Evaluación y asignación</span>
+          <div class="field-group" style="margin-bottom:var(--sp-12);">
+            <span class="field-label">Sistema de evaluación</span>
+            <select class="form-select"><option>1º Ed. Primaria — MODELO I</option><option>Reducido</option></select>
+          </div>
+          <div class="form-row-2" style="margin-bottom:var(--sp-12);">
+            <div class="field-group"><span class="field-label">Tipo de asignación</span><select class="form-select"><option>Manual</option><option>Automática</option></select></div>
+            <div class="field-group"><span class="field-label">Orden</span><input class="form-input" value="101000"></div>
+          </div>
+          <div class="field-group">
+            <span class="field-label">¿Es pendiente?</span>
+            <select class="form-select"><option value="">Seleccione</option><option>Sí</option><option>No</option></select>
+          </div>
+        </div>
+        <div class="form-section">
+          <span class="section-label">Ubicación</span>
+          <div class="field-group">
+            <span class="field-label">Aula</span>
+            <input class="form-input" placeholder="Buscar aula…">
+          </div>
+        </div>
+        <div class="form-section">
+          <span class="section-label">Apariencia y contenido</span>
+          <div class="field-group" style="margin-bottom:var(--sp-12);">
+            <span class="field-label">Color</span>
+            <div class="ses-color-row">
+              <input type="color" class="ses-color-swatch" value="#285A92">
+              <input class="form-input" value="#285A92" style="max-width:130px;">
+            </div>
+          </div>
+          <div class="field-group">
+            <span class="field-label">Contenido</span>
+            <textarea class="form-textarea" placeholder="Descripción de la materia…"></textarea>
+          </div>
+        </div>
+        <div class="form-section" style="border-bottom:none;">
+          <span class="section-label">Integraciones</span>
+          <div class="ses-switch" style="margin-bottom:var(--sp-12);">
+            <div class="toggle-track" onclick="this.classList.toggle('on')"><div class="toggle-thumb"></div></div>
+            <label>¿Área de Classroom?</label>
+          </div>
+          <div class="field-group" style="margin-bottom:var(--sp-16);">
+            <span class="field-label">Classroom</span>
+            <select class="form-select"><option value="">Seleccione</option></select>
+          </div>
+          <div class="field-group" style="margin-bottom:var(--sp-16);">
+            <span class="field-label">Id Moodle</span>
+            <input class="form-input" placeholder="">
+          </div>
+          <div class="ses-switch">
+            <div class="toggle-track" onclick="this.classList.toggle('on')"><div class="toggle-thumb"></div></div>
+            <label>¿Es público?</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- VISTA: Pasar lista (reutiliza patrón de Áreas) -->
+      <div class="view" id="ses-view-pasar-lista">
+        <div class="search-wrap">
+          <div class="search-wrap-inner">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input class="search-input" type="text" placeholder="Buscar">
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:var(--sp-12) var(--sp-16);border-bottom:1px solid var(--grey-400);">
+          <span style="font-size:13px;font-weight:700;color:var(--text-primary);font-family:var(--font-ui);">Nombre</span>
+          <div style="display:flex;align-items:center;gap:var(--sp-8);">
+            <span style="font-size:13px;font-weight:700;color:var(--text-primary);font-family:var(--font-ui);">¿Presencia total?</span>
+            <div class="toggle-track on" onclick="this.classList.toggle('on')"><div class="toggle-thumb"></div></div>
+          </div>
+        </div>
+        <div id="ses-lista-alumnos">
+          <div class="lista-row"><div class="lista-photo" style="background:#E1EDF8;">AA</div><div class="lista-info"><div class="lista-name">Alejandra Abad Urrutia</div><div class="lista-group">011A</div></div><div class="lista-actions"><button class="lista-action-btn" onclick="toggleAbsent(this)" title="Ausente"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></button><button class="lista-action-btn" onclick="toggleLate(this)" title="Retraso"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></button></div></div>
+          <div class="lista-row"><div class="lista-photo" style="background:#EDF7EE;">BG</div><div class="lista-info"><div class="lista-name">Begoña Gomez Bolaños</div><div class="lista-group">011A</div></div><div class="lista-actions"><button class="lista-action-btn" onclick="toggleAbsent(this)" title="Ausente"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></button><button class="lista-action-btn" onclick="toggleLate(this)" title="Retraso"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></button></div></div>
+          <div class="lista-row"><div class="lista-photo" style="background:#F1EFFA;">CK</div><div class="lista-info"><div class="lista-name">Clara Kin Yun</div><div class="lista-group">011A</div></div><div class="lista-actions"><button class="lista-action-btn" onclick="toggleAbsent(this)" title="Ausente"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></button><button class="lista-action-btn" onclick="toggleLate(this)" title="Retraso"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></button></div></div>
+          <div class="lista-row"><div class="lista-photo" style="background:#FFFCE0;">SP</div><div class="lista-info"><div class="lista-name">Santiago de la Peña</div><div class="lista-group">011A</div></div><div class="lista-actions"><button class="lista-action-btn" onclick="toggleAbsent(this)" title="Ausente"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></button><button class="lista-action-btn" onclick="toggleLate(this)" title="Retraso"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></button></div></div>
+          <div class="lista-row" style="border-bottom:none"><div class="lista-photo" style="background:#FEF0F0;">JR</div><div class="lista-info"><div class="lista-name">Javier Ruiz</div><div class="lista-group">011A</div></div><div class="lista-actions"><button class="lista-action-btn" onclick="toggleAbsent(this)" title="Ausente"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></button><button class="lista-action-btn" onclick="toggleLate(this)" title="Retraso"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></button></div></div>
+        </div>
+      </div>
+
+      <!-- VISTA: Programación (placeholder — job futuro) -->
+      <div class="view" id="ses-view-programacion">
+        <div class="ses-placeholder">
+          <div class="ses-note">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <div class="ses-note-body"><strong>Programación</strong> — contenido pendiente de diseño (job futuro). Aquí irá la programación didáctica asociada a la sesión.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VISTA: Cuaderno (marcador — abre el panel Cuaderno V2) -->
+      <div class="view" id="ses-view-cuaderno">
+        <div class="ses-placeholder">
+          <div class="ses-note">
+            <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            <div class="ses-note-body">«Cuaderno» abre el panel <strong>Cuaderno del profesor V2</strong> ya existente.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VISTA: Crear tarea / actividad (formulario, del legado) -->
+      <div class="view" id="ses-view-crear-item">
+        <div class="form-section" style="border-bottom:none;">
+          <div class="ses-req-note">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            Los campos marcados con <span class="ses-req">*</span> son obligatorios
+          </div>
+          <div class="field-group" style="margin-bottom:var(--sp-12);">
+            <span class="field-label">Título <span class="ses-req">*</span></span>
+            <input class="form-input" id="ses-f-titulo" placeholder="Título">
+          </div>
+          <div class="field-group" style="margin-bottom:var(--sp-12);">
+            <span class="field-label">Visibilidad</span>
+            <div class="ses-radio-group">
+              <label class="ses-radio"><input type="radio" name="ses-vis" value="familias" checked><span>Alumnos y familias</span></label>
+              <label class="ses-radio"><input type="radio" name="ses-vis" value="alumno"><span>Alumno</span></label>
+            </div>
+          </div>
+          <div class="form-row-2" style="margin-bottom:var(--sp-12);">
+            <div class="field-group"><span class="field-label">Minutos</span><input class="form-input" id="ses-f-min" type="number" value="0" min="0"></div>
+            <div class="field-group"><span class="field-label">Unidad Didáctica</span><select class="form-select"><option value="">- Seleccionar -</option></select></div>
+          </div>
+          <div class="ses-switch" style="margin-bottom:var(--sp-12);">
+            <div class="toggle-track" id="ses-f-eval" onclick="this.classList.toggle('on')"><div class="toggle-thumb"></div></div>
+            <label>¿Es evaluable?</label>
+          </div>
+          <div class="field-group" style="margin-bottom:var(--sp-12);">
+            <span class="field-label">Descripción</span>
+            <textarea class="form-textarea" id="ses-f-desc" placeholder="Descripción…"></textarea>
+          </div>
+          <div class="field-group" style="margin-bottom:var(--sp-12);">
+            <span class="field-label">Url</span>
+            <div class="ses-urlrow">
+              <input class="form-input" id="ses-f-url" placeholder="https://…">
+              <a class="ses-urllink">Abrir URL</a>
+            </div>
+          </div>
+          <div class="field-group" style="margin-bottom:var(--sp-12);">
+            <span class="field-label">Fichero para docentes</span>
+            <button class="btn-secondary ses-attach"><svg viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>Adjuntar</button>
+          </div>
+          <div class="field-group">
+            <span class="field-label">Fichero para alumnos</span>
+            <button class="btn-secondary ses-attach"><svg viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>Adjuntar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- VISTA: Crear anotación (más ligera) -->
+      <div class="view" id="ses-view-crear-anotacion">
+        <div class="form-section" style="border-bottom:none;">
+          <div class="field-group" style="margin-bottom:var(--sp-12);">
+            <span class="field-label">Anotación <span class="ses-req">*</span></span>
+            <textarea class="form-textarea" id="ses-f-anot" placeholder="Escribe la anotación…"></textarea>
+          </div>
+          <div class="field-group">
+            <span class="field-label">Visibilidad</span>
+            <div class="ses-radio-group">
+              <label class="ses-radio"><input type="radio" name="ses-anot-vis" value="solo-yo" checked><span>Solo yo</span></label>
+              <label class="ses-radio"><input type="radio" name="ses-anot-vis" value="equipo"><span>Equipo docente</span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /panel-body -->
+
+    <footer class="panel-footer" id="ses-footer" style="display:none;">
+      <button class="btn-ghost btn-sm" id="ses-footer-delete" style="display:none;margin-right:auto;color:var(--support-danger);" onclick="sesBorrar()">Borrar</button>
+      <button class="btn-primary btn-sm" id="ses-footer-btn" onclick="sesFooterPrimary()">Grabar</button>
+      <button class="btn-secondary btn-sm" onclick="sesGoView('resumen')">Cancelar</button>
+    </footer>
+
+    <div class="ses-add-menu ses-create-menu" id="ses-create-menu">
+      <button onclick="sesCrear('tarea')"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Tarea</button>
+      <button onclick="sesCrear('actividad')"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>Actividad</button>
+      <button onclick="sesCrear('anotacion')"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/></svg>Anotación</button>
+    </div>
+
+  </aside>
+
   <!-- PAINEL CUADERNO — Crear nuevo cuaderno del profesor (rediseño V2, panel lateral, ancho normal + expandible a 720px) -->
   <aside class="right-panel-3" id="panel-cuaderno">
 
@@ -5363,7 +5772,7 @@
     if (o) o.classList.remove('visible');
   }
   function closeAllPanels() {
-    ['right-panel','panel-alumnos','panel-areas','panel-ia-review','panel-ctx','panel-cuaderno'].forEach(function(id) {
+    ['right-panel','panel-alumnos','panel-areas','panel-ia-review','panel-ctx','panel-cuaderno','panel-detalle-sesion'].forEach(function(id) {
       var el = document.getElementById(id);
       if (el) { el.classList.remove('open', 'expanded'); el.style.width = ''; }
     });
@@ -6483,6 +6892,206 @@
     var nav = document.getElementById('nav-cuaderno');
     if (nav) nav.classList.remove('active');
   }
+
+  // ══ PANEL DETALLE DE SESIÓN ══════════════════════════════════════════
+  var SES = { titles: { ficha: 'Ficha', 'pasar-lista': 'Pasar lista', programacion: 'Programación', cuaderno: 'Cuaderno', 'crear-item': 'Crear', 'crear-anotacion': 'Crear anotación' } };
+
+  function openPanelDetalleSesion() {
+    closeAllPanels();
+    var p = document.getElementById('panel-detalle-sesion');
+    p.style.width = '';
+    p.classList.remove('expanded');
+    p.classList.add('open');
+    showOverlay();
+    sesGoView('resumen');
+    p.querySelectorAll('[onclick*="togglePanelExpand"]').forEach(function(b){ b.innerHTML = ICON_CHEV_L; });
+  }
+  function closePanelDetalleSesion() {
+    var p = document.getElementById('panel-detalle-sesion');
+    if (!p) return;
+    p.classList.remove('open', 'expanded');
+    p.style.width = '';
+    hideOverlay();
+  }
+
+  function sesGoView(view) {
+    SES.current = view;
+    var del = document.getElementById('ses-footer-delete');
+    if (del) del.style.display = 'none';
+    document.querySelectorAll('#panel-detalle-sesion .view').forEach(function(v){ v.classList.remove('active'); });
+    document.getElementById('ses-view-' + view).classList.add('active');
+    var home = document.getElementById('ses-header-home');
+    var detail = document.getElementById('ses-header-detail');
+    var footer = document.getElementById('ses-footer');
+    var footerBtn = document.getElementById('ses-footer-btn');
+    if (view === 'resumen') {
+      home.style.display = 'flex';
+      detail.style.display = 'none';
+      footer.style.display = 'none';
+    } else {
+      home.style.display = 'none';
+      detail.style.display = 'flex';
+      document.getElementById('ses-detail-title').textContent = SES.titles[view] || '';
+      var footerLabels = { ficha: 'Grabar', 'pasar-lista': 'Guardar lista', 'crear-item': 'Guardar', 'crear-anotacion': 'Guardar' };
+      var showFooter = footerLabels.hasOwnProperty(view);
+      footer.style.display = showFooter ? 'flex' : 'none';
+      if (showFooter) footerBtn.textContent = footerLabels[view];
+    }
+    sesCloseCreateMenu();
+  }
+
+  function sesOpenCuaderno() {
+    closePanelDetalleSesion();
+    openPanelCuaderno();
+  }
+
+  function sesToggleStar(el) {
+    el.classList.toggle('on');
+    el.setAttribute('aria-pressed', el.classList.contains('on') ? 'true' : 'false');
+  }
+
+  function sesToggleCreateMenu(e) {
+    e.stopPropagation();
+    document.getElementById('ses-create-menu').classList.toggle('open');
+  }
+  function sesCloseCreateMenu() {
+    var m = document.getElementById('ses-create-menu');
+    if (m) m.classList.remove('open');
+  }
+  document.addEventListener('click', sesCloseCreateMenu);
+
+  var SES_LOCK = '<svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
+  function sesItemIcon(tipo) {
+    if (tipo === 'actividad') return '<svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>';
+    if (tipo === 'anotacion') return '<svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/></svg>';
+    return '<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>';
+  }
+  function sesMetaHtml(min) {
+    var m = parseInt(min, 10) || 0;
+    return SES_LOCK + (m > 0 ? '<span>' + m + ' min</span>' : '');
+  }
+  function sesRenderCounts() {
+    var tl = document.getElementById('ses-tareas-list');
+    var al = document.getElementById('ses-anot-list');
+    if (!tl || !al) return;
+    var t = tl.children.length;
+    document.getElementById('ses-tareas-count').textContent = t;
+    document.getElementById('ses-tareas-empty').style.display = t ? 'none' : 'flex';
+    var a = al.children.length;
+    document.getElementById('ses-anot-count').textContent = a;
+    document.getElementById('ses-anot-empty').style.display = a ? 'none' : 'flex';
+  }
+
+  function sesClearItemForm() {
+    document.getElementById('ses-f-titulo').value = '';
+    document.getElementById('ses-f-min').value = '0';
+    document.getElementById('ses-f-eval').classList.remove('on');
+    document.getElementById('ses-f-desc').value = '';
+    document.getElementById('ses-f-url').value = '';
+    var r = document.querySelector('input[name="ses-vis"][value="familias"]');
+    if (r) r.checked = true;
+  }
+  function sesFillItemForm(d) {
+    document.getElementById('ses-f-titulo').value = d.title || '';
+    document.getElementById('ses-f-min').value = d.min || '0';
+    document.getElementById('ses-f-eval').classList.toggle('on', d.eval === '1');
+    document.getElementById('ses-f-desc').value = d.desc || '';
+    document.getElementById('ses-f-url').value = d.url || '';
+    var vis = d.vis || 'familias';
+    document.querySelectorAll('input[name="ses-vis"]').forEach(function(x){ x.checked = (x.value === vis); });
+  }
+
+  function sesCrear(tipo) {
+    sesCloseCreateMenu();
+    SES.editing = null;
+    SES.editTipo = tipo;
+    if (tipo === 'anotacion') {
+      document.getElementById('ses-f-anot').value = '';
+      var r = document.querySelector('input[name="ses-anot-vis"][value="solo-yo"]'); if (r) r.checked = true;
+      sesGoView('crear-anotacion');
+    } else {
+      sesClearItemForm();
+      sesGoView('crear-item');
+      document.getElementById('ses-detail-title').textContent = (tipo === 'tarea') ? 'Crear tarea' : 'Crear actividad';
+    }
+  }
+
+  function sesEditItem(el) {
+    var tipo = el.dataset.tipo;
+    SES.editing = el;
+    SES.editTipo = tipo;
+    if (tipo === 'anotacion') {
+      document.getElementById('ses-f-anot').value = el.dataset.text || '';
+      var vis = el.dataset.vis || 'solo-yo';
+      document.querySelectorAll('input[name="ses-anot-vis"]').forEach(function(x){ x.checked = (x.value === vis); });
+      sesGoView('crear-anotacion');
+      document.getElementById('ses-detail-title').textContent = 'Editar anotación';
+    } else {
+      sesFillItemForm(el.dataset);
+      sesGoView('crear-item');
+      document.getElementById('ses-detail-title').textContent = (tipo === 'tarea') ? 'Editar tarea' : 'Editar actividad';
+    }
+    document.getElementById('ses-footer-delete').style.display = 'inline-flex';
+  }
+
+  function sesFooterPrimary() {
+    if (SES.current === 'crear-item' || SES.current === 'crear-anotacion') sesGuardar();
+    else sesGoView('resumen');
+  }
+
+  function sesGuardar() {
+    if (SES.editTipo === 'anotacion') {
+      var texto = (document.getElementById('ses-f-anot').value || '').trim() || 'Anotación';
+      var vis = (document.querySelector('input[name="ses-anot-vis"]:checked') || {}).value || 'solo-yo';
+      if (SES.editing) {
+        SES.editing.dataset.text = texto;
+        SES.editing.dataset.vis = vis;
+        SES.editing.querySelector('.ses-item-name').textContent = texto;
+      } else {
+        var a = document.createElement('div');
+        a.className = 'ses-item';
+        a.setAttribute('onclick', 'sesEditItem(this)');
+        a.dataset.tipo = 'anotacion'; a.dataset.text = texto; a.dataset.vis = vis;
+        a.innerHTML = '<div class="ses-item-icon">' + sesItemIcon('anotacion') + '</div><div class="ses-item-body"><div class="ses-item-name"></div></div><div class="ses-item-meta">' + SES_LOCK + '</div>';
+        a.querySelector('.ses-item-name').textContent = texto;
+        document.getElementById('ses-anot-list').appendChild(a);
+      }
+    } else {
+      var tipo = SES.editTipo;
+      var titulo = (document.getElementById('ses-f-titulo').value || '').trim() || (tipo === 'tarea' ? 'Tarea sin título' : 'Actividad sin título');
+      var min = document.getElementById('ses-f-min').value || '0';
+      var evalOn = document.getElementById('ses-f-eval').classList.contains('on') ? '1' : '0';
+      var vis = (document.querySelector('input[name="ses-vis"]:checked') || {}).value || 'familias';
+      var desc = document.getElementById('ses-f-desc').value || '';
+      var url = document.getElementById('ses-f-url').value || '';
+      if (SES.editing) {
+        var e = SES.editing;
+        e.dataset.title = titulo; e.dataset.min = min; e.dataset.eval = evalOn; e.dataset.vis = vis; e.dataset.desc = desc; e.dataset.url = url;
+        e.querySelector('.ses-item-name').textContent = titulo;
+        e.querySelector('.ses-item-meta').innerHTML = sesMetaHtml(min);
+      } else {
+        var n = document.createElement('div');
+        n.className = 'ses-item';
+        n.setAttribute('onclick', 'sesEditItem(this)');
+        n.dataset.tipo = tipo; n.dataset.title = titulo; n.dataset.min = min; n.dataset.eval = evalOn; n.dataset.vis = vis; n.dataset.desc = desc; n.dataset.url = url;
+        n.innerHTML = '<div class="ses-item-icon">' + sesItemIcon(tipo) + '</div><div class="ses-item-body"><div class="ses-item-name"></div></div><div class="ses-item-meta">' + sesMetaHtml(min) + '</div>';
+        n.querySelector('.ses-item-name').textContent = titulo;
+        document.getElementById('ses-tareas-list').appendChild(n);
+      }
+    }
+    SES.editing = null;
+    sesRenderCounts();
+    sesGoView('resumen');
+  }
+
+  function sesBorrar() {
+    if (SES.editing && SES.editing.parentNode) SES.editing.parentNode.removeChild(SES.editing);
+    SES.editing = null;
+    sesRenderCounts();
+    sesGoView('resumen');
+  }
+
+  if (document.getElementById('ses-tareas-list')) sesRenderCounts();
 
   function cuaSelectOrigin(el){
     document.querySelectorAll('#panel-cuaderno .cua-option').forEach(function(o){ o.classList.remove('selected'); });
