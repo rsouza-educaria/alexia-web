@@ -1806,8 +1806,12 @@
 
   .ses-req-note { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); font-family: var(--font-body); margin-bottom: var(--sp-16); }
   .ses-req-note svg { width: 14px; height: 14px; stroke: var(--support-discovery); stroke-width: 2; fill: none; flex-shrink: 0; }
-  .ses-attach { align-self: flex-start; height: 32px; padding: 0 var(--sp-12); font-size: 13px; }
-  .ses-attach svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2; fill: none; }
+  /* Dropzone de ficheros adjuntos — mismo patrón que "Nuevo comunicado" (Comunicados desde
+     alumno). Nota: la instancia original usa var(--sp-24), que no existe en el sistema de
+     tokens (solo hay --sp-4/8/12/16) — aquí se usa el valor literal 24px que claramente era la
+     intención (coincide con el padding hardcodeado 32px 24px de la otra instancia del mismo
+     dropzone en Comunicados general). */
+  .ses-dropzone { border: 1px solid var(--grey-400); border-radius: var(--radius-sm); padding: 24px var(--sp-16); text-align: center; background: var(--bg-surface); cursor: pointer; }
   .ses-urlrow { display: flex; align-items: center; gap: var(--sp-8); }
   .ses-urllink { font-size: 12px; font-weight: 700; color: var(--action-primary); font-family: var(--font-ui); white-space: nowrap; cursor: pointer; text-decoration: none; }
 
@@ -4642,7 +4646,19 @@
 
         <div class="p-section">
           <div class="ses-sec-head">
-            <span class="ses-sec-title">Actividades / Tareas <span class="ses-count" id="ses-tareas-count">0</span></span>
+            <span class="ses-sec-title">Actividades <span class="ses-count" id="ses-actividades-count">0</span></span>
+          </div>
+          <div id="ses-actividades-list"></div>
+          <div class="ses-empty" id="ses-actividades-empty">
+            <div class="ses-empty-icon"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div>
+            <div class="ses-empty-title">Aún no hay actividades</div>
+            <div class="ses-empty-hint">Usa «Crear» para añadir una actividad a esta sesión.</div>
+          </div>
+        </div>
+
+        <div class="p-section">
+          <div class="ses-sec-head">
+            <span class="ses-sec-title">Tareas <span class="ses-count" id="ses-tareas-count">0</span></span>
           </div>
           <div id="ses-tareas-list">
             <div class="ses-item" onclick="sesEditItem(this)" data-tipo="tarea" data-title="Home work" data-min="30" data-eval="0" data-vis="alumno" data-desc="" data-url="">
@@ -4652,9 +4668,9 @@
             </div>
           </div>
           <div class="ses-empty" id="ses-tareas-empty" style="display:none;">
-            <div class="ses-empty-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg></div>
-            <div class="ses-empty-title">Aún no hay actividades ni tareas</div>
-            <div class="ses-empty-hint">Usa «Crear» para añadir una tarea o actividad a esta sesión.</div>
+            <div class="ses-empty-icon"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+            <div class="ses-empty-title">Aún no hay tareas</div>
+            <div class="ses-empty-hint">Usa «Crear» para añadir una tarea a esta sesión.</div>
           </div>
         </div>
 
@@ -4807,13 +4823,29 @@
               <a class="ses-urllink">Abrir URL</a>
             </div>
           </div>
-          <div class="field-group" style="margin-bottom:var(--sp-12);">
-            <span class="field-label">Fichero para docentes</span>
-            <button class="btn-secondary ses-attach"><svg viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>Adjuntar</button>
+        </div>
+
+        <!-- Ficheros adjuntos (mismo patrón que "Nuevo comunicado") -->
+        <div class="form-section">
+          <span class="form-label">Fichero para docentes</span>
+          <div class="ses-dropzone">
+            <svg viewBox="0 0 24 24" style="width:32px;height:32px;stroke:#2a80b5;stroke-width:1.5;fill:none;margin-bottom:var(--sp-8);">
+              <polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/>
+              <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
+            </svg>
+            <p style="font-size:13px;font-weight:700;color:#2a80b5;font-family:var(--font-ui);margin-bottom:4px;">Arrastra archivos aquí o haz clic para subir</p>
+            <p style="font-size:11px;color:var(--text-muted);font-family:var(--font-body);line-height:1.5;">JPG, JPEG, BMP, GIF, PNG, TXT, DOC, PPS, XLS, DOCX, XLSX, PPT, PPTX, MP3, PDF, ODT, ODP, ZIP, XML, CSV, TPC, DBF, MDB, LES, ZMOD, EXPMOD — máx. 5 MB por archivo</p>
           </div>
-          <div class="field-group">
-            <span class="field-label">Fichero para alumnos</span>
-            <button class="btn-secondary ses-attach"><svg viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>Adjuntar</button>
+        </div>
+        <div class="form-section" style="border-bottom:none;">
+          <span class="form-label">Fichero para alumnos</span>
+          <div class="ses-dropzone">
+            <svg viewBox="0 0 24 24" style="width:32px;height:32px;stroke:#2a80b5;stroke-width:1.5;fill:none;margin-bottom:var(--sp-8);">
+              <polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/>
+              <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
+            </svg>
+            <p style="font-size:13px;font-weight:700;color:#2a80b5;font-family:var(--font-ui);margin-bottom:4px;">Arrastra archivos aquí o haz clic para subir</p>
+            <p style="font-size:11px;color:var(--text-muted);font-family:var(--font-body);line-height:1.5;">JPG, JPEG, BMP, GIF, PNG, TXT, DOC, PPS, XLS, DOCX, XLSX, PPT, PPTX, MP3, PDF, ODT, ODP, ZIP, XML, CSV, TPC, DBF, MDB, LES, ZMOD, EXPMOD — máx. 5 MB por archivo</p>
           </div>
         </div>
       </div>
@@ -6926,9 +6958,13 @@
     return SES_LOCK + (m > 0 ? '<span>' + m + ' min</span>' : '');
   }
   function sesRenderCounts() {
+    var avl = document.getElementById('ses-actividades-list');
     var tl = document.getElementById('ses-tareas-list');
     var al = document.getElementById('ses-anot-list');
-    if (!tl || !al) return;
+    if (!avl || !tl || !al) return;
+    var av = avl.children.length;
+    document.getElementById('ses-actividades-count').textContent = av;
+    document.getElementById('ses-actividades-empty').style.display = av ? 'none' : 'flex';
     var t = tl.children.length;
     document.getElementById('ses-tareas-count').textContent = t;
     document.getElementById('ses-tareas-empty').style.display = t ? 'none' : 'flex';
@@ -7031,7 +7067,8 @@
         n.dataset.tipo = tipo; n.dataset.title = titulo; n.dataset.min = min; n.dataset.eval = evalOn; n.dataset.vis = vis; n.dataset.desc = desc; n.dataset.url = url;
         n.innerHTML = '<div class="ses-item-icon">' + sesItemIcon(tipo) + '</div><div class="ses-item-body"><div class="ses-item-name"></div></div><div class="ses-item-meta">' + sesMetaHtml(min) + '</div>';
         n.querySelector('.ses-item-name').textContent = titulo;
-        document.getElementById('ses-tareas-list').appendChild(n);
+        var listId = (tipo === 'actividad') ? 'ses-actividades-list' : 'ses-tareas-list';
+        document.getElementById(listId).appendChild(n);
       }
     }
     SES.editing = null;
