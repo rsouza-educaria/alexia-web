@@ -1768,37 +1768,27 @@
   .ses-navbtn svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2; fill: none; }
   .ses-when { flex: 1; min-width: 0; display: flex; align-items: center; gap: var(--sp-8); font-size: 13px; font-weight: 500; color: var(--text-secondary); font-family: var(--font-body); }
   .ses-when svg { width: 15px; height: 15px; stroke: var(--grey-600); stroke-width: 2; fill: none; flex-shrink: 0; }
-  .ses-star { width: 32px; height: 32px; border-radius: 50%; border: none; background: var(--blue-50); color: var(--action-primary); display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: background .15s, color .15s; }
-  .ses-star svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2; fill: none; }
-  .ses-star.on { background: var(--action-primary); color: #fff; }
-  .ses-star.on svg { fill: currentColor; }
 
   .ses-sec-head { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-8); margin-bottom: var(--sp-12); }
   .ses-sec-title { display: flex; align-items: center; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); font-family: var(--font-ui); }
   .ses-count { display: inline-flex; align-items: center; justify-content: center; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--grey-500); color: var(--text-secondary); font-size: 11px; font-weight: 700; font-family: var(--font-ui); margin-left: 6px; }
-  .ses-sec-actions { display: flex; align-items: center; gap: var(--sp-8); flex-shrink: 0; }
-  .ses-iconbtn { width: 28px; height: 28px; border-radius: var(--radius-sm); border: 1px solid var(--grey-500); background: var(--bg-primary); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-secondary); transition: background .15s, border-color .15s, color .15s; }
-  .ses-iconbtn:hover { background: var(--grey-300); color: var(--action-primary); border-color: var(--action-primary); }
-  .ses-iconbtn svg { width: 15px; height: 15px; stroke: currentColor; stroke-width: 2; fill: none; }
 
-  .ses-add-menu { display: none; position: absolute; min-width: 190px; background: var(--bg-primary); border: 1px solid var(--grey-400); border-radius: var(--radius-md); box-shadow: 0 6px 20px rgba(0,0,0,0.14); padding: var(--sp-4); z-index: 30; }
-  .ses-add-menu.open { display: block; }
-  .ses-add-menu button { display: flex; align-items: center; gap: var(--sp-8); width: 100%; padding: var(--sp-8) var(--sp-12); border: none; background: none; border-radius: var(--radius-sm); cursor: pointer; font-size: 13px; font-weight: 600; color: var(--text-primary); font-family: var(--font-ui); text-align: left; }
-  .ses-add-menu button:hover { background: var(--blue-50); }
-  .ses-add-menu svg { width: 16px; height: 16px; stroke: var(--action-primary); stroke-width: 2; fill: none; flex-shrink: 0; }
-  .ses-create-menu { top: 150px; right: var(--sp-16); left: auto; }
+  /* Menú de «Crear»: reutiliza .ia-menu-wrap/.ia-menu/.ia-menu-item (mismo componente que
+     "ACCIONES DE IA" en Comunicados). Solo se ancla a la izquierda porque «Crear» es el primer
+     ítem de la fila (a diferencia de IA, que ancla a la derecha); y se neutraliza el scroll
+     horizontal de .ficha-actions, que si no recortaría el menú (los 5 accesos caben sin scroll). */
+  #panel-detalle-sesion .ficha-actions { overflow: visible; }
+  #panel-detalle-sesion .ses-create-wrap .ia-menu { left: 0; right: auto; }
+  /* El hover morado (#F1EFFA/discovery) es del componente IA — aquí no aplica (el morado es
+     "novedades"). Se usa la misma lógica de los botones secundarios: texto/icono a azul
+     primario + fondo gris claro (igual que .ph-btn:hover, .com-toggle-btn:hover). */
+  #panel-detalle-sesion .ses-create-wrap .ia-menu-item:hover { background: var(--grey-300); color: var(--action-primary); }
 
   .ses-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: var(--sp-16) var(--sp-16) var(--sp-8); gap: 6px; }
   .ses-empty-icon { width: 40px; height: 40px; border-radius: 50%; background: var(--grey-300); display: flex; align-items: center; justify-content: center; margin-bottom: 2px; }
   .ses-empty-icon svg { width: 20px; height: 20px; stroke: var(--grey-600); stroke-width: 1.8; fill: none; }
   .ses-empty-title { font-size: 13px; font-weight: 700; color: var(--text-secondary); font-family: var(--font-ui); }
   .ses-empty-hint { font-size: 12px; color: var(--text-muted); font-family: var(--font-body); max-width: 250px; line-height: 1.45; }
-
-  .ses-placeholder { padding: var(--sp-16); }
-  .ses-note { display: flex; gap: var(--sp-12); padding: var(--sp-12); border: 1px dashed var(--grey-500); border-radius: var(--radius-md); background: var(--bg-surface); }
-  .ses-note svg { width: 18px; height: 18px; stroke: var(--action-primary); stroke-width: 2; fill: none; flex-shrink: 0; margin-top: 1px; }
-  .ses-note-body { font-size: 13px; color: var(--text-secondary); font-family: var(--font-body); line-height: 1.5; }
-  .ses-note-body strong { color: var(--text-primary); font-family: var(--font-ui); }
 
   .ses-color-row { display: flex; align-items: center; gap: var(--sp-8); }
   .ses-color-swatch { width: 36px; height: 36px; padding: 2px; border: 1px solid var(--grey-400); border-radius: var(--radius-sm); background: var(--bg-surface); cursor: pointer; flex-shrink: 0; }
@@ -4618,40 +4608,41 @@
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             Jue 23/7 · 12:00–13:30 · 1:30 h
           </div>
-          <button class="ses-star" onclick="sesToggleStar(this)" title="Marcar como favorita" aria-pressed="false">
-            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          </button>
         </div>
 
         <div class="ficha-actions">
-          <button class="ficha-action" onclick="sesGoView('ficha')">
-            <div class="ficha-action-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
-            <span>Ficha</span>
-          </button>
+          <div class="ia-menu-wrap ses-create-wrap">
+            <button class="ficha-action ses-create" onclick="sesToggleCreateMenu(event)" title="Crear">
+              <div class="ficha-action-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              <span>Crear</span>
+            </button>
+            <div class="ia-menu" id="ses-create-menu">
+              <button class="ia-menu-item" onclick="sesCrear('tarea')"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Tarea</button>
+              <button class="ia-menu-item" onclick="sesCrear('actividad')"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>Actividad</button>
+              <button class="ia-menu-item" onclick="sesCrear('anotacion')"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/></svg>Anotación</button>
+            </div>
+          </div>
           <button class="ficha-action" onclick="sesGoView('pasar-lista')">
             <div class="ficha-action-icon"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
             <span>Pasar lista</span>
           </button>
-          <button class="ficha-action" onclick="sesGoView('programacion')">
+          <button class="ficha-action">
             <div class="ficha-action-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
             <span>Programación</span>
+          </button>
+          <button class="ficha-action" onclick="sesGoView('ficha')">
+            <div class="ficha-action-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+            <span>Ficha</span>
           </button>
           <button class="ficha-action">
             <div class="ficha-action-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
             <span>Cuaderno</span>
-          </button>
-          <button class="ficha-action ses-create" onclick="sesToggleCreateMenu(event)" title="Crear">
-            <div class="ficha-action-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-            <span>Crear</span>
           </button>
         </div>
 
         <div class="p-section">
           <div class="ses-sec-head">
             <span class="ses-sec-title">Actividades / Tareas <span class="ses-count" id="ses-tareas-count">0</span></span>
-            <div class="ses-sec-actions">
-              <button class="ses-iconbtn" title="Buscar"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
-            </div>
           </div>
           <div id="ses-tareas-list">
             <div class="ses-item" onclick="sesEditItem(this)" data-tipo="tarea" data-title="Home work" data-min="30" data-eval="0" data-vis="alumno" data-desc="" data-url="">
@@ -4779,16 +4770,6 @@
         </div>
       </div>
 
-      <!-- VISTA: Programación (placeholder — job futuro) -->
-      <div class="view" id="ses-view-programacion">
-        <div class="ses-placeholder">
-          <div class="ses-note">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-            <div class="ses-note-body"><strong>Programación</strong> — contenido pendiente de diseño (job futuro). Aquí irá la programación didáctica asociada a la sesión.</div>
-          </div>
-        </div>
-      </div>
-
       <!-- VISTA: Crear tarea / actividad (formulario, del legado) -->
       <div class="view" id="ses-view-crear-item">
         <div class="form-section" style="border-bottom:none;">
@@ -4861,12 +4842,6 @@
       <button class="btn-primary btn-sm" id="ses-footer-btn" onclick="sesFooterPrimary()">Grabar</button>
       <button class="btn-secondary btn-sm" onclick="sesGoView('resumen')">Cancelar</button>
     </footer>
-
-    <div class="ses-add-menu ses-create-menu" id="ses-create-menu">
-      <button onclick="sesCrear('tarea')"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Tarea</button>
-      <button onclick="sesCrear('actividad')"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>Actividad</button>
-      <button onclick="sesCrear('anotacion')"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/></svg>Anotación</button>
-    </div>
 
   </aside>
 
@@ -6884,7 +6859,7 @@
   }
 
   // ══ PANEL DETALLE DE SESIÓN ══════════════════════════════════════════
-  var SES = { titles: { ficha: 'Ficha', 'pasar-lista': 'Pasar lista', programacion: 'Programación', 'crear-item': 'Crear', 'crear-anotacion': 'Crear anotación' } };
+  var SES = { titles: { ficha: 'Ficha', 'pasar-lista': 'Pasar lista', 'crear-item': 'Crear', 'crear-anotacion': 'Crear anotación' } };
 
   function openPanelDetalleSesion() {
     closeAllPanels();
@@ -6928,11 +6903,6 @@
       if (showFooter) footerBtn.textContent = footerLabels[view];
     }
     sesCloseCreateMenu();
-  }
-
-  function sesToggleStar(el) {
-    el.classList.toggle('on');
-    el.setAttribute('aria-pressed', el.classList.contains('on') ? 'true' : 'false');
   }
 
   function sesToggleCreateMenu(e) {
