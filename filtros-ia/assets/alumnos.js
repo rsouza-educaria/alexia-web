@@ -151,7 +151,7 @@
       '<div class="topbar-logo" style="font-family:var(--font-ui);font-weight:800;font-size:20px;color:var(--action-primary);">Alexia</div>' +
       '<div class="school-info" style="margin-left:16px;">Prototipo de borrador, datos ficticios</div>' +
       '<div class="topbar-right" style="padding-right:16px;">' +
-      [['1-dizer.html', '1 · Decir'], ['2-adaptar.html', '2 · Adaptar'], ['3-descubrir.html', '3 · Descubrir']]
+      [['1-dizer.html', '1 · Decir'], ['2-adaptar.html', '2 · Adaptar'], ['3-descubrir.html', '3 · Descubrir'], ['4-mi-vista.html', '4 · Mi vista']]
         .map(([h, t], i) => '<a href="' + h + '" class="com-tb-btn" style="text-decoration:none;' + (i + 1 === actual ? 'border-color:var(--action-primary);color:var(--action-primary);' : '') + '"' + (i + 1 === actual ? ' aria-current="page"' : '') + '>' + t + '</a>').join('') +
       '<div class="vdivider"></div><div class="avatar">MC</div></div>';
     document.getElementById('sn').innerHTML =
@@ -188,8 +188,8 @@
       if (e.key === 'Tab') { const f = dlg.querySelectorAll('button'); const a = f[0], z = f[f.length - 1]; if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); } else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); } }
     });
     const hd = document.querySelector('.module-header');
-    const b = document.createElement('button'); b.className = 'com-tb-btn'; b.style.marginLeft = 'auto'; b.style.marginRight = '16px';
-    b.innerHTML = '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> ¿Qué es esto?';
+    const b = document.createElement('button'); b.className = 'com-tb-btn'; b.style.marginLeft = 'auto'; b.style.marginRight = '16px'; b.style.borderColor = 'var(--support-discovery)'; b.style.color = 'var(--support-discovery)';
+    b.innerHTML = '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> Sobre esta solución';
     b.onclick = open; hd.appendChild(b);
     let visto = false; try { visto = sessionStorage.getItem('info-' + cfg.id) === '1'; sessionStorage.setItem('info-' + cfg.id, '1'); } catch (e) {}
     if (!visto) open();

@@ -81,3 +81,21 @@ button.chip:hover { border-color: var(--action-primary); }
 .common-box.open { display: flex; }
 .com-bulk .btn-ia { margin-left: 8px; }
 @media (max-width: 1100px) { .insights .alert-grid { grid-template-columns: 1fr 1fr; } }
+
+/* Prototipo 4: barra de vistas, aviso y historial. El kit no tiene pestañas de vista. */
+.views-bar { display: flex; align-items: center; gap: 4px; padding: 0 24px; background: var(--bg-primary); border-bottom: 1px solid var(--border); flex-shrink: 0; overflow-x: auto; }
+.vtab { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 14px; background: none; border: none; border-bottom: 3px solid transparent;
+  font-family: var(--font-ui); font-size: 14px; font-weight: 700; color: var(--text-secondary); cursor: pointer; white-space: nowrap; }
+.vtab:hover { color: var(--text-primary); background: var(--blue-50); }
+.vtab.active { color: var(--action-primary); border-bottom-color: var(--action-primary); }
+.vtab.active .com-nav-badge { background: var(--action-primary); color: #fff; }
+.view-settings { display: none; align-items: center; gap: 12px; flex-wrap: wrap; padding: 8px 24px; background: var(--bg-surface); border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.view-settings.visible { display: flex; }
+.note-row { display: none; padding: 8px 24px; background: var(--bg-primary); border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.note-row.visible { display: block; }
+.note-row .compose-info-banner { line-height: 1.7; align-items: center; }
+.note-row .compose-info-banner .ia-icon { margin-top: 0; }
+.com-toolbar .compose-input { width: auto; min-width: 150px; }
+.learn { padding: 8px 24px; background: var(--bg-primary); border-top: 1px solid var(--border); flex-shrink: 0; font-size: 13px; font-family: var(--font-body); }
+.learn summary { cursor: pointer; font-weight: 700; font-family: var(--font-ui); color: var(--action-primary); padding: 4px 0; }
+.learn ul { padding-left: 20px; }

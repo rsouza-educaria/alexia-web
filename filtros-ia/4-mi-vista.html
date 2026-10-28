@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alexia · Prototipo 4: Mi vista</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/alexia-ds.css">
+<link rel="stylesheet" href="assets/proto.css">
+</head>
+<body>
+<header class="topbar" id="tb"></header>
+<div class="body-row">
+  <nav class="sidenav" id="sn" aria-label="Navegación principal"></nav>
+  <main class="content">
+    <div class="module-header">
+      <div class="module-header-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+      <div>
+        <div class="module-header-breadcrumb"><a href="#">Alumnos</a><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg><span>Seguimiento</span></div>
+        <div class="module-header-title-row"><div class="module-header-title">Seguimiento de alumnos</div><div class="module-header-subtitle" id="subtitle"></div></div>
+      </div>
+    </div>
+
+    <div class="views-bar" id="views" role="tablist" aria-label="Vistas"></div>
+    <div class="note-row" id="note" aria-live="polite"></div>
+
+    <div class="com-toolbar">
+      <select class="compose-input" id="sel-curso" aria-label="Curso"></select>
+      <select class="compose-input" id="sel-falt" aria-label="Faltas esta semana">
+        <option value="">Faltas esta semana: todas</option><option value="1">Faltas esta semana ≥ 1</option><option value="2">Faltas esta semana ≥ 2</option><option value="3">Faltas esta semana ≥ 3</option></select>
+      <select class="compose-input" id="sel-ent" aria-label="Entrevista"><option value="">Entrevista: todas</option><option value="no">Sin entrevista este trimestre</option></select>
+      <select class="compose-input" id="sel-est" aria-label="Estado"><option value="">Estado: todos</option><option value="riesgo">Riesgo</option><option value="atencion">Atención</option></select>
+    </div>
+
+    <div class="active-row" id="active-row"></div>
+    <div class="com-table-wrap"><table class="com-table"><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
+    <details class="learn" id="learn"><summary>Qué ha aprendido Alexia de tu uso</summary><div id="learn-body"></div></details>
+    <div class="com-pagination"><div class="com-pag-info" id="foot"></div></div>
+  </main>
+</div>
+
+<script src="assets/alumnos.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const ALU = ALX.ALUMNOS;
+ALX.shell(4);
+$('thead').innerHTML = ALX.THEAD(false);
+$('sel-curso').innerHTML = '<option value="">Curso: todos</option>' + ALX.CURSOS.map(c => '<option>' + c + '</option>').join('');
+
+const keyOf = f => f.slice().sort((a, b) => a.field < b.field ? -1 : 1).map(x => x.field + '=' + JSON.stringify(x.value)).join('&');
+const labelOf = f => f.map(ALX.label).join(' · ');
+function fromControls() {
+  const f = [];
+  if ($('sel-curso').value) f.push({ field: 'curso', value: [$('sel-curso').value] });
+  if ($('sel-falt').value) f.push({ field: 'faltasSemana', value: +$('sel-falt').value });
+  if ($('sel-ent').value) f.push({ field: 'entrevista', value: 'no' });
+  if ($('sel-est').value) f.push({ field: 'estado', value: [$('sel-est').value] });
+  return f;
+}
+function toControls(f) {
+  ['sel-curso', 'sel-falt', 'sel-ent', 'sel-est'].forEach(i => $(i).value = '');
+  f.forEach(x => {
+    if (x.field === 'curso') $('sel-curso').value = [].concat(x.value)[0];
+    if (x.field === 'faltasSemana') $('sel-falt').value = String(x.value);
+    if (x.field === 'entrevista') $('sel-ent').value = 'no';
+    if (x.field === 'estado') $('sel-est').value = [].concat(x.value)[0];
+  });
+}
+
+/* Lo que Alexia ha visto de este usuario (datos de ejemplo). Explica por qué la página abre filtrada. */
+const VISTA = [{ field: 'curso', value: ['2º ESO A'] }, { field: 'faltasSemana', value: 2 }];
+const VKEY = keyOf(VISTA);
+let hist = [
+  { label: labelOf(VISTA), n: 3, lunes: 3 },
+  { label: labelOf([{ field: 'entrevista', value: 'no' }, { field: 'estado', value: ['riesgo'] }]), n: 1, lunes: 0 }
+];
+let auto = true;                 // la vista se aplica sola al abrir la página
+let applied = auto ? VISTA.slice() : [];
+toControls(applied);
+
+function render() {
+  const rows = ALX.apply(ALU, applied);
+  const esVista = keyOf(applied) === VKEY;
+  ALX.renderTable($('tbody'), rows);
+  $('subtitle').textContent = rows.length + ' de ' + ALU.length + ' alumnos';
+  $('foot').textContent = 'Mostrando ' + rows.length + ' de ' + ALU.length + ' alumnos';
+
+  const nVista = ALX.apply(ALU, VISTA).length;
+  $('views').innerHTML =
+    '<button class="vtab' + (!applied.length ? ' active' : '') + '" role="tab" aria-selected="' + !applied.length + '" data-v="all">Todos <span class="com-nav-badge">' + ALU.length + '</span></button>' +
+    '<button class="vtab' + (esVista ? ' active' : '') + '" role="tab" aria-selected="' + esVista + '" data-v="mia">' + ALX.IA_ICON + ' Mi vista habitual <span class="com-nav-badge">' + nVista + '</span></button>';
+
+  let h = '';
+  if (esVista && auto) {
+    h = '<div class="compose-info-banner" role="status">' + ALX.IA_ICON + '<span><strong>Se han aplicado filtros según tu uso.</strong> ' +
+      'Los últimos 3 lunes filtraste esta pantalla por <em>' + ALX.esc(labelOf(VISTA)) + '</em>, así que Alexia los ha aplicado por ti. Ahora ves <strong>' + rows.length + ' de ' + ALU.length + ' alumnos</strong>.<br>' +
+      '<button class="link-btn" data-act="all">Ver todos los alumnos</button> &nbsp; <button class="link-btn" data-act="off">Dejar de aplicarlos automáticamente</button><br>' +
+      '<span class="stat-sub">Alexia aprende de tu uso solo en este navegador. Puedes verlo y borrarlo abajo.</span></span></div>';
+  } else if (esVista && !auto) {
+    h = '<div class="compose-info-banner" role="status">' + ALX.IA_ICON + '<span>Tu vista habitual está aplicada, pero <strong>ya no se aplicará sola</strong> al abrir la página. <button class="link-btn" data-act="on">Volver a aplicarla automáticamente</button></span></div>';
+  }
+  $('note').innerHTML = h; $('note').classList.toggle('visible', !!h);
+
+  const ar = $('active-row'); ar.classList.toggle('visible', applied.length > 0);
+  ar.innerHTML = applied.length ? '<span class="stat-sub">' + (esVista ? 'Filtrado por tu vista habitual:' : 'Filtros activos:') + '</span>' + applied.map(f => '<span class="chip">' + ALX.esc(ALX.label(f)) + '</span>').join('') +
+    '<span class="stat-sub">Mostrando ' + rows.length + ' de ' + ALU.length + '</span>' +
+    (esVista ? '' : '<button class="link-btn" data-act="mia">Volver a mi vista habitual</button>') + '<button class="link-btn" data-act="all">Ver todos</button>' : '';
+
+  $('learn-body').innerHTML = '<p class="stat-sub" style="margin-bottom:8px">Combinaciones de filtros que has aplicado en esta pantalla. Son datos de ejemplo, guardados solo en este navegador.</p>' +
+    (hist.length ? '<ul>' + hist.map(x => '<li>' + ALX.esc(x.label) + ': <strong>' + x.n + (x.n === 1 ? ' vez' : ' veces') + '</strong>' + (x.lunes ? ' (' + x.lunes + ' en lunes)' : '') + '</li>').join('') + '</ul>' : '<p class="stat-sub">Nada todavía.</p>') +
+    (hist.length ? '<button class="link-btn" data-act="wipe" style="margin-top:8px">Borrar historial</button>' : '');
+}
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  const a = b.dataset.act || (b.dataset.v === 'all' ? 'all' : b.dataset.v === 'mia' ? 'mia' : '');
+  if (a === 'all') { applied = []; toControls([]); }
+  else if (a === 'mia') { applied = VISTA.slice(); toControls(applied); }
+  else if (a === 'off') auto = false;
+  else if (a === 'on') auto = true;
+  else if (a === 'wipe') hist = [];
+  else return;
+  render();
+});
+document.addEventListener('change', e => { if (e.target.closest('.com-toolbar')) { applied = fromControls(); render(); } });
+render();
+
+ALX.info({
+  id: 'p4', title: 'Mi vista', subtitle: 'La página se abre ya con los filtros que sueles usar',
+  sections: [
+    { h: 'Qué es', p: 'Alexia se fija en los filtros que repites al entrar en una pantalla. Cuando detecta un hábito, la página <strong>se abre ya con esos filtros aplicados</strong> y te lo dice con un aviso, para que sepas por qué ves solo una parte de los datos.' },
+    { h: 'Qué te ayuda a resolver', p: 'Muchas personas aplican cada vez los mismos filtros al entrar, por ejemplo los lunes las faltas de su curso. Aquí dejas de repetirlos a mano, sin perder el control de lo que estás viendo.' },
+    { h: 'Qué verás al abrir', ul: [
+      'Un aviso que explica <strong>qué filtros se han aplicado y por qué</strong>: «Los últimos 3 lunes filtraste esta pantalla por…».',
+      'Cuántos alumnos ves de cuántos hay en total, siempre visible.',
+      'Una pestaña <strong>Mi vista habitual</strong> junto a <strong>Todos</strong>, para cambiar de una a otra con un clic.'
+    ] },
+    { h: 'Qué puedes hacer', ol: [
+      'Pulsar <strong>Ver todos los alumnos</strong> para quitar los filtros.',
+      'Cambiar cualquier filtro a mano. Con <strong>Volver a mi vista habitual</strong> recuperas la tuya.',
+      'Elegir <strong>Dejar de aplicarlos automáticamente</strong> si no te sirve. La vista sigue guardada.',
+      'Abrir <strong>Qué ha aprendido Alexia de tu uso</strong> para ver el historial y borrarlo.'
+    ] },
+    { h: 'Qué lo hace seguro', ul: [
+      'La vista nunca se aplica en silencio: el aviso y los filtros activos están siempre a la vista.',
+      'Se quita con un clic y la puedes desactivar.',
+      'El historial es tuyo: lo ves y lo borras.'
+    ] },
+    { h: 'Sobre este prototipo', note: 'El historial es de ejemplo y no se guarda: al recargar vuelve a empezar con la vista aplicada. La IA es simulada. En Alexia habría que decidir cuántas repeticiones hacen falta, dónde se guarda el uso y cómo se informa a los docentes.', warn: true }
+  ]
+});
+</script>
+</body>
+</html>
