@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alexia · Prototipo 2: Adaptar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/alexia-ds.css">
+<link rel="stylesheet" href="assets/proto.css">
+</head>
+<body>
+<header class="topbar" id="tb"></header>
+<div class="body-row">
+  <nav class="sidenav" id="sn" aria-label="Navegación principal"></nav>
+  <main class="content">
+    <div class="module-header">
+      <div class="module-header-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+      <div>
+        <div class="module-header-breadcrumb"><a href="#">Alumnos</a><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg><span id="bc">Pasar lista</span></div>
+        <div class="module-header-title-row"><div class="module-header-title" id="title">Pasar lista</div><div class="module-header-subtitle" id="subtitle"></div></div>
+      </div>
+    </div>
+
+    <div class="split-layout">
+      <aside class="fp" aria-label="Filtros">
+        <div class="fp-ctx">
+          <span class="block-label" style="margin:0">Simular contexto</span>
+          <div class="compose-field"><label for="role">Quién eres</label>
+            <select class="compose-input" id="role"><option value="tutor">Tutor/a</option><option value="jefatura">Jefatura de estudios</option><option value="materia">Profesor/a de materia</option></select></div>
+          <div class="compose-field"><label for="screen">Dónde estás</label>
+            <select class="compose-input" id="screen"><option value="lista">Pasar lista</option><option value="entrevistas">Entrevistas</option><option value="evaluacion">Evaluación</option></select></div>
+          <label class="fp-switch"><input type="checkbox" id="ai-on" checked> <span>Filtros adaptados por IA</span></label>
+        </div>
+        <div class="fp-head"><span class="ia-count" id="fp-count"></span><button class="link-btn" id="clear">Borrar filtros</button></div>
+        <div id="fp-top"></div>
+        <details class="fp-more" id="fp-more"><summary id="more-sum"></summary><div id="fp-rest"></div></details>
+        <div style="padding:12px 16px;" class="stat-sub" id="fp-note"></div>
+      </aside>
+
+      <section class="com-main" style="min-width:0;">
+        <div class="com-toolbar"><span class="ia-count" id="res-count"></span><div id="chips" style="display:flex;gap:8px;flex-wrap:wrap;"></div></div>
+        <div class="com-table-wrap"><table class="com-table"><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
+        <div class="com-pagination"><div class="com-pag-info" id="foot"></div></div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<script src="assets/alumnos.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const ALU = ALX.ALUMNOS;
+ALX.shell(2);
+$('thead').innerHTML = ALX.THEAD(false);
+
+/* Estado de los filtros: valor vacío = sin filtrar */
+const S = { curso: [], tutor: [], estado: [], faltasSemana: '', faltasTrim: '', mediaMax: '', suspensas: '', entrevista: '', texto: '' };
+const ctx = { role: 'tutor', screen: 'lista', ai: true };
+const DEFS = {
+  curso:        { name: 'Curso' },
+  tutor:        { name: 'Tutor/a' },
+  estado:       { name: 'Estado' },
+  faltasSemana: { name: 'Faltas esta semana' },
+  faltasTrim:   { name: 'Faltas del trimestre' },
+  mediaMax:     { name: 'Media' },
+  suspensas:    { name: 'Asignaturas suspensas' },
+  entrevista:   { name: 'Entrevista' },
+  texto:        { name: 'Nombre' }
+};
+const ORDEN_FIJO = ['curso', 'tutor', 'estado', 'faltasSemana', 'faltasTrim', 'mediaMax', 'suspensas', 'entrevista', 'texto'];
+
+/* "IA" simulada: puntuación de relevancia según pantalla, rol y lo ya filtrado */
+const BASE = {
+  lista:       { faltasSemana: 9, curso: 8, texto: 5, faltasTrim: 5, estado: 4, tutor: 3, entrevista: 2, mediaMax: 1, suspensas: 1 },
+  entrevistas: { entrevista: 9, estado: 8, tutor: 6, faltasTrim: 5, curso: 5, mediaMax: 4, suspensas: 4, texto: 4, faltasSemana: 2 },
+  evaluacion:  { mediaMax: 9, suspensas: 9, curso: 7, estado: 5, texto: 5, tutor: 3, faltasTrim: 2, entrevista: 2, faltasSemana: 1 }
+};
+const ROL = {
+  tutor:    { curso: -6, tutor: -6 },
+  jefatura: { tutor: 4, curso: 3, estado: 2 },
+  materia:  { mediaMax: 2, suspensas: 1, tutor: -3, entrevista: -3 }
+};
+const PORQUE_PANTALLA = {
+  lista:       { faltasSemana: 'Estás pasando lista: lo primero es ver quién falta esta semana.', curso: 'Pasas lista por curso.', texto: 'Para localizar a un alumno concreto.' },
+  entrevistas: { entrevista: 'En entrevistas conviene empezar por quién aún no ha tenido ninguna.', estado: 'Para priorizar a quién llamar primero.', tutor: 'Para repartir entrevistas por tutor/a.' },
+  evaluacion:  { mediaMax: 'Estás en evaluación: la media es el filtro más habitual.', suspensas: 'Para ver quién llega con asignaturas pendientes.', curso: 'Evalúas por curso.' }
+};
+const PORQUE_ROL = {
+  tutor:    {},
+  jefatura: { tutor: 'Como jefatura de estudios revisas varios tutores.', curso: 'Revisas varios cursos a la vez.', estado: 'Para ver a quién actuar primero en todo el centro.' },
+  materia:  { mediaMax: 'Como profesor/a de materia miras las notas.' }
+};
+
+function activo(id) { const v = S[id]; return Array.isArray(v) ? v.length > 0 : v !== ''; }
+function puntuar() {
+  const sc = {}, why = {};
+  ORDEN_FIJO.forEach(id => {
+    let s = (BASE[ctx.screen][id] || 0) + ((ROL[ctx.role] || {})[id] || 0), w = PORQUE_PANTALLA[ctx.screen][id] || PORQUE_ROL[ctx.role][id] || '';
+    if (id === 'tutor' && S.curso.length) { s -= 4; }
+    if (id === 'curso' && S.tutor.length) { s -= 4; }
+    if (S.estado.includes('riesgo') && (id === 'faltasTrim' || id === 'mediaMax')) { s += 4; w = 'Suele ir junto a «Estado: Riesgo».'; }
+    if (activo(id)) { s += 20; w = 'Ya lo estás usando.'; }
+    sc[id] = s; why[id] = w;
+  });
+  return { sc, why };
+}
+
+function filtros() {
+  const f = [];
+  if (S.curso.length) f.push({ field: 'curso', value: S.curso });
+  if (S.tutor.length) f.push({ field: 'tutor', value: S.tutor });
+  if (S.estado.length) f.push({ field: 'estado', value: S.estado });
+  if (S.faltasSemana !== '') f.push({ field: 'faltasSemana', value: +S.faltasSemana });
+  if (S.faltasTrim !== '') f.push({ field: 'faltasTrim', value: +S.faltasTrim });
+  if (S.mediaMax !== '') f.push({ field: 'mediaMax', value: +S.mediaMax });
+  if (S.suspensas !== '') f.push({ field: 'suspensas', value: +S.suspensas });
+  if (S.entrevista) f.push({ field: 'entrevista', value: S.entrevista });
+  if (S.texto) f.push({ field: 'texto', value: S.texto });
+  return f;
+}
+
+function control(id) {
+  const lab = DEFS[id].name;
+  const checks = (vals, key) => vals.map(v => '<div class="compose-dest-item"><input type="checkbox" id="' + id + '-' + ALX.norm(v).replace(/\W/g, '') + '" data-id="' + id + '" data-v="' + v + '"' + (S[key].includes(v) ? ' checked' : '') + '><label for="' + id + '-' + ALX.norm(v).replace(/\W/g, '') + '">' + (ALX.ESTADOS[v] ? ALX.ESTADOS[v][1] : v) + '</label></div>').join('');
+  let body = '';
+  if (id === 'curso') body = checks(ALX.CURSOS, 'curso');
+  else if (id === 'tutor') body = checks(Object.values(ALX.TUTORES), 'tutor');
+  else if (id === 'estado') body = checks(['riesgo', 'atencion', 'aldia'], 'estado');
+  else if (id === 'entrevista') body = [['', 'Todos'], ['no', 'Sin entrevista este trimestre'], ['si', 'Con entrevista este trimestre']].map(([v, t]) => '<div class="compose-dest-item"><input type="radio" name="entrevista" id="ent-' + (v || 'todos') + '" data-id="entrevista" data-v="' + v + '"' + (S.entrevista === v ? ' checked' : '') + '><label for="ent-' + (v || 'todos') + '">' + t + '</label></div>').join('');
+  else if (id === 'texto') body = '<input class="compose-input" id="in-texto" data-id="texto" type="text" value="' + ALX.esc(S.texto) + '" placeholder="Buscar por nombre" aria-label="Nombre">';
+  else {
+    const pre = { faltasSemana: 'Al menos', faltasTrim: 'Al menos', mediaMax: 'Inferior a', suspensas: 'Al menos' }[id];
+    body = '<div class="compose-field"><label for="in-' + id + '">' + pre + '</label><input class="compose-input" id="in-' + id + '" data-id="' + id + '" type="number" min="0" max="' + (id === 'mediaMax' ? 10 : 20) + '" step="' + (id === 'mediaMax' ? 0.5 : 1) + '" value="' + S[id] + '"></div>';
+  }
+  return '<div class="compose-section-label" style="margin-bottom:8px;display:block">' + lab + '</div>' + body;
+}
+
+let prevTop = new Set();
+function renderPanel() {
+  const { sc, why } = puntuar();
+  let orden = ORDEN_FIJO.slice();
+  let top = orden, rest = [];
+  if (ctx.ai) {
+    orden = ORDEN_FIJO.slice().sort((a, b) => sc[b] - sc[a]);
+    const K = 4;
+    top = orden.slice(0, K); orden.slice(K).forEach(id => activo(id) ? top.push(id) : rest.push(id));
+  }
+  $('fp-top').innerHTML = top.map(id => '<div class="fp-filter' + (ctx.ai ? ' top' : '') + '" data-box="' + id + '">' +
+    (ctx.ai && why[id] ? '<div class="fp-why"><span aria-hidden="true">✦</span><span>' + why[id] + '</span></div>' : '') + control(id) + '</div>').join('');
+  const more = $('fp-more'); more.style.display = rest.length ? '' : 'none';
+  $('more-sum').textContent = 'Más filtros (' + rest.length + ')';
+  $('fp-rest').innerHTML = rest.map(id => '<div class="fp-filter" style="padding-left:0;padding-right:0;animation:none">' + control(id) + '</div>').join('');
+  $('fp-note').textContent = ctx.ai ? 'Orden sugerido por IA según tu rol, la pantalla y lo que ya has filtrado. Puedes abrir «Más filtros» en cualquier momento.' : 'Mostrando todos los filtros en orden fijo.';
+  prevTop = new Set(top);
+}
+
+function renderTable() {
+  const f = filtros(), r = ALX.apply(ALU, f);
+  ALX.renderTable($('tbody'), r);
+  $('subtitle').textContent = r.length + ' de ' + ALU.length + ' alumnos';
+  $('res-count').innerHTML = '<strong style="color:var(--action-primary)">' + r.length + '</strong> de ' + ALU.length + ' alumnos';
+  $('fp-count').textContent = f.length ? f.length + (f.length === 1 ? ' filtro activo' : ' filtros activos') : 'Sin filtros activos';
+  $('foot').textContent = 'Mostrando ' + r.length + ' de ' + ALU.length + ' alumnos';
+  $('chips').innerHTML = f.map(x => '<span class="chip">' + ALX.esc(ALX.label(x)) + '</span>').join('');
+}
+
+function leer(el) {
+  const id = el.dataset.id;
+  if (el.type === 'checkbox') { const a = S[id]; const v = el.dataset.v; const i = a.indexOf(v); if (el.checked && i < 0) a.push(v); if (!el.checked && i >= 0) a.splice(i, 1); }
+  else S[id] = el.type === 'radio' ? el.dataset.v : el.value.trim();
+}
+document.addEventListener('input', e => { if (e.target.dataset.id && (e.target.type === 'text' || e.target.type === 'number')) { leer(e.target); renderTable(); } });
+document.addEventListener('change', e => { if (e.target.dataset.id) { leer(e.target); renderTable(); renderPanel(); } });
+$('role').onchange = e => { ctx.role = e.target.value; renderPanel(); };
+$('screen').onchange = e => {
+  ctx.screen = e.target.value;
+  const t = { lista: 'Pasar lista', entrevistas: 'Entrevistas', evaluacion: 'Evaluación' }[ctx.screen];
+  $('title').textContent = t; $('bc').textContent = t; renderPanel();
+};
+$('ai-on').onchange = e => { ctx.ai = e.target.checked; renderPanel(); };
+$('clear').onclick = () => { Object.keys(S).forEach(k => S[k] = Array.isArray(S[k]) ? [] : ''); renderTable(); renderPanel(); };
+renderPanel(); renderTable();
+ALX.info({
+  id: 'p2', title: 'Filtros que se adaptan', subtitle: 'La IA decide qué filtros mostrarte primero',
+  sections: [
+    { h: 'Qué es', p: 'Un panel de filtros que se reordena solo según <strong>quién eres</strong>, <strong>dónde estás</strong> y <strong>lo que ya has filtrado</strong>. Te enseña los 4 más útiles en ese momento y deja el resto en «Más filtros».' },
+    { h: 'Qué te ayuda a resolver', p: 'Cuando hay nueve o más filtros a la vista, encontrar el que necesitas cuesta y la pantalla se llena de ruido. Aquí no tienes que escribir nada: el filtro adecuado ya está arriba, con la razón por la que se sugiere.' },
+    { h: 'Cómo probarlo', ol: [
+      'Cambia <strong>Quién eres</strong> (tutor/a, jefatura de estudios, profesor/a de materia) y mira cómo cambia el orden.',
+      'Cambia <strong>Dónde estás</strong> (pasar lista, entrevistas, evaluación).',
+      'Marca <strong>Riesgo</strong> en Estado y observa cómo suben las faltas y la media.',
+      'Apaga <strong>Filtros adaptados por IA</strong> para comparar con el panel completo.'
+    ] },
+    { h: 'Qué lo hace fiable', ul: [
+      'Un filtro que estás usando <strong>nunca se oculta</strong>.',
+      'Nada desaparece: lo demás está en «Más filtros», a un clic.',
+      'Cada filtro destacado explica por qué aparece.',
+      'Si un tutor/a ya filtra por curso, el filtro de tutor/a baja porque sería redundante.'
+    ] },
+    { h: 'Sobre este prototipo', note: 'La IA es simulada: una puntuación por reglas según rol, pantalla y filtros marcados. Los roles y pantallas del selector son de prueba, en Alexia saldrían del contexto real. Los datos de alumnos son ficticios.', warn: true }
+  ]
+});
+</script>
+</body>
+</html>

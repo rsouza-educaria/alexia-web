@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alexia · Prototipo 3: Descubrir</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/alexia-ds.css">
+<link rel="stylesheet" href="assets/proto.css">
+</head>
+<body>
+<header class="topbar" id="tb"></header>
+<div class="body-row">
+  <nav class="sidenav" id="sn" aria-label="Navegación principal"></nav>
+  <main class="content">
+    <div class="module-header">
+      <div class="module-header-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+      <div>
+        <div class="module-header-breadcrumb"><a href="#">Alumnos</a><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg><span>Seguimiento</span></div>
+        <div class="module-header-title-row"><div class="module-header-title">Seguimiento de alumnos</div><div class="module-header-subtitle" id="subtitle"></div></div>
+      </div>
+    </div>
+
+    <section class="insights" aria-label="Lo que merece atención">
+      <div class="insights-head">
+        <span class="block-label" style="margin:0;display:flex;align-items:center;gap:8px;"><span id="ia-ico"></span>Lo que merece atención esta semana</span>
+        <span class="stat-sub">Utiliza la IA. Verifica los resultados.</span>
+      </div>
+      <div class="alert-grid" id="cards"></div>
+    </section>
+
+    <div class="active-row" id="active-row"></div>
+
+    <div class="com-bulk" id="bulk" role="status">
+      <span class="com-bulk-label" id="bulk-count"></span>
+      <button class="btn-ia" id="btn-like" data-tooltip="Busca qué tienen en común y lo convierte en filtros"><span id="like-ico"></span>Más como estos</button>
+      <button class="com-bulk-action" id="sel-clear">Limpiar selección</button>
+      <span class="stat-sub" id="bulk-hint"></span>
+    </div>
+
+    <section class="common-box" id="common" aria-live="polite"></section>
+
+    <div class="com-table-wrap"><table class="com-table"><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
+    <div class="com-pagination"><div class="com-pag-info" id="foot"></div></div>
+  </main>
+</div>
+
+<script src="assets/alumnos.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const ALU = ALX.ALUMNOS;
+ALX.shell(3);
+$('thead').innerHTML = ALX.THEAD(true);
+$('ia-ico').innerHTML = ALX.IA_ICON; $('like-ico').innerHTML = ALX.IA_ICON;
+
+let applied = [];
+let activeCard = -1;
+const selected = new Set();
+let proposal = [];   // [{f, on}]
+
+/* "IA" simulada: hallazgos calculados sobre los datos, solo si hay algo que contar */
+function hallazgos() {
+  const out = [];
+  const add = (t, filtros, texto, sub) => { const n = ALX.apply(ALU, filtros).length; if (n > 0) out.push({ t, filtros, n, texto, sub }); };
+  add('danger', [{ field: 'faltasSemana', value: 3 }], 'alumnos con 3 o más faltas esta semana', 'Ver quiénes son');
+  add('warning', [{ field: 'estado', value: 'riesgo' }, { field: 'entrevista', value: 'no' }], 'en riesgo y sin entrevista este trimestre', 'Ver quiénes son');
+  add('info', [{ field: 'bajada', value: 1.5 }], 'han bajado 1,5 puntos o más de media', 'Frente al trimestre anterior');
+  const por = ALX.CURSOS.map(c => ({ c, n: ALX.apply(ALU, [{ field: 'curso', value: [c] }, { field: 'suspensas', value: 3 }]).length })).sort((a, b) => b.n - a.n)[0];
+  const tot = ALX.apply(ALU, [{ field: 'suspensas', value: 3 }]).length;
+  if (por && por.n > 0) { const f = [{ field: 'curso', value: [por.c] }, { field: 'suspensas', value: 3 }]; out.push({ t: 'info', filtros: f, n: por.n, texto: 'de ' + por.c + ' con 3 o más suspensas', sub: 'Es el curso con más (' + por.n + ' de ' + tot + ' en total)' }); }
+  return out;
+}
+const H = hallazgos();
+$('cards').innerHTML = H.map((h, i) => '<button class="alert-card" data-t="' + h.t + '" data-h="' + i + '" aria-pressed="false"><span class="alert-num">' + h.n + '</span><span class="alert-body"><span class="alert-label">' + ALX.esc(h.texto) + '</span><span class="alert-link">' + ALX.esc(h.sub) + '</span></span></button>').join('');
+
+const chipHTML = (f, i) => '<span class="chip">' + ALX.esc(ALX.label(f)) + '<button data-x="' + i + '" aria-label="Quitar filtro ' + ALX.esc(ALX.label(f)) + '">' + ALX.X_SVG + '</button></span>';
+
+function render() {
+  const r = ALX.apply(ALU, applied);
+  ALX.renderTable($('tbody'), r, { selectable: true, selected });
+  $('subtitle').textContent = r.length + ' de ' + ALU.length + ' alumnos';
+  $('foot').textContent = 'Mostrando ' + r.length + ' de ' + ALU.length + ' alumnos';
+  const ar = $('active-row'); ar.classList.toggle('visible', applied.length > 0);
+  ar.innerHTML = applied.length ? '<span class="stat-sub">Filtros activos:</span>' + applied.map(chipHTML).join('') + '<button class="link-btn" id="clear">Borrar filtros</button>' : '';
+  document.querySelectorAll('.alert-card').forEach((c, i) => { c.classList.toggle('on', i === activeCard); c.setAttribute('aria-pressed', i === activeCard); });
+  const n = selected.size;
+  $('bulk').classList.toggle('visible', n > 0);
+  $('bulk-count').textContent = n + (n === 1 ? ' seleccionado' : ' seleccionados');
+  $('btn-like').disabled = n === 0 || n > 6;
+  $('bulk-hint').textContent = n > 6 ? 'Elige entre 1 y 6 alumnos para buscar parecidos.' : (n === 1 ? 'Con 2 o 3 alumnos la IA acierta mejor lo que tienen en común.' : '');
+  const all = $('check-all'); if (all) all.checked = r.length > 0 && r.every(a => selected.has(a.id));
+}
+
+/* "IA" simulada: qué tienen en común los alumnos elegidos */
+function enComun(sel) {
+  const f = [], uniq = k => [...new Set(sel.map(a => a[k]))];
+  const cs = uniq('curso'); if (cs.length <= 2) f.push({ field: 'curso', value: cs });
+  const es = uniq('estado'); if (es.length === 1) f.push({ field: 'estado', value: es });
+  const fs = Math.min(...sel.map(a => a.faltasSemana)); if (fs >= 2) f.push({ field: 'faltasSemana', value: fs });
+  const ft = Math.min(...sel.map(a => a.faltasTrim)); if (ft >= 3) f.push({ field: 'faltasTrim', value: ft });
+  const mx = Math.max(...sel.map(a => a.media)); if (mx < 7) f.push({ field: 'mediaMax', value: Math.floor(mx) + 1 });
+  const su = Math.min(...sel.map(a => a.suspensas)); if (su >= 1) f.push({ field: 'suspensas', value: su });
+  const en = uniq('entrevistaTrim'); if (en.length === 1) f.push({ field: 'entrevista', value: en[0] ? 'si' : 'no' });
+  return f;
+}
+function renderCommon() {
+  const box = $('common'); const on = proposal.filter(p => p.on).map(p => p.f);
+  const n = ALX.apply(ALU, on).length;
+  box.innerHTML = '<span class="block-label" style="margin:0">Los alumnos que has elegido tienen en común</span>' +
+    '<div class="ia-actions">' + proposal.map((p, i) => '<button class="chip' + (p.on ? '' : ' off') + '" data-p="' + i + '" aria-pressed="' + p.on + '">' + ALX.esc(ALX.label(p.f)) + '</button>').join('') + '</div>' +
+    '<div class="ia-count">Con esto verías <strong>' + n + '</strong> de ' + ALU.length + ' alumnos <span class="stat-sub">(los ' + selected.size + ' elegidos incluidos)</span></div>' +
+    '<div class="ia-actions"><button class="btn-primary btn-md" id="p-apply">Aplicar filtros</button><button class="btn-ghost btn-md" id="p-cancel">Cancelar</button>' +
+    '<span class="stat-sub">Pulsa un filtro para quitarlo o ponerlo. Utiliza la IA. Verifica los resultados.</span></div>';
+}
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('button'); const row = e.target.closest('tr[data-id]');
+  if (b && b.dataset.h !== undefined) { const i = +b.dataset.h; activeCard = activeCard === i ? -1 : i; applied = activeCard === -1 ? [] : H[i].filtros.slice(); render(); return; }
+  if (b && b.dataset.x !== undefined) { applied.splice(+b.dataset.x, 1); activeCard = -1; render(); return; }
+  if (b && b.id === 'clear') { applied = []; activeCard = -1; render(); return; }
+  if (b && b.id === 'sel-clear') { selected.clear(); $('common').classList.remove('open'); render(); return; }
+  if (b && b.id === 'btn-like') {
+    b.classList.add('loading');
+    $('common').classList.add('open'); $('common').innerHTML = '<div class="shimmer-wrap" style="padding:0"><div class="shimmer sh-line-lg"></div><div class="shimmer sh-line-sm"></div></div>';
+    setTimeout(() => { b.classList.remove('loading'); proposal = enComun(ALU.filter(a => selected.has(a.id))).map(f => ({ f, on: true })); renderCommon(); }, 900);
+    return;
+  }
+  if (b && b.dataset.p !== undefined) { proposal[+b.dataset.p].on = !proposal[+b.dataset.p].on; renderCommon(); return; }
+  if (b && b.id === 'p-apply') { applied = proposal.filter(p => p.on).map(p => p.f); activeCard = -1; $('common').classList.remove('open'); render(); return; }
+  if (b && b.id === 'p-cancel') { $('common').classList.remove('open'); return; }
+  if (row && !e.target.closest('input')) { toggle(+row.dataset.id); }
+});
+document.addEventListener('change', e => {
+  if (e.target.id === 'check-all') { ALX.apply(ALU, applied).forEach(a => e.target.checked ? selected.add(a.id) : selected.delete(a.id)); render(); }
+  else if (e.target.classList.contains('row-check')) { const tr = e.target.closest('tr[data-id]'); if (tr) toggle(+tr.dataset.id); }
+});
+function toggle(id) { selected.has(id) ? selected.delete(id) : selected.add(id); render(); }
+render();
+ALX.info({
+  id: 'p3', title: 'Descubrir qué filtrar', subtitle: 'Empezar por los datos, no por el filtro',
+  sections: [
+    { h: 'Qué es', p: 'Pensado para cuando <strong>no sabes qué filtrar</strong>. La pantalla te enseña lo que merece atención y te deja partir de alumnos concretos para encontrar otros parecidos.' },
+    { h: 'Qué te ayuda a resolver', p: 'Muchas veces conoces un caso, pero no el nombre de los filtros que lo describen. Aquí la IA hace de puente: de un ejemplo saca los criterios y los convierte en filtros normales.' },
+    { h: 'Dos formas de usarlo', ul: [
+      '<strong>Lo que merece atención:</strong> tarjetas calculadas sobre los datos de esta semana. Un clic filtra la tabla. Solo aparecen si hay algo que contar.',
+      '<strong>Más como estos:</strong> marca entre 1 y 6 alumnos y pulsa el botón. La IA busca qué tienen en común y te lo muestra como filtros que puedes activar o quitar, con el número de alumnos en directo.'
+    ] },
+    { h: 'Ejemplo', p: 'Marcas a dos alumnas de 2º ESO con muchas faltas y sin entrevista. La IA propone <em>«Faltas del trimestre ≥ 5»</em> y <em>«Sin entrevista este trimestre»</em>. Quitas lo que no te interesa y aplicas: ya tienes a todo el grupo parecido.' },
+    { h: 'Qué lo hace fiable', ul: [
+      'Cada criterio se puede quitar o poner antes de aplicar.',
+      'Con pocos alumnos elegidos, la IA puede deducir algo que sea casualidad: por eso conviene revisar. Con 2 o 3 acierta mejor.',
+      'Aviso de verificar los resultados.'
+    ] },
+    { h: 'Sobre este prototipo', note: 'La IA es simulada con reglas: los hallazgos y los criterios en común se calculan sobre datos ficticios de 36 alumnos, sin ningún modelo real detrás.', warn: true }
+  ]
+});
+</script>
+</body>
+</html>

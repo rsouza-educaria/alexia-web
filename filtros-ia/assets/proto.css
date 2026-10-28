@@ -1,0 +1,83 @@
+/* Reglas de layout propias de estos prototipos.
+   Solo usan variables y clases de alexia-ds.css. Cubren huecos del kit:
+   chip con botón de quitar, caja de IA, fila de filtros activos. */
+
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.com-table td, .com-table th { white-space: nowrap; }
+.com-table tbody tr { cursor: default; }
+:focus-visible { outline: 2px solid var(--action-primary); outline-offset: 2px; }
+
+/* Chip: cat-badge + botón de quitar */
+.chip { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px; border-radius: 99px;
+  background: var(--blue-50); border: 1px solid var(--blue-200); color: var(--action-primary);
+  font-size: 12px; font-weight: 700; font-family: var(--font-ui); white-space: nowrap; }
+.chip button { display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; border: none; border-radius: 50%;
+  background: none; color: inherit; cursor: pointer; padding: 0; }
+.chip button:hover { background: var(--blue-200); }
+.chip.off { background: var(--bg-primary); border-color: var(--grey-500); color: var(--text-muted); text-decoration: line-through; }
+button.chip { cursor: pointer; }
+button.chip:hover { border-color: var(--action-primary); }
+.chip.ia { background: color-mix(in srgb, var(--support-discovery) 10%, var(--bg-primary)); border-color: var(--support-discovery); color: var(--support-discovery); }
+
+/* Fila de filtros activos */
+.active-row { padding: 8px 24px; background: var(--bg-primary); border-bottom: 1px solid var(--border);
+  display: none; align-items: center; gap: 8px; flex-wrap: wrap; flex-shrink: 0; }
+.active-row.visible { display: flex; }
+.link-btn { background: none; border: none; padding: 0; cursor: pointer; font-size: 13px; font-weight: 700; font-family: var(--font-ui); color: var(--action-primary); }
+.link-btn:hover { text-decoration: underline; }
+
+/* Caja de IA (sobre la barra de filtros) */
+.ia-box { display: none; padding: 16px 24px; background: var(--bg-primary); border-bottom: 1px solid var(--border);
+  border-left: 3px solid var(--support-discovery); flex-direction: column; gap: 12px; flex-shrink: 0; }
+.ia-box.open { display: flex; animation: ia-menu-in 0.15s ease-out; }
+.ia-box-row { display: flex; align-items: center; gap: 8px; }
+.ia-box-row .compose-input { height: 40px; font-size: 14px; flex: 1; }
+.ia-examples { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; font-size: 12px; color: var(--text-muted); font-family: var(--font-body); }
+.ia-result { display: flex; flex-direction: column; gap: 8px; }
+.ia-count { font-size: 14px; font-family: var(--font-ui); font-weight: 700; color: var(--text-primary); }
+.ia-count strong { color: var(--action-primary); }
+.ia-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.ia-foot { display: flex; align-items: center; gap: 8px; justify-content: space-between; font-size: 12px; color: var(--text-secondary); font-family: var(--font-body); }
+.save-row { display: none; gap: 8px; align-items: flex-end; }
+.save-row.open { display: flex; }
+.save-row .compose-field { margin: 0; flex: 1; max-width: 320px; }
+.compose-info-banner { margin-bottom: 0; }
+
+/* Modal informativo: el kit no tiene modal centrado. Reutiliza panel-overlay, panel-header, panel-body y panel-footer. */
+.dlg { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 160;
+  width: min(640px, calc(100vw - 32px)); max-height: calc(100vh - 48px); display: flex; flex-direction: column;
+  background: var(--bg-primary); border-radius: var(--radius-md); box-shadow: 0 8px 24px rgba(0,0,0,0.18); overflow: hidden; animation: ia-menu-in 0.15s ease-out; }
+.dlg[hidden] { display: none; }
+.dlg-body { padding: 8px 24px 16px; }
+.dlg-sec { padding: 12px 0; border-bottom: 1px solid var(--grey-400); }
+.dlg-sec:last-child { border-bottom: none; }
+.dlg-sec .compose-section-label { margin-bottom: 6px; }
+.dlg-sec p, .dlg-sec li { font-size: 14px; line-height: 1.55; color: var(--text-primary); font-family: var(--font-body); }
+.dlg-sec ol, .dlg-sec ul { padding-left: 20px; display: flex; flex-direction: column; gap: 4px; }
+.dlg-sec .compose-info-banner { margin-top: 4px; font-size: 13px; }
+
+/* Prototipo 2: panel lateral de filtros adaptables */
+.split-layout { flex: 1; display: flex; overflow: hidden; }
+.fp { width: 320px; flex-shrink: 0; background: var(--bg-primary); border-right: 1px solid var(--border); overflow-y: auto; display: flex; flex-direction: column; }
+.fp-ctx { padding: 16px; border-bottom: 1px solid var(--grey-400); display: flex; flex-direction: column; gap: 12px; }
+.fp-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--grey-400); }
+.fp-head .ia-count { font-size: 13px; }
+.fp-filter { padding: 12px 16px; border-bottom: 1px solid var(--grey-400); animation: ia-menu-in 0.2s ease-out; }
+.fp-filter.top { border-left: 3px solid var(--support-discovery); background: var(--bg-surface); }
+.fp-why { font-size: 11px; color: var(--support-discovery); font-family: var(--font-body); margin: -4px 0 8px; display: flex; gap: 4px; align-items: flex-start; }
+.fp-more { padding: 12px 16px; }
+.fp-more summary { cursor: pointer; font-size: 13px; font-weight: 700; font-family: var(--font-ui); color: var(--action-primary); list-style: none; }
+.fp-more summary::-webkit-details-marker { display: none; }
+.fp-switch { display: flex; align-items: center; gap: 8px; font-size: 13px; font-family: var(--font-ui); font-weight: 700; color: var(--text-primary); }
+.fp-switch input { width: 16px; height: 16px; accent-color: var(--support-discovery); }
+
+/* Prototipo 3: hallazgos */
+.insights { padding: 12px 24px; background: var(--bg-primary); border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.insights .alert-grid { grid-template-columns: repeat(4, 1fr); }
+.insights .alert-card { text-align: left; background: var(--bg-surface); font: inherit; }
+.insights .alert-card.on { box-shadow: 0 0 0 2px var(--action-primary); }
+.insights-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.common-box { padding: 12px 24px; background: color-mix(in srgb, var(--support-discovery) 10%, var(--bg-primary)); border-bottom: 1px solid var(--support-discovery); display: none; flex-direction: column; gap: 8px; flex-shrink: 0; }
+.common-box.open { display: flex; }
+.com-bulk .btn-ia { margin-left: 8px; }
+@media (max-width: 1100px) { .insights .alert-grid { grid-template-columns: 1fr 1fr; } }

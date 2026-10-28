@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alexia · Prototipo 1: Decir</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/alexia-ds.css">
+<link rel="stylesheet" href="assets/proto.css">
+</head>
+<body>
+<header class="topbar" id="tb"></header>
+<div class="body-row">
+  <nav class="sidenav" id="sn" aria-label="Navegación principal"></nav>
+  <main class="content">
+    <div class="module-header">
+      <div class="module-header-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+      <div>
+        <div class="module-header-breadcrumb"><a href="#">Alumnos</a><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg><span>Seguimiento</span></div>
+        <div class="module-header-title-row"><div class="module-header-title">Seguimiento de alumnos</div><div class="module-header-subtitle" id="subtitle"></div></div>
+      </div>
+    </div>
+
+    <div class="com-toolbar">
+      <div class="com-search">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="q" placeholder="Buscar alumno..." aria-label="Buscar alumno por nombre">
+      </div>
+      <button class="btn-ia" id="btn-ia" data-tooltip="Filtra escribiendo lo que buscas" aria-expanded="false" aria-controls="ia-box">
+        <span id="btn-ia-icon"></span>Filtrar con IA
+      </button>
+    </div>
+
+    <section class="ia-box" id="ia-box" aria-label="Filtrar con IA">
+      <div class="ia-box-row">
+        <label for="ia-input" class="sr-only">Describe a qué alumnos quieres ver</label>
+        <input class="compose-input" id="ia-input" type="text" placeholder="Describe a qué alumnos quieres ver" autocomplete="off">
+        <button class="btn-primary btn-md" id="ia-go">Filtrar</button>
+        <button class="btn-ghost btn-md" id="ia-close" aria-label="Cerrar">Cerrar</button>
+      </div>
+      <div class="ia-examples" id="examples"><span>Prueba con:</span></div>
+      <div id="ia-out" aria-live="polite"></div>
+    </section>
+
+    <div class="active-row" id="saved-row"></div>
+    <div class="active-row" id="active-row"></div>
+    <div class="active-row save-row" id="save-row" style="padding:8px 24px;">
+      <div class="compose-field"><label for="save-name">Nombre del filtro</label><input class="compose-input" id="save-name" type="text" placeholder="Ej.: Faltas sin entrevista"></div>
+      <button class="btn-primary btn-md" id="save-ok">Guardar</button>
+      <button class="btn-ghost btn-md" id="save-cancel">Cancelar</button>
+    </div>
+
+    <div class="com-table-wrap"><table class="com-table"><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
+    <div class="com-pagination"><div class="com-pag-info" id="foot"></div></div>
+  </main>
+</div>
+
+<script src="assets/alumnos.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const ALU = ALX.ALUMNOS;
+let applied = [];          // filtros aplicados a la tabla
+let pending = [];          // propuesta de la IA, aún sin aplicar
+let nameQ = '';
+const saved = [{ name: 'Faltas sin entrevista', filters: [{ field: 'faltasSemana', value: 3 }, { field: 'entrevista', value: 'no' }] }];
+
+ALX.shell(1);
+$('btn-ia-icon').innerHTML = ALX.IA_ICON;
+$('thead').innerHTML = ALX.THEAD(false);
+const EJEMPLOS = [
+  'Alumnos de 1º ESO con 3 o más faltas esta semana y sin entrevista',
+  '2º ESO A en riesgo con la media por debajo de 5',
+  'Alumnos de Marta que suspenden 2 o más asignaturas',
+  '2º ESO B en riesgo con media superior a 8'
+];
+EJEMPLOS.forEach(t => {
+  const b = document.createElement('button'); b.className = 'chip ia'; b.textContent = t;
+  b.onclick = () => { $('ia-input').value = t; runIA(); };
+  $('examples').appendChild(b);
+});
+
+const chipHTML = (f, i, group) => '<span class="chip">' + ALX.esc(ALX.label(f)) + '<button data-g="' + group + '" data-i="' + i + '" aria-label="Quitar filtro ' + ALX.esc(ALX.label(f)) + '">' + ALX.X_SVG + '</button></span>';
+
+function rows() {
+  const f = nameQ ? applied.concat([{ field: 'texto', value: nameQ }]) : applied;
+  return ALX.apply(ALU, f);
+}
+function renderAll() {
+  const r = rows();
+  ALX.renderTable($('tbody'), r);
+  $('subtitle').textContent = r.length + ' de ' + ALU.length + ' alumnos';
+  $('foot').textContent = 'Mostrando ' + r.length + ' de ' + ALU.length + ' alumnos';
+  const ar = $('active-row');
+  ar.classList.toggle('visible', applied.length > 0);
+  ar.innerHTML = applied.length ? '<span class="stat-sub">Filtros activos:</span>' + applied.map((f, i) => chipHTML(f, i, 'a')).join('') +
+    '<button class="link-btn" id="clear">Borrar filtros</button><button class="link-btn" id="save-open">Guardar filtro</button>' : '';
+  const sr = $('saved-row');
+  sr.classList.toggle('visible', saved.length > 0);
+  sr.innerHTML = '<span class="stat-sub">Filtros guardados:</span>' + saved.map((s, i) => '<button class="chip ia" data-s="' + i + '">' + ALX.esc(s.name) + '</button>').join('');
+}
+
+function runIA() {
+  const t = $('ia-input').value.trim(); if (!t) { $('ia-input').focus(); return; }
+  const btn = $('btn-ia'); btn.classList.add('loading');
+  $('ia-out').innerHTML = '<div class="shimmer-wrap" style="padding:0"><div class="shimmer sh-line-lg"></div><div class="shimmer sh-line-sm"></div></div>';
+  setTimeout(() => {
+    btn.classList.remove('loading');
+    pending = ALX.parse(t);
+    renderOut(t);
+  }, 900);
+}
+
+function renderOut(t) {
+  const out = $('ia-out');
+  if (!pending.length) {
+    out.innerHTML = '<div class="compose-info-banner"><span>No he sabido convertir «' + ALX.esc(t) + '» en filtros. Prueba a nombrar un curso, un tutor, faltas, la media o si hay entrevista.</span></div>';
+    return;
+  }
+  const n = ALX.apply(ALU, pending).length;
+  let h = '<div class="ia-result"><span class="block-label" style="margin:0">He entendido esto</span><div class="ia-actions">' + pending.map((f, i) => chipHTML(f, i, 'p')).join('') + '</div>';
+  h += '<div class="ia-count">Esto dejaría <strong>' + n + '</strong> de ' + ALU.length + ' alumnos</div>';
+  if (n === 0) {
+    const sug = ALX.relajar(pending, ALU);
+    h += '<div class="compose-info-banner compose-info-banner--warning" role="status"><span><strong>Ningún alumno cumple todo a la vez.</strong> ' +
+      (sug.length ? 'Esto es lo que se puede relajar:' : 'Prueba a quitar algún filtro.') + '</span></div>';
+    h += '<div class="ia-actions">' + sug.map((s, i) => '<button class="com-tb-btn" data-r="' + i + '">' + ALX.esc(s.texto) + ' <span class="stat-sub">(' + s.n + ' alumnos)</span></button>').join('') + '</div>';
+    out._sug = sug;
+  }
+  h += '<div class="ia-actions"><button class="btn-primary btn-md" id="ia-apply"' + (n === 0 ? ' disabled' : '') + '>Aplicar filtros</button>' +
+    '<button class="btn-ghost btn-md" id="ia-discard">Descartar</button></div>';
+  h += '<div class="ia-foot"><span>Utiliza la IA. Verifica los resultados.</span><span id="fb"><button class="com-tb-btn" data-fb="1" aria-label="Resultado útil">Útil</button> <button class="com-tb-btn" data-fb="0" aria-label="Resultado no útil">No útil</button></span></div></div>';
+  out.innerHTML = h;
+}
+
+document.addEventListener('click', e => {
+  const t = e.target.closest('button'); if (!t) return;
+  if (t.id === 'btn-ia') { const o = $('ia-box').classList.toggle('open'); t.setAttribute('aria-expanded', o); if (o) $('ia-input').focus(); }
+  else if (t.id === 'ia-close') { $('ia-box').classList.remove('open'); $('btn-ia').setAttribute('aria-expanded', 'false'); }
+  else if (t.id === 'ia-go') runIA();
+  else if (t.id === 'ia-apply') { applied = pending.slice(); $('ia-box').classList.remove('open'); $('btn-ia').setAttribute('aria-expanded', 'false'); renderAll(); }
+  else if (t.id === 'ia-discard') { pending = []; $('ia-out').innerHTML = ''; }
+  else if (t.id === 'clear') { applied = []; renderAll(); }
+  else if (t.id === 'save-open') { $('save-row').classList.add('open'); $('save-name').focus(); }
+  else if (t.id === 'save-cancel') $('save-row').classList.remove('open');
+  else if (t.id === 'save-ok') { const n = $('save-name').value.trim(); if (!n) { $('save-name').focus(); return; } saved.push({ name: n, filters: applied.slice() }); $('save-name').value = ''; $('save-row').classList.remove('open'); renderAll(); }
+  else if (t.dataset.g === 'a') { applied.splice(+t.dataset.i, 1); renderAll(); }
+  else if (t.dataset.g === 'p') { pending.splice(+t.dataset.i, 1); renderOut($('ia-input').value); }
+  else if (t.dataset.s !== undefined) { applied = saved[+t.dataset.s].filters.slice(); renderAll(); }
+  else if (t.dataset.fb !== undefined) $('fb').textContent = 'Gracias por tu valoración.';
+  else if (t.dataset.r !== undefined) {
+    const s = $('ia-out')._sug[+t.dataset.r];
+    pending = s.tipo === 'quitar' ? pending.filter(f => f.field !== s.field) : pending.map(f => f.field === s.field ? Object.assign({}, f, { value: s.value }) : f);
+    renderOut($('ia-input').value);
+  }
+});
+/* Placeholder que se escribe solo con ejemplos, mientras el campo está vacío y la caja abierta */
+const SUGERENCIAS = [
+  'Alumnos de 1º ESO con 3 o más faltas esta semana y sin entrevista',
+  '2º ESO A en riesgo con la media por debajo de 5',
+  'Alumnos de Marta que suspenden 2 o más asignaturas',
+  '¿Quién no ha tenido ninguna entrevista este trimestre?'
+];
+const quieto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+(function tipear() {
+  const inp = $('ia-input'); let s = 0, c = 0, borrando = false;
+  inp.placeholder = SUGERENCIAS[0];
+  if (quieto) return;
+  function paso() {
+    if (inp.value || !$('ia-box').classList.contains('open')) { c = 0; borrando = false; inp.placeholder = SUGERENCIAS[s]; return setTimeout(paso, 400); }
+    const txt = SUGERENCIAS[s];
+    if (!borrando) { c++; inp.placeholder = txt.slice(0, c); if (c === txt.length) { borrando = true; return setTimeout(paso, 1800); } return setTimeout(paso, 45); }
+    c -= 2; if (c <= 0) { c = 0; borrando = false; s = (s + 1) % SUGERENCIAS.length; inp.placeholder = '​'; return setTimeout(paso, 350); }
+    inp.placeholder = txt.slice(0, c); return setTimeout(paso, 18);
+  }
+  paso();
+})();
+$('ia-input').addEventListener('keydown', e => { if (e.key === 'Enter') runIA(); if (e.key === 'Escape') $('ia-close').click(); });
+$('q').addEventListener('input', e => { nameQ = e.target.value.trim(); renderAll(); });
+renderAll();
+ALX.info({
+  id: 'p1', title: 'Decir lo que buscas', subtitle: 'Filtrar con IA escribiendo con tus palabras',
+  sections: [
+    { h: 'Qué es', p: 'En lugar de ir filtro por filtro, escribes a qué alumnos quieres ver. La IA traduce tu frase a filtros normales de la tabla y te los enseña antes de aplicarlos.' },
+    { h: 'Qué te ayuda a resolver', p: 'Alexia tiene muchas posibilidades de filtrado y combinarlas lleva tiempo. Una frase como <strong>«alumnos de 1º ESO con 3 o más faltas esta semana y sin entrevista»</strong> sustituye a cuatro filtros. Sirve igual para cualquier otra tabla.' },
+    { h: 'Cómo se usa', ol: [
+      'Pulsa <strong>Filtrar con IA</strong>.',
+      'Escribe lo que buscas o elige uno de los ejemplos.',
+      'Revisa los filtros que ha entendido y cuántos alumnos quedarían. Quita con la ✕ los que sobren.',
+      'Pulsa <strong>Aplicar filtros</strong>.',
+      'Si lo vas a repetir, usa <strong>Guardar filtro</strong>.'
+    ] },
+    { h: 'Qué lo hace fiable', ul: [
+      'Ves el número de alumnos <strong>antes</strong> de aplicar.',
+      'Si no sale ningún alumno, te propone qué quitar o relajar (prueba el último ejemplo).',
+      'Los filtros siguen siendo editables a mano, como siempre.',
+      'Aviso de que la IA puede equivocarse y botones para valorar el resultado.'
+    ] },
+    { h: 'Sobre este prototipo', note: 'La IA es simulada con reglas, no hay un modelo real detrás. Entiende curso, tutor/a, faltas, media, asignaturas suspensas, entrevista y estado. Los datos de alumnos son ficticios.', warn: true }
+  ]
+});
+</script>
+</body>
+</html>
