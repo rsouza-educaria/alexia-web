@@ -151,7 +151,7 @@
       '<div class="topbar-logo" style="font-family:var(--font-ui);font-weight:800;font-size:20px;color:var(--action-primary);">Alexia</div>' +
       '<div class="school-info" style="margin-left:16px;">Prototipo de borrador, datos ficticios</div>' +
       '<div class="topbar-right" style="padding-right:16px;">' +
-      [['1-dizer.html', '1 · Decir'], ['2-adaptar.html', '2 · Adaptar'], ['3-descubrir.html', '3 · Descubrir'], ['4-mi-vista.html', '4 · Mi vista']]
+      [['1-dizer.html', '1 · Decir'], ['2-adaptar.html', '2 · Adaptar'], ['3-descubrir.html', '3 · Descubrir'], ['4-mi-vista.html', '4 · Mi vista'], ['5-panel.html', '5 · En el panel']]
         .map(([h, t], i) => '<a href="' + h + '" class="com-tb-btn" style="text-decoration:none;' + (i + 1 === actual ? 'border-color:var(--action-primary);color:var(--action-primary);' : '') + '"' + (i + 1 === actual ? ' aria-current="page"' : '') + '>' + t + '</a>').join('') +
       '<div class="vdivider"></div><div class="avatar">MC</div></div>';
     document.getElementById('sn').innerHTML =

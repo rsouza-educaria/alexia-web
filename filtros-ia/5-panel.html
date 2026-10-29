@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alexia · Prototipo 5: En el panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/alexia-ds.css">
+<link rel="stylesheet" href="assets/proto.css">
+</head>
+<body>
+<header class="topbar" id="tb"></header>
+<div class="body-row">
+  <nav class="sidenav" id="sn" aria-label="Navegación principal"></nav>
+  <main class="content">
+    <div class="module-header">
+      <div class="module-header-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+      <div>
+        <div class="module-header-breadcrumb"><a href="#">Alumnos</a><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg><span>Matrícula</span></div>
+        <div class="module-header-title-row"><div class="module-header-title">Alumnos y matrícula</div><div class="module-header-subtitle" id="subtitle"></div></div>
+      </div>
+    </div>
+
+    <div class="split-layout">
+      <div class="fp-col"><div class="fp-add"><button class="btn-primary t5-add" tabindex="-1" title="Solo decorativo en el prototipo"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="3" fill="none" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Añadir nuevo<span class="t5-caret"></span></button></div>
+      <aside class="fp fp5" aria-label="Filtros">
+        <div class="fp-title"><span>Filtrar los resultados</span><button class="link-btn" id="clear">Restablecer</button></div>
+
+        <div class="fp-filter" data-box="nivel"><span class="fp-funnel" hidden aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 4h18l-7 8.5V20l-4-2v-5.5z"/></svg></span><div class="fp-why" hidden><span aria-hidden="true">✦</span><span>Lo ha ajustado la IA</span></div>
+          <label class="compose-section-label" for="f-nivel" style="margin-bottom:8px">Nivel</label>
+          <select class="compose-input" id="f-nivel"></select></div>
+
+        <div class="fp-filter" data-box="estado"><span class="fp-funnel" hidden aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 4h18l-7 8.5V20l-4-2v-5.5z"/></svg></span><div class="fp-why" hidden><span aria-hidden="true">✦</span><span>Lo ha ajustado la IA</span></div>
+          <div class="fp-pair">
+            <div class="compose-dest-item"><input type="checkbox" id="f-alta"><label for="f-alta">Alta</label></div>
+            <div class="compose-dest-item"><input type="checkbox" id="f-baja"><label for="f-baja">Baja</label></div>
+          </div></div>
+
+        <div class="fp-filter" data-box="noMatric"><span class="fp-funnel" hidden aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 4h18l-7 8.5V20l-4-2v-5.5z"/></svg></span><div class="fp-why" hidden><span aria-hidden="true">✦</span><span>Lo ha ajustado la IA</span></div>
+          <div class="compose-dest-item"><input type="checkbox" id="f-noMatric"><label for="f-noMatric">No matriculados</label></div></div>
+
+        <div class="fp-filter" data-box="tutor"><span class="fp-funnel" hidden aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 4h18l-7 8.5V20l-4-2v-5.5z"/></svg></span><div class="fp-why" hidden><span aria-hidden="true">✦</span><span>Lo ha ajustado la IA</span></div>
+          <div class="compose-dest-item"><input type="checkbox" id="f-tutor"><label for="f-tutor">Tutorizados</label></div></div>
+
+        <div class="fp-filter" data-box="matHoy"><span class="fp-funnel" hidden aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 4h18l-7 8.5V20l-4-2v-5.5z"/></svg></span><div class="fp-why" hidden><span aria-hidden="true">✦</span><span>Lo ha ajustado la IA</span></div>
+          <div class="compose-dest-item"><input type="checkbox" id="f-matHoy"><label for="f-matHoy">Filtrar por matrícula a fecha de hoy</label></div></div>
+
+        <div class="fp-filter" data-box="nombres"><span class="fp-funnel" hidden aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 4h18l-7 8.5V20l-4-2v-5.5z"/></svg></span><div class="fp-why" hidden><span aria-hidden="true">✦</span><span>Lo ha ajustado la IA</span></div>
+          <div class="compose-section-label" style="margin-bottom:8px">Nombre y apellidos</div>
+          <div class="fp-txt"><select class="compose-input" id="op-nombre" aria-label="Nombre: condición"></select><input class="compose-input" id="v-nombre" type="text" placeholder="Nombre" aria-label="Nombre"></div>
+          <div class="fp-txt"><select class="compose-input" id="op-ap1" aria-label="Primer apellido: condición"></select><input class="compose-input" id="v-ap1" type="text" placeholder="Primer apellido" aria-label="Primer apellido"></div>
+          <div class="fp-txt"><select class="compose-input" id="op-ap2" aria-label="Segundo apellido: condición"></select><input class="compose-input" id="v-ap2" type="text" placeholder="Segundo apellido" aria-label="Segundo apellido"></div></div>
+
+        <div class="fp-filter" data-box="matricula"><span class="fp-funnel" hidden aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 4h18l-7 8.5V20l-4-2v-5.5z"/></svg></span><div class="fp-why" hidden><span aria-hidden="true">✦</span><span>Lo ha ajustado la IA</span></div>
+          <div class="compose-section-label" style="margin-bottom:8px">Núm. matrícula</div>
+          <div class="fp-txt"><select class="compose-input" id="op-matricula" aria-label="Núm. matrícula: condición"></select><input class="compose-input" id="v-matricula" type="text" inputmode="numeric" aria-label="Núm. matrícula"></div></div>
+
+        <details class="fp-more flat" id="fp-more"><summary><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M3 4h18l-7 8.5V20l-4-2v-5.5z"/></svg>Mas filtros</summary>
+          <div class="fp-filter" data-box="grupo"><span class="fp-funnel" hidden aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 4h18l-7 8.5V20l-4-2v-5.5z"/></svg></span><div class="fp-why" hidden><span aria-hidden="true">✦</span><span>Lo ha ajustado la IA</span></div>
+            <label class="compose-section-label" for="f-grupo" style="margin-bottom:8px">Grupo</label>
+            <select class="compose-input" id="f-grupo"><option value="">Todos</option><option>A</option><option>B</option><option>C</option></select></div>
+          <div class="fp-filter" data-box="altaAnio"><span class="fp-funnel" hidden aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 4h18l-7 8.5V20l-4-2v-5.5z"/></svg></span><div class="fp-why" hidden><span aria-hidden="true">✦</span><span>Lo ha ajustado la IA</span></div>
+            <label class="compose-section-label" for="f-anio" style="margin-bottom:8px">Año de alta</label>
+            <select class="compose-input" id="f-anio"><option value="">Todos</option><option>2022</option><option>2023</option><option>2024</option><option>2025</option><option>2026</option></select></div>
+        </details>
+      </aside></div>
+
+      <section class="com-main t5" style="min-width:0;">
+        <div class="t5-bar"><button class="btn-ia" id="btn-ia" data-tooltip="Describe lo que buscas y la IA rellena los filtros" aria-expanded="false" aria-controls="ia-box"><span id="btn-ia-icon"></span>Filtrar con IA</button><span class="t5-sep"></span><button class="t5-ico" tabindex="-1" aria-label="Eliminar" title="Eliminar (solo decorativo)"><svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></button><button class="t5-ico" tabindex="-1" aria-label="Exportar a Excel" title="Exportar a Excel (solo decorativo)"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4zM8 8l8 8M16 8l-8 8"/></svg></button><button class="t5-ico" tabindex="-1" aria-label="Buscar personas" title="Buscar personas (solo decorativo)"><svg viewBox="0 0 24 24"><path d="M16 11a4 4 0 1 0-8 0M4 21v-2a4 4 0 0 1 4-4h4M18 18l3 3"/></svg></button><button class="t5-ico" tabindex="-1" aria-label="Editar en bloque" title="Editar en bloque (solo decorativo)"><svg viewBox="0 0 24 24"><path d="M4 6h10M4 12h6M4 18h10M15 15l5-5 2 2-5 5-3 1z"/></svg></button><button class="t5-ico" tabindex="-1" aria-label="Ordenar" title="Ordenar (solo decorativo)"><svg viewBox="0 0 24 24"><path d="M7 4v16M4 17l3 3 3-3M17 20V4M14 7l3-3 3 3"/></svg></button><span class="t5-sep"></span><button class="t5-more" tabindex="-1" title="Solo decorativo en el prototipo">Más<span class="t5-caret dark"></span></button><button class="t5-hl" tabindex="-1" disabled>Resaltar texto</button></div>
+        <section class="ia-box" id="ia-box" aria-label="Filtrar con IA">
+          <div class="ia-box-row">
+            <label for="ia-input" class="sr-only">Describe a qué alumnos quieres ver</label>
+            <input class="compose-input" id="ia-input" type="text" placeholder="Describe a qué alumnos quieres ver" autocomplete="off">
+            <button class="btn-primary btn-md" id="ia-go">Filtrar</button>
+            <button class="btn-ghost btn-md" id="ia-close" aria-label="Cerrar">Cerrar</button>
+          </div>
+          <div class="ia-examples" id="examples"><span>Prueba con:</span></div>
+          <div id="ia-out" aria-live="polite"></div>
+        </section>
+        <div class="note-row" id="note" aria-live="polite"></div>
+        <div class="com-table-wrap"><table class="t5-table"><thead><tr><th class="c-chk"><input type="checkbox" aria-label="Seleccionar todos"></th><th>Apellidos</th><th>Nombre</th><th>Matrícula</th><th>Avisos médicos</th><th>Secciones (Académicas)</th><th>Extraescolares y servicios</th></tr></thead><tbody id="tbody"></tbody></table></div>
+        <div class="t5-foot"><span>Elementos por página: <span class="t5-sel">100<span class="t5-caret dark"></span></span></span><span class="t5-page">1</span><span id="foot"></span></div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<script src="assets/alumnos.js"></script>
+<script src="assets/matricula.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const ALU = MAT.ALUMNOS, N = ALU.length;
+ALX.shell(5);
+$('btn-ia-icon').innerHTML = ALX.IA_ICON;
+
+/* Controles del panel */
+$('f-nivel').innerHTML = '<option value="">Todos los niveles</option><optgroup label="Etapa completa"><option value="Infantil">Toda Infantil</option><option value="Primaria">Toda Primaria</option></optgroup><optgroup label="Nivel">' +
+  MAT.NIVELES.map(n => '<option>' + n + '</option>').join('') + '</optgroup>';
+['nombre', 'ap1', 'ap2', 'matricula'].forEach(k => { $('op-' + k).innerHTML = Object.keys(MAT.OPS).map(o => '<option value="' + o + '">' + MAT.OPS[o].charAt(0).toUpperCase() + MAT.OPS[o].slice(1) + '</option>').join(''); });
+
+/* Estado */
+const INICIAL = () => Object.assign(MAT.DEFAULT(), { nivel: 'Infantil 2' });   // como abre la pantalla de Alexia
+let S = INICIAL();           // filtros que ve la tabla (y que muestra el panel)
+let ia = new Set();              // bloques del panel que ha ajustado la IA
+let pending = null;              // propuesta de la IA: { P: lo entendido, S: filtros resultantes }
+let snapshot = null;             // para deshacer la última aplicación
+let lastText = '';
+const BLOCK = { nivel: 'nivel', estado: 'estado', noMatric: 'noMatric', tutor: 'tutor', matHoy: 'matHoy', nombre: 'nombres', ap1: 'nombres', ap2: 'nombres', matricula: 'matricula', grupo: 'grupo', altaAnio: 'altaAnio' };
+const keyOfField = f => (f === 'alta' || f === 'baja') ? 'estado' : f;
+const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+const chipHTML = (f, group) => '<span class="chip">' + ALX.esc(f.label) + '<button data-g="' + group + '" data-k="' + f.key + '" aria-label="Quitar filtro ' + ALX.esc(f.label) + '">' + ALX.X_SVG + '</button></span>';
+
+/* Panel: S -> controles */
+function syncPanel() {
+  $('f-nivel').value = S.nivel;
+  $('f-alta').checked = S.alta; $('f-baja').checked = S.baja;
+  $('f-noMatric').checked = S.noMatric; $('f-tutor').checked = S.tutor; $('f-matHoy').checked = S.matHoy;
+  ['nombre', 'ap1', 'ap2', 'matricula'].forEach(k => { $('op-' + k).value = S[k].op; $('v-' + k).value = S[k].v; });
+  $('f-grupo').value = S.grupo; $('f-anio').value = S.altaAnio;
+  if (ia.has('grupo') || ia.has('altaAnio')) $('fp-more').open = true;
+  tags();
+}
+/* Panel: controles -> S */
+function readPanel() {
+  S.nivel = $('f-nivel').value;
+  S.alta = $('f-alta').checked; S.baja = $('f-baja').checked;
+  S.noMatric = $('f-noMatric').checked; S.tutor = $('f-tutor').checked; S.matHoy = $('f-matHoy').checked;
+  ['nombre', 'ap1', 'ap2', 'matricula'].forEach(k => { S[k] = { op: $('op-' + k).value, v: $('v-' + k).value.trim() }; });
+  S.grupo = $('f-grupo').value; S.altaAnio = $('f-anio').value;
+}
+/* Marca ✦ en los bloques que ha tocado la IA */
+function tags() {
+  const act = new Set(MAT.activos(S).map(f => BLOCK[f.key]));
+  document.querySelectorAll('.fp-filter[data-box]').forEach(el => {
+    const on = ia.has(el.dataset.box);
+    el.classList.toggle('top', on); el.querySelector('.fp-why').hidden = !on;
+    el.querySelector('.fp-funnel').hidden = !act.has(el.dataset.box);
+  });
+}
+
+function renderTable() {
+  const r = MAT.apply(ALU, S);
+  const ico = { pill: '<svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="6"/></svg>', plus: '<svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="4" fill="none" aria-hidden="true"><line x1="12" y1="4" x2="12" y2="20"/><line x1="4" y1="12" x2="20" y2="12"/></svg>' };
+  const tag = t => '<span class="t5-tag">' + ALX.esc(t) + '<i></i></span>';
+  $('tbody').innerHTML = r.length ? r.map(a =>
+    '<tr><td class="c-chk"><input type="checkbox" aria-label="Seleccionar a ' + ALX.esc(a.nombre + ' ' + a.ap1) + '"></td>' +
+    '<td>' + ALX.esc(a.ap1 + ' ' + a.ap2) + '</td><td>' + ALX.esc(a.nombre) + '</td><td>' + a.matricula + '</td>' +
+    '<td class="c-av">' + (a.avisos === 2 ? ico.pill : '') + (a.avisos ? ico.plus : '') + '</td>' +
+    '<td>' + (a.seccionRoja ? tag(a.seccionRoja) + ', ' : '') + a.seccion + '</td>' +
+    '<td>' + a.extra.map(x => x.red ? tag(x.t) : ALX.esc(x.t)).join(', ') + '</td></tr>'
+  ).join('') : '<tr><td colspan="7" style="height:120px;text-align:center;color:var(--text-muted);">Ningún alumno coincide con estos filtros.</td></tr>';
+  $('subtitle').textContent = r.length + ' de ' + N + ' alumnos';
+  $('foot').textContent = r.length ? 'Mostrando 1 a ' + r.length + ' de ' + r.length + ' elementos' : 'Mostrando 0 elementos';
+  if (!ia.size) showNote(false);
+}
+
+/* Aviso de que la IA ha tocado el panel */
+function showNote(on) {
+  const n = $('note');
+  n.classList.toggle('visible', on);
+  n.innerHTML = on ? '<div class="compose-info-banner" role="status">' + ALX.IA_ICON + '<span><strong>Filtros aplicados con IA.</strong> A partir de «' + ALX.esc(lastText) + '» se han rellenado los filtros del panel. Los marcados con ✦ los ha ajustado la IA y puedes cambiarlos a mano. ' +
+    '<button class="link-btn" data-act="undo">Deshacer</button></span></div>' : '';
+}
+
+/* Cambios manuales en el panel */
+function manual(e) {
+  const box = e.target.closest('[data-box]'); if (!box) return;
+  ia.delete(box.dataset.box);
+  readPanel(); tags(); renderTable();
+}
+document.querySelector('.fp').addEventListener('input', e => { if (e.target.type === 'text') manual(e); });
+document.querySelector('.fp').addEventListener('change', e => { if (e.target.type !== 'text' && e.target.type !== 'textarea') manual(e); });
+$('clear').onclick = () => { S = INICIAL(); ia = new Set(); syncPanel(); renderTable(); };
+
+/* ---------- IA dentro del panel ---------- */
+const EJEMPLOS = [
+  'Alumnos de Infantil 3 que no están matriculados',
+  'Dados de baja en Primaria 4º',
+  'Tutorizados con matrícula vigente a fecha de hoy',
+  'Se llama Hugo y el primer apellido es García',
+  'Número de matrícula que empiece por 000082'
+];
+EJEMPLOS.forEach(t => {
+  const b = document.createElement('button'); b.className = 'chip ia'; b.textContent = t;
+  b.onclick = () => { $('ia-input').value = t; runIA(); };
+  $('examples').appendChild(b);
+});
+
+function abrir(o) {
+  $('ia-box').classList.toggle('open', o); $('btn-ia').setAttribute('aria-expanded', o);
+  if (o) $('ia-input').focus(); else $('btn-ia').focus();
+}
+function runIA() {
+  const t = $('ia-input').value.trim(); if (!t) { $('ia-input').focus(); return; }
+  const btn = $('btn-ia'); btn.classList.add('loading');
+  $('ia-out').innerHTML = '<div class="shimmer-wrap" style="padding:0"><div class="shimmer sh-line-lg"></div><div class="shimmer sh-line-sm"></div></div>';
+  setTimeout(() => {
+    btn.classList.remove('loading');
+    const P = MAT.parse(t);
+    pending = P ? { P, S: MAT.completo(P) } : null;
+    renderOut(t);
+  }, 900);
+}
+function renderOut(t) {
+  const out = $('ia-out');
+  if (!pending) {
+    out.innerHTML = '<div class="compose-info-banner"><span>No he sabido convertir «' + ALX.esc(t) + '» en filtros. Prueba a nombrar un nivel (Infantil 2, Primaria 3º), el estado (alta o baja), «no matriculados», «tutorizados», un nombre, un apellido o un número de matrícula.</span></div>';
+    return;
+  }
+  const f = MAT.activos(pending.S), n = MAT.apply(ALU, pending.S).length;
+  let h = '<div class="ia-result"><span class="block-label" style="margin:0">He entendido esto</span><div class="ia-actions">' + f.map(x => chipHTML(x, 'p')).join('') + '</div>';
+  h += '<div class="ia-count">Esto dejaría <strong>' + n + '</strong> de ' + N + ' alumnos</div>';
+  if (!same(S, INICIAL())) h += '<span class="stat-sub">Al aplicar se sustituyen los filtros actuales del panel.</span>';
+  if (n === 0) {
+    const sug = MAT.relajar(pending.S, ALU);
+    h += '<div class="compose-info-banner compose-info-banner--warning" role="status"><span><strong>Ningún alumno cumple todo a la vez.</strong> ' + (sug.length ? 'Esto es lo que se puede relajar:' : 'Prueba a quitar algún filtro.') + '</span></div>';
+    h += '<div class="ia-actions">' + sug.map(s => '<button class="com-tb-btn" data-r="' + s.key + '">' + ALX.esc(s.texto) + ' <span class="stat-sub">(' + s.n + ' alumnos)</span></button>').join('') + '</div>';
+  }
+  h += '<div class="ia-actions"><button class="btn-primary btn-md" id="ia-apply"' + (n === 0 ? ' disabled' : '') + '>Aplicar al panel</button><button class="btn-ghost btn-md" id="ia-discard">Descartar</button></div>';
+  h += '<div class="ia-foot"><span>Utiliza la IA. Verifica los resultados.</span><span id="fb"><button class="com-tb-btn" data-fb="1" aria-label="Resultado útil">Útil</button> <button class="com-tb-btn" data-fb="0" aria-label="Resultado no útil">No útil</button></span></div></div>';
+  out.innerHTML = h;
+}
+function quitarPending(key) {
+  pending.S = MAT.quitar(pending.S, key);
+  Object.keys(pending.P).forEach(f => { if (keyOfField(f) === key) delete pending.P[f]; });
+}
+function aplicar() {
+  snapshot = { S: MAT.clone(S), ia: new Set(ia) };
+  lastText = $('ia-input').value.trim();
+  S = MAT.clone(pending.S);
+  ia = new Set(Object.keys(pending.P).map(f => BLOCK[keyOfField(f)]).filter(Boolean));
+  pending = null; $('ia-out').innerHTML = '';
+  abrir(false); syncPanel(); renderTable(); showNote(ia.size > 0);
+}
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.id === 'btn-ia') abrir(!$('ia-box').classList.contains('open'));
+  else if (b.id === 'ia-close') abrir(false);
+  else if (b.id === 'ia-go') runIA();
+  else if (b.id === 'ia-apply') aplicar();
+  else if (b.id === 'ia-discard') { pending = null; $('ia-out').innerHTML = ''; }
+  else if (b.dataset.act === 'undo' && snapshot) { S = snapshot.S; ia = snapshot.ia; snapshot = null; syncPanel(); renderTable(); showNote(false); }
+  else if (b.dataset.g === 'p') { quitarPending(b.dataset.k); renderOut($('ia-input').value); }
+  else if (b.dataset.r !== undefined) { quitarPending(b.dataset.r); renderOut($('ia-input').value); }
+  else if (b.dataset.fb !== undefined) $('fb').textContent = 'Gracias por tu valoración.';
+});
+$('ia-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); runIA(); }
+  if (e.key === 'Escape') abrir(false);
+});
+
+/* Placeholder que se escribe solo con ejemplos, mientras el campo está vacío y la caja abierta */
+const quieto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+(function tipear() {
+  const inp = $('ia-input'); let s = 0, c = 0, borrando = false;
+  inp.placeholder = EJEMPLOS[0];
+  if (quieto) return;
+  function paso() {
+    if (inp.value || !$('ia-box').classList.contains('open')) { c = 0; borrando = false; inp.placeholder = EJEMPLOS[s]; return setTimeout(paso, 400); }
+    const txt = EJEMPLOS[s];
+    if (!borrando) { c++; inp.placeholder = txt.slice(0, c); if (c === txt.length) { borrando = true; return setTimeout(paso, 1800); } return setTimeout(paso, 45); }
+    c -= 2; if (c <= 0) { c = 0; borrando = false; s = (s + 1) % EJEMPLOS.length; inp.placeholder = '​'; return setTimeout(paso, 350); }
+    inp.placeholder = txt.slice(0, c); return setTimeout(paso, 18);
+  }
+  paso();
+})();
+
+syncPanel(); renderTable();
+ALX.info({
+  id: 'p5', title: 'IA dentro del panel de filtros', subtitle: 'El acceso a la IA está donde ya filtras',
+  sections: [
+    { h: 'Qué es', p: 'Es la misma idea del prototipo 1, escribir con tus palabras lo que buscas, pero con el acceso en la barra de herramientas de la tabla, junto a los filtros de siempre, y con el resultado <strong>escrito en el panel «Filtrar los resultados»</strong>.' },
+    { h: 'Qué te ayuda a resolver', p: 'Quien ya está mirando los filtros es quien más puede necesitar ayuda con ellos. Aquí el acceso a la IA está en ese contexto, y lo que la IA entiende <strong>se escribe en los propios controles del panel</strong>, de modo que ves y puedes retocar cada filtro como siempre.' },
+    { h: 'Cómo se usa', ol: [
+      'En la barra sobre la tabla, pulsa <strong>Filtrar con IA</strong>.',
+      'Escribe lo que buscas o elige un ejemplo. Por ejemplo, «Alumnos de Infantil 3 que no están matriculados».',
+      'Revisa los filtros que ha entendido y cuántos alumnos quedarían. Quita con la ✕ los que sobren.',
+      'Pulsa <strong>Aplicar al panel</strong>. Los controles se rellenan y los que ha tocado la IA llevan la marca ✦.',
+      'Si no te convence, usa <strong>Deshacer</strong> en el aviso de la tabla.'
+    ] },
+    { h: 'Qué lo hace fiable', ul: [
+      'Ves el número de alumnos <strong>antes</strong> de aplicar.',
+      'Al aplicar se sustituyen los filtros del panel, y el aviso lo dice antes.',
+      'Los filtros siguen siendo editables a mano. Si cambias uno, pierde la marca ✦.',
+      'Si no sale ningún alumno, propone qué quitar (prueba «Alumnos de Infantil 2 que no están matriculados»).'
+    ] },
+    { h: 'Sobre este prototipo', note: 'La IA es simulada con reglas. Entiende nivel, alta o baja, no matriculados, tutorizados, matrícula vigente hoy, nombre, apellidos, número de matrícula, grupo y año de alta. Los campos son los del panel actual de Alexia; los datos de alumnos son ficticios.', warn: true }
+  ]
+});
+</script>
+</body>
+</html>
